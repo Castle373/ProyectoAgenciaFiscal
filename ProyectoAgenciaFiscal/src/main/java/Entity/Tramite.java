@@ -9,10 +9,13 @@ import java.util.Calendar;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -25,69 +28,46 @@ import javax.persistence.TemporalType;
  * @author diego
  */
 @Entity
-@Table(name = "Persona")
-public class Persona implements Serializable {
-    public Persona(){
+@Table(name = "Tramite")
+@DiscriminatorColumn(name="Tipo",length = 30)
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Tramite implements Serializable {
+    public Tramite(){
         
     }
-    public Persona(String nombreCompleto, String rfc, String telefono, Calendar fechaNacimiento) {
-        this.nombreCompleto = nombreCompleto;
-        this.rfc = rfc;
-        this.telefono = telefono;
+    public Tramite(Calendar fechaNacimiento) {
+        super();
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public Tramite(Calendar fechaNacimiento, Persona persona) {
+        super();
+        this.fechaNacimiento = fechaNacimiento;
+        this.persona = persona;
+    }
+
+    public Tramite(float Costo, Calendar fechaNacimiento, Persona persona) {
+        this.Costo = Costo;
+        this.fechaNacimiento = fechaNacimiento;
+        this.persona = persona;
+    }
     
     @Id
-    @Column(name = "idPersona")
+    @Column(name = "idTramite")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "Nombre_Completo")
-    private String nombreCompleto;
-    @Column(name = "RFC")
-    private String rfc;
-    @Column(name = "Telefono")
-    private String telefono;
-    @Column(name="FechaNacimiento",nullable =  false)
+    
+    @Column(name = "Costo")
+    private float Costo;
+    
+    @Column(name="Fecha_Tramite",nullable =  false)
     @Temporal(TemporalType.DATE)
     private Calendar fechaNacimiento;
     
-    @OneToMany(mappedBy = "persona", cascade = {CascadeType.ALL})
-    private List<Tramite> tramite;
-
-    public String getNombreCompleto() {
-        return nombreCompleto;
-    }
-
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
-    }
-
-    public String getRfc() {
-        return rfc;
-    }
-
-    public void setRfc(String rfc) {
-        this.rfc = rfc;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public Calendar getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Calendar fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
+    @ManyToOne(cascade={CascadeType.ALL})
+    @JoinColumn(name="idPersona", nullable = false)
+    private Persona persona;
     
-
     public Integer getId() {
         return id;
     }
@@ -106,10 +86,10 @@ public class Persona implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Persona)) {
+        if (!(object instanceof Tramite)) {
             return false;
         }
-        Persona other = (Persona) object;
+        Tramite other = (Tramite) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -118,7 +98,7 @@ public class Persona implements Serializable {
 
     @Override
     public String toString() {
-        return "Entity.Persona[ id=" + id + " ]";
+        return "Entity.Tramite[ id=" + id + " ]";
     }
     
 }
