@@ -5,6 +5,8 @@
 package Entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -27,13 +30,13 @@ public class Automovil implements Serializable {
         
     }
 
-    public Automovil(String modelo, String marca, String linea, String color, String NumeroDeSerie, Placas placas) {
+    public Automovil(String modelo, String marca, String linea, String color, String NumeroDeSerie) {
         this.modelo = modelo;
         this.marca = marca;
         this.linea = linea;
         this.color = color;
         this.NumeroDeSerie = NumeroDeSerie;
-        this.placas = placas;
+        placas = new ArrayList<Placas>();
     }
 
     
@@ -52,21 +55,20 @@ public class Automovil implements Serializable {
     @Column(name = "NumeroDeSerie")
     private String NumeroDeSerie;
     
-    @OneToOne(cascade={CascadeType.ALL})
-    @JoinColumn(name="idPlacas", nullable = false)
-    private Placas placas;
+     @OneToMany(mappedBy = "automovil")
+     private List<Placas> placas;
     
-    @OneToOne(mappedBy = "automovil",cascade = CascadeType.ALL)
-    private Historial historial;
 
-    public Placas getPlacas() {
-        return placas;
+    public List<Placas> getPlacas() {
+    return placas;
     }
-
-    public void setPlacas(Placas placas) {
-        this.placas = placas;
-    }
-    
+  
+  public void setPlacas(List<Placas> placas) {
+    this.placas = placas;
+  }
+  public void agregaPlaca(Placas placas) {
+    this.placas.add(placas);
+  }
     public Integer getId() {
         return id;
     }
@@ -122,13 +124,6 @@ public class Automovil implements Serializable {
         return hash;
     }
 
-    public Historial getHistorial() {
-        return historial;
-    }
-
-    public void setHistorial(Historial historial) {
-        this.historial = historial;
-    }
     
     @Override
     public boolean equals(Object object) {

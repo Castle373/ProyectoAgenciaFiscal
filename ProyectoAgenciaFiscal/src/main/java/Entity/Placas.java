@@ -34,34 +34,35 @@ public class Placas extends Tramite implements Serializable {
         
     }
 
-    public Placas(String numeroPlacas, Calendar FechaRecepcion, Automovil Automovil, float Costo, Calendar fechaNacimiento, Persona persona) {
+    public Placas(String numeroPlacas, String estado, Calendar fechaInactividad, Automovil automovil, float Costo, Calendar fechaNacimiento, Persona persona) {
         super(Costo, fechaNacimiento, persona);
         this.numeroPlacas = numeroPlacas;
-        this.FechaRecepcion = FechaRecepcion;
-        this.Automovil = Automovil;
+        this.estado = estado;
+        this.fechaInactividad = fechaInactividad;
+        this.automovil = automovil;
     }
 
-    public Placas(String numeroPlacas, Calendar FechaRecepcion, float Costo, Calendar fechaNacimiento, Persona persona) {
+    public Placas(String numeroPlacas, String estado, Automovil automovil, float Costo, Calendar fechaNacimiento, Persona persona) {
         super(Costo, fechaNacimiento, persona);
         this.numeroPlacas = numeroPlacas;
-        this.FechaRecepcion = FechaRecepcion;
+        this.estado = estado;
+        this.automovil = automovil;
     }
-    
-    
     
     @Column(name="Numero_Placas",nullable =  false)
     private String numeroPlacas;
     
-    @Column(name="Fecha_Recepcion",nullable =  false)
-    @Temporal(TemporalType.DATE)
-    private Calendar FechaRecepcion;
-   
-    @OneToOne(mappedBy = "placas")
-    private Automovil Automovil;
+    @Column(name="Estado",nullable =  false)
+    private String estado;
     
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idHistorial")
-    private Historial historial;
+    @Column(name="Fecha_Inactividad")
+    @Temporal(TemporalType.DATE)
+    private Calendar fechaInactividad;
+   
+    @ManyToOne
+    @JoinColumn(name = "idAutomovil")
+    private Automovil automovil;
+    
     
     public String getNumeroPlacas() {
         return numeroPlacas;
@@ -72,28 +73,21 @@ public class Placas extends Tramite implements Serializable {
     }
 
     public Calendar getFechaRecepcion() {
-        return FechaRecepcion;
+        return fechaInactividad;
     }
 
     public void setFechaRecepcion(Calendar FechaRecepcion) {
-        this.FechaRecepcion = FechaRecepcion;
+        this.fechaInactividad = FechaRecepcion;
     }
 
     public Automovil getAutomovil() {
-        return Automovil;
+        return automovil;
     }
 
     public void setAutomovil(Automovil Automovil) {
-        this.Automovil = Automovil;
+        this.automovil = Automovil;
     }
 
-    public Historial getHistorial() {
-        return historial;
-    }
-
-    public void setHistorial(Historial historial) {
-        this.historial = historial;
-    }
     
     
     
