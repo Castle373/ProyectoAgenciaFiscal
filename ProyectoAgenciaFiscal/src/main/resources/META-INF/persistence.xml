@@ -8,6 +8,7 @@
     <class>Entity.Placas</class>
     <class>Entity.Automovil</class>
     <class>Entity.Historial</class>
+    <class>Presentacion.RenderTabla</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/AgenciaFiscal?serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
