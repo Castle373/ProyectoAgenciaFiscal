@@ -26,21 +26,42 @@ public class frmPrePlaca extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnCarroNuevo = new javax.swing.JButton();
+        btnCarroUsado = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        btnRegresar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Carro nuevo");
+        btnCarroNuevo.setText("Carro nuevo");
+        btnCarroNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarroNuevoActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Carro usado");
+        btnCarroUsado.setText("Carro usado");
+        btnCarroUsado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarroUsadoActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Solicitud de placa");
 
         jLabel2.setText("Tipo de auto");
+
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Nombre de solicitante:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -50,33 +71,65 @@ public class frmPrePlaca extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(90, 90, 90)
-                        .addComponent(jButton1)
+                        .addComponent(btnCarroNuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(jLabel1))
+                        .addComponent(btnCarroUsado))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(151, 151, 151)
-                        .addComponent(jLabel2)))
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnRegresar)
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(jLabel3)))
                 .addContainerGap(93, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel1)
-                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnRegresar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(55, Short.MAX_VALUE))
+                    .addComponent(btnCarroNuevo)
+                    .addComponent(btnCarroUsado))
+                .addGap(34, 34, 34))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+   frmInicio frminicio = new frmInicio();
+   frminicio.setVisible(true);
+   this.dispose();
+// TODO add your handling code here:
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnCarroNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarroNuevoActionPerformed
+    frmAutomovil frmAuto = new frmAutomovil();
+    frmAuto.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_btnCarroNuevoActionPerformed
+
+    private void btnCarroUsadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarroUsadoActionPerformed
+    frmPlaca frmPlaca = new frmPlaca();
+    frmPlaca.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_btnCarroUsadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -114,9 +167,11 @@ public class frmPrePlaca extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnCarroNuevo;
+    private javax.swing.JButton btnCarroUsado;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }
