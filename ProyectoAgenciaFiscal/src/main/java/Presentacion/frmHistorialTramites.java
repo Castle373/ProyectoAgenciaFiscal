@@ -61,6 +61,12 @@ public class frmHistorialTramites extends javax.swing.JFrame {
 
         jLabel1.setText("Busqueda;");
 
+        txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBusquedaActionPerformed(evt);
+            }
+        });
+
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,6 +150,10 @@ public class frmHistorialTramites extends javax.swing.JFrame {
    frminicio.setVisible(true);
    this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBusquedaActionPerformed
 
     /**
      * @param args the command line arguments
