@@ -37,18 +37,18 @@ public class Tramite implements Serializable {
     }
     public Tramite(Calendar fechaNacimiento) {
         super();
-        this.fechaNacimiento = fechaNacimiento;
+        this.fechaTramite = fechaNacimiento;
     }
 
     public Tramite(Calendar fechaNacimiento, Persona persona) {
         super();
-        this.fechaNacimiento = fechaNacimiento;
+        this.fechaTramite = fechaNacimiento;
         this.persona = persona;
     }
 
     public Tramite(float Costo, Calendar fechaNacimiento, Persona persona) {
         this.Costo = Costo;
-        this.fechaNacimiento = fechaNacimiento;
+        this.fechaTramite = fechaNacimiento;
         this.persona = persona;
     }
     
@@ -62,7 +62,7 @@ public class Tramite implements Serializable {
     
     @Column(name="Fecha_Tramite",nullable =  false)
     @Temporal(TemporalType.DATE)
-    private Calendar fechaNacimiento;
+    private Calendar fechaTramite;
     
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="idPersona", nullable = false)

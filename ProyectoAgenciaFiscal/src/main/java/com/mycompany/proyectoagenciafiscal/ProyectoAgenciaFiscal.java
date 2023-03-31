@@ -29,22 +29,31 @@ public class ProyectoAgenciaFiscal {
 //        
 //        entity.getTransaction().begin();
 //        //Crea persona
-//        Persona p = new Persona("Diego","Rfc","6441271967",new GregorianCalendar(2003, Calendar.JUNE, 1));
-//        //Persona solicita licencia y placa
+//        Persona p = new Persona("Diego","Rfc","Curp","6441271967",new GregorianCalendar(2003, Calendar.JUNE, 1));
+//        Automovil auto = new Automovil("2003", "ferrari", "Veneno", "gris", "aaa",p);
+//        p.agregarAuto(auto);
 //        Licencia lice  = new Licencia(0, new GregorianCalendar(2003, Calendar.JUNE, 1),100,new GregorianCalendar(2003, Calendar.JUNE, 1),p);
-//        Automovil auto = new Automovil("2003", "ferrari", "Veneno", "gris", "aaa");
-//        Placas placa = new Placas("ddd-123","ACTIVO",auto,150,new GregorianCalendar(2003, Calendar.JUNE, 1), p);
-//        //auto con placa
-//        auto.agregaPlaca(placa);
+//        p.agregarTramite(lice);
+//
+//        
+//      
 //        
 //        // guarda
-//        entity.persist(lice);
-//        entity.persist(auto);
-//        entity.persist(placa);
+//        entity.persist(p);
 //        entity.getTransaction().commit();
-//
-//        entity.close();
+//        entity.getTransaction().begin();
+//        //Crea persona
+//        Placas placa = new Placas("placa123", "ACTIVA", new GregorianCalendar(2003, Calendar.JUNE, 1), auto, 100, new GregorianCalendar(2003, Calendar.JUNE, 1), p);
+////        Automovil autoencontrado=entity.find(Automovil.class,auto);
+////        autoencontrado.agregaPlaca(placa);
+//        entity.persist(placa);
+////        entity.merge(autoencontrado);
 //        
+//        
+//        // guarda
+//        entity.persist(p);
+//        entity.getTransaction().commit();
+//        entity.close();
 //        enti.close();
     frmInicio frminicio = new frmInicio();
      frminicio.setVisible(true);

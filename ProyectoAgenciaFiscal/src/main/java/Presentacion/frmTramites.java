@@ -7,6 +7,7 @@ package Presentacion;
 
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -34,20 +35,27 @@ public class frmTramites extends javax.swing.JFrame {
         defa.addColumn("Telefono");
         defa.addColumn("Licencia");
         defa.addColumn("Automoviles");
+        TableColumn nombreColumna = tblTramites.getColumnModel().getColumn(0);
+        TableColumn rfcColumna = tblTramites.getColumnModel().getColumn(2);
+        TableColumn fechaColumna = tblTramites.getColumnModel().getColumn(3);
+        TableColumn teColumna = tblTramites.getColumnModel().getColumn(4);
+        nombreColumna.setPreferredWidth(100);
+        rfcColumna.setPreferredWidth(30);
+        fechaColumna.setPreferredWidth(50);
+        teColumna.setPreferredWidth(25);
+  
         tblTramites.setRowHeight(40);
         Object[] datos = new Object[defa.getColumnCount()];
-               datos[0]="prueba";
-               datos[1]="prueba";
-               datos[2]="prueba";
-               datos[3]="prueba";
-               datos[4]="prueba";
+               datos[0]="Daniel armando almada diaz";
+               datos[1]="OEAF771012HMCRGR09";
+               datos[2]="ABC 680524 P-76";
+               datos[3]="10/10/1990";
+               datos[4]="6441271967";
                datos[5]=btnLicencia;
                datos[6]=btnAutomoviles;
                defa.addRow(datos);
-             
-               
-        
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,6 +70,7 @@ public class frmTramites extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,6 +108,13 @@ public class frmTramites extends javax.swing.JFrame {
 
         jLabel2.setText("Busqueda:");
 
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -113,19 +129,23 @@ public class frmTramites extends javax.swing.JFrame {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 375, Short.MAX_VALUE)))
+                        .addGap(0, 414, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(38, 38, 38)
+                .addComponent(btnRegresar)
+                .addGap(227, 227, 227)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(217, 217, 217))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegresar)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
@@ -171,6 +191,12 @@ public class frmTramites extends javax.swing.JFrame {
        }
     }//GEN-LAST:event_tblTramitesMouseClicked
 
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+    frmInicio inicio = new frmInicio();
+        inicio.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -207,6 +233,7 @@ public class frmTramites extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane3;
