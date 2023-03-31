@@ -5,7 +5,14 @@
 package Presentacion;
 
 import java.awt.Button;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.Timer;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -13,34 +20,45 @@ import javax.swing.table.DefaultTableModel;
  * @author DELL User
  */
 public class frmHistorialTramites extends javax.swing.JFrame {
-     JButton btnHistorial = new JButton("Generar PDF");
+
+    private int row, columna;
+    private JButton btnHistorial = new JButton("Historial");
+
     /**
-      * Creates new form frmHistorialTramites
-      */
+     * Creates new form frmHistorialTramites
+     */
     public frmHistorialTramites() {
+
         initComponents();
-         tabla();
+
+        tabla();
     }
 
-    public void  tabla(){
+    public void tabla() {
         tblConsultas.setDefaultRenderer(Object.class, new RenderTabla());
         DefaultTableModel defa = new DefaultTableModel();
         tblConsultas.setModel(defa);
         defa.addColumn("Nombre");
-        defa.addColumn("CURP");
+        defa.addColumn("Curp");
+        defa.addColumn("RFC");
         defa.addColumn("Fecha de nacimiento");
+        defa.addColumn("Telefono");
         defa.addColumn("Historial");
         tblConsultas.setRowHeight(40);
-        Object[] datos = new Object[defa.getColumnCount()];
-               datos[0]="prueba";
-               datos[1]="prueba";
-               datos[2]="prueba";
-               datos[3]=btnHistorial;
-               defa.addRow(datos);
-             
-               
-        
+        for (int i = 0; i < 2; i++) {
+            Object[] datos = new Object[defa.getColumnCount()];
+            datos[0] = "prueba";
+            datos[1] = "prueba";
+            datos[2] = "prueba";
+            datos[3] = "prueba";
+            datos[4] = "prueba";
+            datos[5] = btnHistorial;
+            defa.addRow(datos);
+        }
+
+        defa.fireTableDataChanged();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,16 +104,18 @@ public class frmHistorialTramites extends javax.swing.JFrame {
         };
         tblConsultas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {}
+
             },
             new String [] {
 
             }
         ));
-        tblConsultas.setFocusable(false);
-        tblConsultas.setRequestFocusEnabled(false);
-        tblConsultas.setRowSelectionAllowed(false);
         tblConsultas.getTableHeader().setReorderingAllowed(false);
+        tblConsultas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblConsultasMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblConsultas);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -106,7 +126,7 @@ public class frmHistorialTramites extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -138,7 +158,7 @@ public class frmHistorialTramites extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         pack();
@@ -146,14 +166,34 @@ public class frmHistorialTramites extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-   frmInicio frminicio = new frmInicio();
-   frminicio.setVisible(true);
-   this.dispose();
+        frmInicio frminicio = new frmInicio();
+        frminicio.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBusquedaActionPerformed
+
+    private void tblConsultasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblConsultasMouseClicked
+        columna = tblConsultas.getColumnModel().getColumnIndexAtX(evt.getX());
+        row = evt.getY() / tblConsultas.getRowHeight();
+        if (columna <= tblConsultas.getColumnCount() && columna >= 0 && row <= tblConsultas.getRowCount() && row >= 0) {
+            Object objeto = tblConsultas.getValueAt(row, columna);
+            if (objeto instanceof JButton) {
+                ((JButton) objeto).doClick();
+                JButton boton = (JButton) objeto;
+                if (boton.equals(btnHistorial)) {
+                    
+                    
+                    //AQUI LO QUE HARA EL BOTON
+                    //Row es para especificar en que columna se pulso el boton
+                    System.out.println(row);
+                    
+                }
+            }
+        }
+    }//GEN-LAST:event_tblConsultasMouseClicked
 
     /**
      * @param args the command line arguments
