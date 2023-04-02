@@ -4,19 +4,46 @@
  */
 package Presentacion;
 
+import Entity.Automovil;
+import Entity.Persona;
+import Excepciones.AutomovilException;
+import INegocio.IAutomovilNegocio;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author diego
  */
-public class frmAutomovil extends javax.swing.JFrame {
+public class frmRegistroAutomovil extends javax.swing.JFrame {
+
+    private IAutomovilNegocio automovilNegocio;
+    private Persona persona;
 
     /**
      * Creates new form frmAutomovil
      */
-    public frmAutomovil() {
+    public frmRegistroAutomovil(IAutomovilNegocio automovilNegocio, Persona persona) {
+        this.persona = persona;
+        this.automovilNegocio = automovilNegocio;
         initComponents();
     }
 
+    public void registrar() {
+        Automovil auto = new Automovil(txtModelo.getText(), txtMarca.getText(), txtLinea.getText(), txtColor.getText(), txtNumero.getText(), persona);
+        try {
+            Automovil autoRegistrado = automovilNegocio.registrarAutomovil(auto);
+            JOptionPane.showMessageDialog(null, "El auto fue registrado exitosamente.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            regresar();
+        } catch (AutomovilException e) {
+            JOptionPane.showMessageDialog(null, "Error al registrar el auto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+    public void regresar(){
+        frmAutomoviles frmauto = new frmAutomoviles(automovilNegocio, persona);
+        frmauto.setVisible(true);
+        this.dispose();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,9 +118,6 @@ public class frmAutomovil extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -109,7 +133,10 @@ public class frmAutomovil extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtMarca, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtLinea, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtLinea, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jLabel1)))
                 .addContainerGap(50, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -120,9 +147,9 @@ public class frmAutomovil extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(29, 29, 29)
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -157,17 +184,13 @@ public class frmAutomovil extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+    regresar();
         
-        frmPrePlaca preplaca= new frmPrePlaca();
-        preplaca.setVisible(true);
-        this.dispose();
-    
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        frmPlaca frmPlaca = new frmPlaca();
-    frmPlaca.setVisible(true);
-    this.dispose();
+        registrar();
+
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void txtColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtColorActionPerformed
@@ -175,10 +198,10 @@ public class frmAutomovil extends javax.swing.JFrame {
     }//GEN-LAST:event_txtColorActionPerformed
 
     private void txtColorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtColorKeyTyped
-    char c = evt.getKeyChar();
-    if (!(Character.isLetter(c) || (c == evt.VK_BACK_SPACE) || (c == evt.VK_DELETE))) {
-        evt.consume();
-    }
+        char c = evt.getKeyChar();
+        if (!(Character.isLetter(c) || (c == evt.VK_BACK_SPACE) || (c == evt.VK_DELETE))) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtColorKeyTyped
 
     /**
@@ -198,20 +221,21 @@ public class frmAutomovil extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmAutomovil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmRegistroAutomovil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmAutomovil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmRegistroAutomovil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmAutomovil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmRegistroAutomovil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmAutomovil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmRegistroAutomovil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmAutomovil().setVisible(true);
+                //   new frmRegistroAutomovil().setVisible(true);
             }
         });
     }

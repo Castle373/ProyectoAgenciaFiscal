@@ -5,6 +5,13 @@
 package Presentacion;
 
 
+import Entity.Persona;
+import INegocio.IAutomovilNegocio;
+import INegocio.IPersonaNegocio;
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -17,17 +24,25 @@ public class frmTramites extends javax.swing.JFrame {
     private int row,columna;
     JButton btnLicencia = new JButton("Solicitar Licencia");
     JButton btnAutomoviles = new JButton("Automoviles");
+    private IPersonaNegocio personaNegocio;
+    private IAutomovilNegocio automovilNegocio;
+    private List<Persona> listaActual = new ArrayList<Persona>();
     /**
      * Creates new form frmTramites
      */
-    public frmTramites() {
+    public frmTramites(IPersonaNegocio personaNegocio,IAutomovilNegocio automovilNegocio) {
+        this.automovilNegocio=automovilNegocio;
+        this.personaNegocio=personaNegocio;
         initComponents();
         tabla();
+        llenarTabla();
     }
     public void  tabla(){
         tblTramites.setDefaultRenderer(Object.class, new RenderTabla());
         DefaultTableModel defa = new DefaultTableModel();
+                tblTramites.setRowHeight(40);
         tblTramites.setModel(defa);
+        
         defa.addColumn("Nombre");
         defa.addColumn("Curp");
         defa.addColumn("RFC");
@@ -44,18 +59,26 @@ public class frmTramites extends javax.swing.JFrame {
         fechaColumna.setPreferredWidth(50);
         teColumna.setPreferredWidth(25);
   
-        tblTramites.setRowHeight(40);
-        Object[] datos = new Object[defa.getColumnCount()];
-               datos[0]="Daniel armando almada diaz";
-               datos[1]="OEAF771012HMCRGR09";
-               datos[2]="ABC 680524 P-76";
-               datos[3]="10/10/1990";
-               datos[4]="6441271967";
+
+    }
+    public void llenarTabla(){
+        listaActual= personaNegocio.BuscarPersonas(txtBusqueda.getText());
+        DefaultTableModel defa = (DefaultTableModel) tblTramites.getModel();
+        defa.setRowCount(0);
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); 
+        for (int i = 0; i < listaActual.size(); i++) {
+            Object[] datos = new Object[defa.getColumnCount()];
+               datos[0]=listaActual.get(i).getNombreCompleto();
+               datos[1]=listaActual.get(i).getCurp();
+               datos[2]=listaActual.get(i).getRfc();
+               datos[3]=formato.format(listaActual.get(i).getFechaNacimiento().getTime());
+               datos[4]=listaActual.get(i).getTelefono();
                datos[5]=btnLicencia;
                datos[6]=btnAutomoviles;
                defa.addRow(datos);
+        }
+        
     }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -103,6 +126,11 @@ public class frmTramites extends javax.swing.JFrame {
         txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBusquedaActionPerformed(evt);
+            }
+        });
+        txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyReleased(evt);
             }
         });
 
@@ -171,20 +199,16 @@ public class frmTramites extends javax.swing.JFrame {
            ((JButton)objeto).doClick();
                JButton botones=(JButton)objeto;
                if(botones.equals(btnLicencia)){
-                   
-                   
                    //AQUI LO QUE HARA EL BOTON
                     //Row es para especificar en que columna se pulso el boton
-                    System.out.println(row);
                    
-                
                }else{
                    if(botones.equals(btnAutomoviles)){
                    
                     
-                   //AQUI LO QUE HARA EL BOTON
-                    //Row es para especificar en que columna se pulso el boton
-                    System.out.println(row);
+                   frmAutomoviles frm  = new frmAutomoviles(automovilNegocio, listaActual.get(row));
+                   frm.setVisible(true);
+                   this.dispose();
                    }
                }
            }
@@ -192,10 +216,14 @@ public class frmTramites extends javax.swing.JFrame {
     }//GEN-LAST:event_tblTramitesMouseClicked
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-    frmInicio inicio = new frmInicio();
+        frmInicio inicio = new frmInicio();
         inicio.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
+    llenarTabla();
+    }//GEN-LAST:event_txtBusquedaKeyReleased
 
     /**
      * @param args the command line arguments
@@ -227,7 +255,7 @@ public class frmTramites extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmTramites().setVisible(true);
+//                new frmTramites().setVisible(true);
             }
         });
     }

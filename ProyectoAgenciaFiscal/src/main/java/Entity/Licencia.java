@@ -28,14 +28,11 @@ import javax.persistence.TemporalType;
 public class Licencia extends Tramite implements Serializable {
 
 
-    public Licencia(int añosVigencia, Calendar FechaVigencia, float Costo, Calendar fechaNacimiento, Persona persona) {
-        super(Costo, fechaNacimiento, persona);
+    public Licencia(int añosVigencia, Calendar FechaVigencia, float Costo, Persona persona) {
+        super(Costo, persona);
         this.añosVigencia = añosVigencia;
         this.FechaVigencia = FechaVigencia;
     }
-    
-
-    
     public Licencia(){
         
     }

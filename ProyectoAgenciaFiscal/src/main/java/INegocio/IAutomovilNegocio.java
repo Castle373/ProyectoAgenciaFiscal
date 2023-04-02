@@ -6,6 +6,7 @@ package INegocio;
 
 import Entity.Automovil;
 import Entity.Persona;
+import Excepciones.AutomovilException;
 import java.util.List;
 
 /**
@@ -14,4 +15,6 @@ import java.util.List;
  */
 public interface IAutomovilNegocio {
     public List<Automovil> BuscarAutomovilesPorPersona(int id);
+    public List<Automovil> BuscarAutomovilesPorPersona(int id,String filtro);
+    public Automovil registrarAutomovil(Automovil auto)throws AutomovilException;
 }

@@ -4,7 +4,24 @@
  */
 package Presentacion;
 
+import Entity.Automovil;
+import Entity.Persona;
+import INegocio.IAutomovilNegocio;
+import INegocio.IPersonaNegocio;
+import INegocio.IPlacasNegocio;
+import IPersistencia.IConexionBD;
+import IPersistencia.IPersonaDAO;
+import IPersistencia.IPlacasDAO;
+import Negocio.PersonaNegocio;
+import Negocio.PlacasNegocio;
+import Persistencia.ConexionBD;
+import Persistencia.PersonaDAO;
+import Persistencia.PlacasDAO;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -12,16 +29,29 @@ import javax.swing.table.DefaultTableModel;
  * @author diego
  */
 public class frmAutomoviles extends javax.swing.JFrame {
+
     private int row, columna;
     private JButton btnSolicitar = new JButton("Solicitar Placas");
     private JButton btnHistorial = new JButton("Historial Placas");
+    private List<Automovil> listaActual = new ArrayList<Automovil>();
+    private IPlacasNegocio placasNegocio;
+    private IAutomovilNegocio automovilNegocio;
+    private Persona persona;
+
     /**
      * Creates new form frmAutomoviles
      */
-    public frmAutomoviles() {
+    public frmAutomoviles(IAutomovilNegocio automovilNegocio, Persona persona) {
+        IConexionBD conexionBD = new ConexionBD();
+        IPlacasDAO placasDAO = new PlacasDAO(conexionBD);
+        this.placasNegocio = new PlacasNegocio(placasDAO);
+        this.persona = persona;
+        this.automovilNegocio = automovilNegocio;
         initComponents();
         tabla();
+        llenarTabla();
     }
+
     public void tabla() {
         tblAuto.setDefaultRenderer(Object.class, new RenderTabla());
         DefaultTableModel defa = new DefaultTableModel();
@@ -34,20 +64,34 @@ public class frmAutomoviles extends javax.swing.JFrame {
         defa.addColumn("Solicitar Placas");
         defa.addColumn("Historial Placas");
         tblAuto.setRowHeight(40);
-        for (int i = 0; i < 2; i++) {
+        defa.fireTableDataChanged();
+    }
+
+    public void llenarTabla() {
+
+        listaActual = automovilNegocio.BuscarAutomovilesPorPersona(persona.getId(), txtBusqueda.getText());
+        DefaultTableModel defa = (DefaultTableModel) tblAuto.getModel();
+        defa.setRowCount(0);
+        for (int i = 0; i < listaActual.size(); i++) {
             Object[] datos = new Object[defa.getColumnCount()];
-            datos[0] = "ABC-123";
-            datos[1] = "Honda";
-            datos[2] = "Civic";
-            datos[3] = "2003";
-            datos[4] = "Nuevo";
+            datos[0] = listaActual.get(i).getNumeroDeSerie();
+            datos[1] = listaActual.get(i).getMarca();
+            datos[2] = listaActual.get(i).getLinea();
+            datos[3] = listaActual.get(i).getModelo();
+            if (placasNegocio.BuscarPorAuto(listaActual.get(i).getId()).isEmpty()) {
+                datos[4] = "Nuevo";
+            } else {
+                datos[4] = "Usado";
+            }
+
             datos[5] = btnSolicitar;
             datos[6] = btnHistorial;
             defa.addRow(datos);
+            
         }
 
-        defa.fireTableDataChanged();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,7 +106,8 @@ public class frmAutomoviles extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
+        btnAgregaCarro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,10 +142,27 @@ public class frmAutomoviles extends javax.swing.JFrame {
                 txtBusquedaActionPerformed(evt);
             }
         });
+        txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyReleased(evt);
+            }
+        });
 
         jLabel2.setText("Busqueda:");
 
-        jButton1.setText("Regresar");
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
+        btnAgregaCarro.setText("Agregar Carro");
+        btnAgregaCarro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregaCarroActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,40 +171,43 @@ public class frmAutomoviles extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(56, 56, 56)
-                                .addComponent(jButton1)
-                                .addGap(112, 112, 112)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(180, 180, 180)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 198, Short.MAX_VALUE))
+                        .addGap(180, 180, 180)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 865, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(btnRegresar)
+                .addGap(112, 112, 112)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAgregaCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                        .addGap(36, 36, 36)
+                        .addComponent(btnRegresar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(77, 77, 77)
+                                .addComponent(btnAgregaCarro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                        .addGap(26, 26, 26)))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -158,10 +223,32 @@ public class frmAutomoviles extends javax.swing.JFrame {
                 ((JButton) objeto).doClick();
                 JButton boton = (JButton) objeto;
                 if (boton.equals(btnHistorial)) {
-                    System.out.println(row+"h");      
+                    frmHistorialPlacas frmhisto = new frmHistorialPlacas(automovilNegocio, placasNegocio, listaActual.get(row), persona);
+                    frmhisto.setVisible(true);
+                    this.dispose();
                 }
                 if (boton.equals(btnSolicitar)) {
-                    System.out.println(row+"s");      
+                    if (tblAuto.getValueAt(row, 4).equals("Nuevo")) {
+                        int respuesta = JOptionPane.showConfirmDialog(rootPane, "Este carro es nuevo, Deseas solicitar una placa?", "Confirmación", JOptionPane.YES_NO_OPTION);
+                        if (respuesta == JOptionPane.YES_OPTION) {
+                            
+                            frmPlaca frmplacas = new frmPlaca(automovilNegocio, placasNegocio, listaActual.get(row), persona,1500);
+                            frmplacas.setVisible(true);
+                            this.dispose();
+                        } else {
+                            return;
+                        }
+                    } else {
+                        int respuesta = JOptionPane.showConfirmDialog(rootPane, "Este carro ya cuenta con placas, Desea cambiar de placas?", "Confirmación", JOptionPane.YES_NO_OPTION);
+                        if (respuesta == JOptionPane.YES_OPTION) {
+                            frmPlaca frmplacas = new frmPlaca(automovilNegocio, placasNegocio, listaActual.get(row), persona,1000);
+                            frmplacas.setVisible(true);
+                            this.dispose();
+                        } else {
+                            return;
+                        }
+                    }
+
                 }
             }
         }
@@ -170,6 +257,28 @@ public class frmAutomoviles extends javax.swing.JFrame {
     private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBusquedaActionPerformed
+
+    private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
+        llenarTabla();
+
+    }//GEN-LAST:event_txtBusquedaKeyReleased
+
+    private void btnAgregaCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregaCarroActionPerformed
+        frmRegistroAutomovil frmRegistro = new frmRegistroAutomovil(automovilNegocio, persona);
+        frmRegistro.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAgregaCarroActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        IConexionBD conexionBD = new ConexionBD();
+        IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
+        IPersonaNegocio personaNegocio = new PersonaNegocio(personaDAO);
+        frmTramites frm = new frmTramites(personaNegocio, automovilNegocio);
+        frm.setVisible(true);
+        this.dispose();
+
+
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,13 +310,14 @@ public class frmAutomoviles extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmAutomoviles().setVisible(true);
+                //  new frmAutomoviles().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAgregaCarro;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane3;

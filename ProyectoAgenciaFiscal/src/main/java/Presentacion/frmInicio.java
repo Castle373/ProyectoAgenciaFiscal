@@ -4,6 +4,16 @@
  */
 package Presentacion;
 
+import INegocio.IAutomovilNegocio;
+import INegocio.IPersonaNegocio;
+import IPersistencia.IAutomovilDAO;
+import IPersistencia.IConexionBD;
+import IPersistencia.IPersonaDAO;
+import Negocio.AutomovilNegocio;
+import Negocio.PersonaNegocio;
+import Persistencia.AutomovilDAO;
+import Persistencia.ConexionBD;
+import Persistencia.PersonaDAO;
 import javax.swing.JOptionPane;
 
 /**
@@ -153,9 +163,7 @@ public class frmInicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSolicitarPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarPlacaActionPerformed
-    frmPrePlaca preplaca= new frmPrePlaca();
-    preplaca.setVisible(true);
-    this.dispose();
+
     }//GEN-LAST:event_btnSolicitarPlacaActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -198,7 +206,12 @@ System.exit(0);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btnTramitesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTramitesActionPerformed
-    frmTramites frm = new frmTramites();
+        IConexionBD conexionBD = new ConexionBD();
+        IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
+        IAutomovilDAO automovilDAO = new AutomovilDAO(conexionBD);
+        IPersonaNegocio personaNegocio = new PersonaNegocio(personaDAO);
+        IAutomovilNegocio automovilNegocio = new AutomovilNegocio(automovilDAO);
+    frmTramites frm = new frmTramites(personaNegocio,automovilNegocio);
     frm.setVisible(true);
     this.dispose();
     }//GEN-LAST:event_btnTramitesActionPerformed

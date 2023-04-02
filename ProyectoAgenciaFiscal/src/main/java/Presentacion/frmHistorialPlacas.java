@@ -4,6 +4,14 @@
  */
 package Presentacion;
 
+import Entity.Automovil;
+import Entity.Persona;
+import Entity.Placas;
+import INegocio.IAutomovilNegocio;
+import INegocio.IPlacasNegocio;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -11,14 +19,35 @@ import javax.swing.table.DefaultTableModel;
  * @author diego
  */
 public class frmHistorialPlacas extends javax.swing.JFrame {
+
     private int row, columna;
+    private IPlacasNegocio placasNegocio;
+    private Automovil automovilActual;
+    private Persona persona;
+    private List<Placas> listaActual = new ArrayList<Placas>();
+    private IAutomovilNegocio automovilNegocio;
+
     /**
      * Creates new form frmHistorialPlacas
      */
-    public frmHistorialPlacas() {
+    public frmHistorialPlacas(IAutomovilNegocio automovilNegocio,IPlacasNegocio placasNegocio, Automovil automovil,Persona persona) {
+        this.automovilNegocio=automovilNegocio;
+        this.placasNegocio = placasNegocio;
+        this.automovilActual = automovil;
+        this.persona=persona;
         initComponents();
+        configuracionFrame();
         tabla();
+        llenarTabla();
     }
+    public void configuracionFrame(){
+        lblDueno.setText("Dueño Actual:  "+persona.getNombreCompleto());
+        lblLinea.setText("Linea:  "+automovilActual.getLinea());
+        lblMarca.setText("Marca:  "+automovilActual.getMarca());
+lblNumeroDeSerie.setText("Numero de Serie:  "+automovilActual.getNumeroDeSerie());
+       lblModelo.setText("Modelo:  "+automovilActual.getModelo());
+    }
+
     public void tabla() {
         tblConsultas.setDefaultRenderer(Object.class, new RenderTabla());
         DefaultTableModel defa = new DefaultTableModel();
@@ -29,18 +58,28 @@ public class frmHistorialPlacas extends javax.swing.JFrame {
         defa.addColumn("Fecha Inactividad");
         defa.addColumn("Nombre de solicitante");
         tblConsultas.setRowHeight(40);
-        for (int i = 0; i < 2; i++) {
+
+    }
+
+    public void llenarTabla() {
+        listaActual = placasNegocio.BuscarPorAuto(automovilActual.getId());
+        DefaultTableModel defa = (DefaultTableModel) tblConsultas.getModel();
+        defa.setRowCount(0);
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        for (int i = 0; i < listaActual.size(); i++) {
             Object[] datos = new Object[defa.getColumnCount()];
-            datos[0] = "prueba";
-            datos[1] = "prueba";
-            datos[2] = "prueba";
-            datos[3] = "prueba";
-            datos[4] = "prueba";
+            datos[0] = formato.format(listaActual.get(i).getFechaTramite().getTime());
+            datos[1] = listaActual.get(i).getNumeroPlacas();
+            datos[2] = listaActual.get(i).getEstado();
+            if (listaActual.get(i).getFechaInactividad()!=null) {
+            datos[3] = formato.format(listaActual.get(i).getFechaInactividad().getTime());
+            }
+            
+            datos[4] = listaActual.get(i).getPersona().getNombreCompleto();
             defa.addRow(datos);
         }
-
-        defa.fireTableDataChanged();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,13 +93,13 @@ public class frmHistorialPlacas extends javax.swing.JFrame {
         tblConsultas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lblNumeroDeSerie = new javax.swing.JLabel();
+        lblModelo = new javax.swing.JLabel();
+        lblMarca = new javax.swing.JLabel();
+        lblLinea = new javax.swing.JLabel();
+        lblDueno = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton1 = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,20 +127,25 @@ public class frmHistorialPlacas extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setText("Automovil");
 
-        jLabel3.setText("Numero de serie:");
+        lblNumeroDeSerie.setText("Numero de serie:");
 
-        jLabel4.setText("Modelo:");
+        lblModelo.setText("Modelo:");
 
-        jLabel5.setText("Marca:");
+        lblMarca.setText("Marca:");
 
-        jLabel6.setText("Linea:");
+        lblLinea.setText("Linea:");
 
-        jLabel7.setText("Dueño actual:");
+        lblDueno.setText("Dueño actual:");
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jSeparator1.setToolTipText("");
 
-        jButton1.setText("Regresar");
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,16 +159,17 @@ public class frmHistorialPlacas extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel6))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(lblLinea, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblMarca, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblModelo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblNumeroDeSerie, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(73, 73, 73)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel7)
+                        .addComponent(lblDueno)
                         .addGap(166, 166, 166)
-                        .addComponent(jButton1)))
+                        .addComponent(btnRegresar)))
                 .addContainerGap(64, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -137,27 +182,35 @@ public class frmHistorialPlacas extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jButton1)))
+                            .addComponent(lblDueno)
+                            .addComponent(btnRegresar)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)
+                        .addComponent(lblNumeroDeSerie)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel6))
+                        .addComponent(lblModelo)
+                        .addGap(12, 12, 12)
+                        .addComponent(lblMarca)
+                        .addGap(13, 13, 13)
+                        .addComponent(lblLinea))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+    
+    frmAutomoviles frm = new frmAutomoviles(automovilNegocio, persona);
+    frm.setVisible(true);
+    this.dispose();
+    
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,22 +242,22 @@ public class frmHistorialPlacas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmHistorialPlacas().setVisible(true);
+                //  new frmHistorialPlacas().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblDueno;
+    private javax.swing.JLabel lblLinea;
+    private javax.swing.JLabel lblMarca;
+    private javax.swing.JLabel lblModelo;
+    private javax.swing.JLabel lblNumeroDeSerie;
     private javax.swing.JTable tblConsultas;
     // End of variables declaration//GEN-END:variables
 }

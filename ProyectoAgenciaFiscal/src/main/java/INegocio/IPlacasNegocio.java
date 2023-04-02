@@ -6,6 +6,7 @@ package INegocio;
 
 import Entity.Automovil;
 import Entity.Placas;
+import Excepciones.PlacaException;
 import java.util.List;
 
 /**
@@ -14,4 +15,5 @@ import java.util.List;
  */
 public interface IPlacasNegocio {
     public List<Placas> BuscarPorAuto(int id);
+    public Placas registrarPlaca(Placas plascas) throws PlacaException;
 }
