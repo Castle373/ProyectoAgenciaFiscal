@@ -43,9 +43,20 @@
               <Component id="btnRegresar" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" pref="341" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="btnAgregaCarro" min="-2" pref="148" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnAgregaCarro" min="-2" pref="148" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="lblLicencia" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblLicenciaVigente" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -62,7 +73,12 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel1" pref="111" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblLicencia" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblLicenciaVigente" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                               <Component id="btnAgregaCarro" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -142,6 +158,16 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregaCarroActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblLicencia">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Licencia:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblLicenciaVigente">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Estado Licencia"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

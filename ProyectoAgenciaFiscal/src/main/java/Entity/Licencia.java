@@ -42,6 +42,22 @@ public class Licencia extends Tramite implements Serializable {
     @Column(name="FechaVigencia",nullable =  false)
     @Temporal(TemporalType.DATE)
     private Calendar FechaVigencia;
+
+    public int getAñosVigencia() {
+        return añosVigencia;
+    }
+
+    public void setAñosVigencia(int añosVigencia) {
+        this.añosVigencia = añosVigencia;
+    }
+
+    public Calendar getFechaVigencia() {
+        return FechaVigencia;
+    }
+
+    public void setFechaVigencia(Calendar FechaVigencia) {
+        this.FechaVigencia = FechaVigencia;
+    }
     
     
 }
