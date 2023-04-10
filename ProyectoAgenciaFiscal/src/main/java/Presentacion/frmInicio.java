@@ -56,7 +56,7 @@ public class frmInicio extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Solicitar licencia");
+        jButton3.setText("Solicitar Tramites");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -82,7 +82,7 @@ public class frmInicio extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Crear/Editar Persona");
+        jButton4.setText("Administración de Personas");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
