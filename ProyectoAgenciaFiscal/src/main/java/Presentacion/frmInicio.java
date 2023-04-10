@@ -14,19 +14,23 @@ import Negocio.PersonaNegocio;
 import Persistencia.AutomovilDAO;
 import Persistencia.ConexionBD;
 import Persistencia.PersonaDAO;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
  * @author DELL User
  */
 public class frmInicio extends javax.swing.JFrame {
-
     /**
      * Creates new form frmInicio
      */
     public frmInicio() {
         initComponents();
+        
     }
 
     /**
@@ -176,9 +180,7 @@ public class frmInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        frmReporte reporte = new frmReporte();
-        reporte.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
@@ -201,7 +203,8 @@ System.exit(0);        // TODO add your handling code here:
       }else{
            frmPersona per = new frmPersona();
         per.setVisible(true);
-        this.dispose();   
+        this.dispose();  
+        
       }     
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -263,4 +266,5 @@ System.exit(0);        // TODO add your handling code here:
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+ 
 }

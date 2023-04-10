@@ -108,7 +108,7 @@ public class frmAutomoviles extends javax.swing.JFrame {
 
     }
     public void comprobarLicencia(){
-        List<Licencia> listaLicencia=licenciaNegocio.listaLicenciaPersonaVigentes(persona.getId());
+        List<Licencia> listaLicencia=licenciaNegocio.listaLicenciaPersona(persona.getId());
         System.out.println(listaLicencia.size());
         if (listaLicencia.isEmpty()) {
             lblLicenciaVigente.setText("Sin Licencia Vigente");

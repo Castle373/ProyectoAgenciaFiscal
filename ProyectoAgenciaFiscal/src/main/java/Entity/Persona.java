@@ -32,8 +32,10 @@ public class Persona implements Serializable {
         
     }
 
-    public Persona(String nombreCompleto, String rfc, String curp, String telefono, Calendar fechaNacimiento) {
-        this.nombreCompleto = nombreCompleto;
+    public Persona(String nombre, String apellidoPaterno, String apellidoMaterno, String rfc, String curp, String telefono, Calendar fechaNacimiento) {
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
         this.rfc = rfc;
         this.curp = curp;
         this.telefono = telefono;
@@ -42,15 +44,7 @@ public class Persona implements Serializable {
         automoviles = new ArrayList<Automovil>();
     }
 
-    public Persona(String nombreCompleto, String rfc, String curp, String telefono, Calendar fechaNacimiento, List<Tramite> tramite) {
-
-        this.nombreCompleto = nombreCompleto;
-        this.rfc = rfc;
-        this.curp = curp;
-        this.telefono = telefono;
-        this.fechaNacimiento = fechaNacimiento;
-        this.tramites = tramite;
-    }
+   
     
 
     
@@ -58,8 +52,12 @@ public class Persona implements Serializable {
     @Column(name = "idPersona")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "Nombre_Completo")
-    private String nombreCompleto;
+    @Column(name = "Nombre")
+    private String nombre;
+    @Column(name = "Apellido_Paterno")
+    private String apellidoPaterno;
+    @Column(name = "Apellido_Materno")
+    private String apellidoMaterno; 
     @Column(name = "RFC")
     private String rfc;
     @Column(name = "Curp")
@@ -82,12 +80,12 @@ public class Persona implements Serializable {
     public void agregarTramite(Tramite tramite) {
         this.tramites.add(tramite);
     }
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getRfc() {

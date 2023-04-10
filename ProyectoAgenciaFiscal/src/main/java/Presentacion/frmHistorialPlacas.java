@@ -41,7 +41,7 @@ public class frmHistorialPlacas extends javax.swing.JFrame {
         llenarTabla();
     }
     public void configuracionFrame(){
-        lblDueno.setText("Dueño Actual:  "+persona.getNombreCompleto());
+        lblDueno.setText("Dueño Actual:  "+persona.getNombre());
         lblLinea.setText("Linea:  "+automovilActual.getLinea());
         lblMarca.setText("Marca:  "+automovilActual.getMarca());
 lblNumeroDeSerie.setText("Numero de Serie:  "+automovilActual.getNumeroDeSerie());
@@ -75,7 +75,7 @@ lblNumeroDeSerie.setText("Numero de Serie:  "+automovilActual.getNumeroDeSerie()
             datos[3] = formato.format(listaActual.get(i).getFechaInactividad().getTime());
             }
             
-            datos[4] = listaActual.get(i).getPersona().getNombreCompleto();
+            datos[4] = listaActual.get(i).getPersona().getNombre();
             defa.addRow(datos);
         }
     }

@@ -38,7 +38,7 @@ public class frmPlaca extends javax.swing.JFrame {
     }
 
     public void configuracionFrame() {
-        lblNombre.setText("Dueño Actual:  " + persona.getNombreCompleto());
+        lblNombre.setText("Dueño Actual:  " + persona.getNombre());
         lblLinea.setText("Linea:  " + automovilActual.getLinea());
         lblMarca.setText("Marca:  " + automovilActual.getMarca());
         lblNumeroSerie.setText("Numero de Serie:  " + automovilActual.getNumeroDeSerie());
@@ -90,6 +90,11 @@ public class frmPlaca extends javax.swing.JFrame {
         jLabel3.setText("Placa:");
 
         txtPlaca.setText("AAA-111");
+        txtPlaca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPlacaActionPerformed(evt);
+            }
+        });
 
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -190,6 +195,10 @@ public class frmPlaca extends javax.swing.JFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
        registrarPlaca();
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void txtPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlacaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPlacaActionPerformed
 
     /**
      * @param args the command line arguments

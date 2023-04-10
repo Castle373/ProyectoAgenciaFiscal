@@ -26,6 +26,7 @@ public class PersonaDAO implements IPersonaDAO{
     public PersonaDAO(IConexionBD conexionBD) {
         this.conexionBD = conexionBD;
     }
+    
     @Override
     public List<Persona> listaPersonas() {
        
@@ -51,7 +52,7 @@ public class PersonaDAO implements IPersonaDAO{
    List<Predicate> predicados = new ArrayList<Predicate>();
 
    if (nombre != null && !nombre.isEmpty()) {
-       predicados.add(criteriaBuilder.like(criteriaBuilder.lower(persona.get("nombreCompleto")), "%" + nombre.toLowerCase() + "%"));
+       predicados.add(criteriaBuilder.like(criteriaBuilder.lower(persona.get("nombre")), "%" + nombre.toLowerCase() + "%"));
    }
 
    if (rfc != null && !rfc.isEmpty()) {
@@ -72,6 +73,8 @@ public class PersonaDAO implements IPersonaDAO{
 
    return listasPersonas;
 }
+    
+    
  @Override
 public List<Persona> listaPersonas(String filtro) {
    EntityManager entityManager = this.conexionBD.crearConexion();
@@ -83,7 +86,7 @@ public List<Persona> listaPersonas(String filtro) {
 
    if (filtro != null && !filtro.isEmpty()) {
        filtro = "%" + filtro.toLowerCase() + "%";
-       Predicate predicadoNombre = criteriaBuilder.like(criteriaBuilder.lower(persona.get("nombreCompleto")), filtro);
+       Predicate predicadoNombre = criteriaBuilder.like(criteriaBuilder.lower(persona.get("nombre")), filtro);
        Predicate predicadoRFC = criteriaBuilder.like(criteriaBuilder.lower(persona.get("rfc")), filtro);
        Predicate predicadoCURP = criteriaBuilder.like(criteriaBuilder.lower(persona.get("curp")), filtro);
        criteriaQuery.where(criteriaBuilder.or(predicadoNombre, predicadoRFC, predicadoCURP));
