@@ -41,8 +41,10 @@ public class PlacasDAO implements IPlacasDAO {
         entityManager.getTransaction().begin();
         try {
             // Buscar si existe una placa activa para el automóvil
-            Query query = entityManager.createQuery("SELECT p FROM Placas p WHERE p.automovil.id = :idAutomovil AND p.estado = 'ACTIVA'");
-            query.setParameter("idAutomovil", placas.getAutomovil().getId());
+            TypedQuery<Placas> query = entityManager.createQuery(
+                    "SELECT p FROM Placas p WHERE p.automovil.id = :idAutomovil AND p.estado = :estadoActivo", Placas.class)
+                    .setParameter("idAutomovil", placas.getAutomovil().getId())
+                    .setParameter("estadoActivo", "ACTIVA");
             List<Placas> placasActivas = query.getResultList();
 
             // Si existe una placa activa, cambiar su estado a inactivo
@@ -50,15 +52,22 @@ public class PlacasDAO implements IPlacasDAO {
                 Placas placaActiva = placasActivas.get(0);
                 placaActiva.setEstado("INACTIVA");
                 entityManager.merge(placaActiva);
+                Query query2 = entityManager.createQuery("SELECT p FROM Placas p WHERE p.id = :id");
+                query2.setParameter("id", placaActiva.getId());
+                Placas placasActualizadas = (Placas) query2.getSingleResult();
             }
 
             // Agregar la nueva placa
             entityManager.persist(placas);
+
+            entityManager.getTransaction().commit();
+            return placas;
         } catch (Exception e) {
+            entityManager.getTransaction().rollback();
             throw new RuntimeException("Error al agregar placa", e);
+        } finally {
+            entityManager.close();
         }
-        entityManager.getTransaction().commit();
-        return placas;
     }
 
     @Override

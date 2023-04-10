@@ -8,11 +8,17 @@ package Presentacion;
 import Entity.Persona;
 import INegocio.IAutomovilNegocio;
 import INegocio.IPersonaNegocio;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -21,6 +27,7 @@ import javax.swing.table.TableColumn;
  * @author diego
  */
 public class frmTramites extends javax.swing.JFrame {
+    FondoPanel fondo = new FondoPanel();
     private int row,columna;
     JButton btnLicencia = new JButton("Solicitar Licencia");
     JButton btnAutomoviles = new JButton("Automoviles");
@@ -33,9 +40,19 @@ public class frmTramites extends javax.swing.JFrame {
     public frmTramites(IPersonaNegocio personaNegocio,IAutomovilNegocio automovilNegocio) {
         this.automovilNegocio=automovilNegocio;
         this.personaNegocio=personaNegocio;
+        botoneDiseño();
+        
         initComponents();
         tabla();
         llenarTabla();
+    }
+    public void botoneDiseño(){
+        btnLicencia.setBackground(new Color(102,89,222));
+        btnAutomoviles.setBackground(new Color(102,89,222));
+        btnLicencia.setForeground(Color.BLACK);
+        btnAutomoviles.setForeground(Color.BLACK);
+        btnAutomoviles.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnLicencia.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
     }
     public void  tabla(){
         tblTramites.setDefaultRenderer(Object.class, new RenderTabla());
@@ -68,7 +85,7 @@ public class frmTramites extends javax.swing.JFrame {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); 
         for (int i = 0; i < listaActual.size(); i++) {
             Object[] datos = new Object[defa.getColumnCount()];
-               datos[0]=listaActual.get(i).getNombreCompleto();
+               datos[0]=listaActual.get(i).getNombre();
                datos[1]=listaActual.get(i).getCurp();
                datos[2]=listaActual.get(i).getRfc();
                datos[3]=formato.format(listaActual.get(i).getFechaNacimiento().getTime());
@@ -88,40 +105,27 @@ public class frmTramites extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblTramites = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        txtBusqueda = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        txtBusqueda = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
         btnRegresar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblTramites = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jScrollPane3.setFocusable(false);
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(5, 0, 0));
+        jLabel2.setText("Busqueda:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 119, 120, 33));
 
-        tblTramites = new javax.swing.JTable(){
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
-        };
-        tblTramites.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {}
-            },
-            new String [] {
-
-            }
-        ));
-        tblTramites.getTableHeader().setReorderingAllowed(false);
-        tblTramites.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblTramitesMouseClicked(evt);
-            }
-        });
-        jScrollPane3.setViewportView(tblTramites);
-
-        jLabel1.setFont(new java.awt.Font("ROG Fonts", 0, 36)); // NOI18N
-        jLabel1.setText("Tramites");
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setForeground(new java.awt.Color(153, 0, 204));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,54 +137,92 @@ public class frmTramites extends javax.swing.JFrame {
                 txtBusquedaKeyReleased(evt);
             }
         });
+        jPanel1.add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 367, 33));
 
-        jLabel2.setText("Busqueda:");
+        jPanel3.setBackground(new java.awt.Color(102, 89, 222));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        btnRegresar.setBackground(new java.awt.Color(255, 255, 255));
+        btnRegresar.setForeground(new java.awt.Color(2, 2, 2));
         btnRegresar.setText("Regresar");
+        btnRegresar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 414, Short.MAX_VALUE)))
+        jLabel1.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 60)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Tramites");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(233, 233, 233)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(317, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 11, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 100));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        tblTramites.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        tblTramites.setFocusable(false);
+        tblTramites.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tblTramites.setRowHeight(25);
+        tblTramites.setSelectionBackground(new java.awt.Color(232, 57, 95));
+        tblTramites.setShowVerticalLines(false);
+        tblTramites.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tblTramites);
+        tblTramites.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
+        tblTramites.getTableHeader().setOpaque(false);
+        tblTramites.getTableHeader().setBackground(new Color(102,89,222));
+        tblTramites.getTableHeader().setForeground(new Color(255,255,255));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(btnRegresar)
-                .addGap(227, 227, 227)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegresar)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
-                .addGap(39, 39, 39)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 980, 410));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 550));
 
         pack();
         setLocationRelativeTo(null);
@@ -189,31 +231,6 @@ public class frmTramites extends javax.swing.JFrame {
     private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBusquedaActionPerformed
-
-    private void tblTramitesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTramitesMouseClicked
-       columna=tblTramites.getColumnModel().getColumnIndexAtX(evt.getX());
-       row=evt.getY()/tblTramites.getRowHeight();
-       if(columna<=tblTramites.getColumnCount() && columna>=0 && row<=tblTramites.getRowCount()&& row>=0){
-           Object objeto=tblTramites.getValueAt(row, columna);
-           if(objeto instanceof JButton){
-           ((JButton)objeto).doClick();
-               JButton botones=(JButton)objeto;
-               if(botones.equals(btnLicencia)){
-                   //AQUI LO QUE HARA EL BOTON
-                    //Row es para especificar en que columna se pulso el boton
-                   
-               }else{
-                   if(botones.equals(btnAutomoviles)){
-                   
-                    
-                   frmAutomoviles frm  = new frmAutomoviles(automovilNegocio, listaActual.get(row));
-                   frm.setVisible(true);
-                   this.dispose();
-                   }
-               }
-           }
-       }
-    }//GEN-LAST:event_tblTramitesMouseClicked
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         frmInicio inicio = new frmInicio();
@@ -264,8 +281,31 @@ public class frmTramites extends javax.swing.JFrame {
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblTramites;
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
+class FondoPanel extends JPanel {
+
+        private Image imagen;
+
+        @Override
+        public void paint(Graphics g) {
+            ImageIcon imageIcon = new javax.swing.ImageIcon(getClass().getResource("/Fondo.gif"));
+            imagen = imageIcon.getImage();
+            
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+
+            setOpaque(false);
+            try{
+                super.paint(g); 
+            }catch(Exception e){
+                
+            }
+           
+        }
+    }
 }

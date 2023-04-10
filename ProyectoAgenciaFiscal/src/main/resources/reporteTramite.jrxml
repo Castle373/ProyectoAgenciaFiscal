@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07c8b82b-2a07-4d85-aacb-d643f848a15c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="costo" class="java.lang.String"/>
+	<field name="fechaTramite" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="tipo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="120" splitType="Stretch">
+			<staticText>
+				<reportElement x="103" y="67" width="350" height="53" uuid="62aae6e4-faff-4439-b13a-b28c2ed724ca"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="36" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Reporte Tramites]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="45" splitType="Stretch">
+			<rectangle>
+				<reportElement x="17" y="25" width="100" height="20" uuid="7c56f94b-6bfb-48ce-a989-ea3c942b3d0c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="117" y="25" width="137" height="20" uuid="3cabd748-2718-40fa-9d02-0110b070dbd4"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="254" y="25" width="98" height="20" uuid="480d70a0-7d26-49ab-87b1-f670e66bff69"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="352" y="25" width="203" height="20" uuid="4f223c12-b4dc-462c-8b5f-0089f2538bd6"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="17" y="25" width="100" height="20" uuid="d4388ffe-4c07-4a3c-a402-08375cc69a17"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12"/>
+				</textElement>
+				<text><![CDATA[TIPO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="117" y="25" width="137" height="20" uuid="760374b9-784a-42d1-9869-7a941c22ea89"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12"/>
+				</textElement>
+				<text><![CDATA[FECHA TRAMITE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="254" y="25" width="98" height="20" uuid="9d6e1c81-2027-484a-8ccb-da91281241fa"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12"/>
+				</textElement>
+				<text><![CDATA[COSTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="352" y="25" width="203" height="20" uuid="8612adfc-7f84-409e-bf61-2e1b93acfa13"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="254" y="0" width="98" height="20" uuid="01873206-8c50-464b-b33d-163d1315fb7d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="117" y="0" width="137" height="20" uuid="e07d4096-305c-481f-8895-dd5717ff3b23"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="17" y="0" width="100" height="20" uuid="38a3832b-d9de-49ea-9a45-b3dc191469ec"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="352" y="0" width="203" height="20" uuid="4b6f8a43-edc2-4178-aa5b-7200dbe26966"/>
+			</rectangle>
+			<textField>
+				<reportElement x="17" y="0" width="100" height="20" uuid="badf4abc-f6ad-4eee-80ff-bbec86939a99"/>
+				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="352" y="0" width="203" height="20" uuid="3c949859-24e1-4674-a230-a87e369df98e"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="254" y="0" width="98" height="20" uuid="326a3962-f5d2-4af2-94a8-a764d36aec1d"/>
+				<textFieldExpression><![CDATA[$F{costo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="117" y="0" width="137" height="20" uuid="8c9cc1bf-d3c1-4d58-8fa1-aab5e6a738e6"/>
+				<textFieldExpression><![CDATA[$F{fechaTramite}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="57" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

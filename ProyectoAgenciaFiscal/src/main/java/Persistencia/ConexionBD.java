@@ -17,5 +17,6 @@ public class ConexionBD implements IConexionBD {
         EntityManager entityManager = managerFactory.createEntityManager();
 
         return entityManager;
+        
     }
 }

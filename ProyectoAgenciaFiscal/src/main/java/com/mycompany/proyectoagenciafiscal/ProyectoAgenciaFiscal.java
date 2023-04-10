@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
@@ -64,7 +64,7 @@ public class ProyectoAgenciaFiscal {
 //        
 //        entity.getTransaction().begin();
 //        //Crea persona
-//        Persona p = new Persona("Diego","estoesunarfc","estoesunacrup","minumero",new GregorianCalendar(2003, Calendar.JUNE, 1));
+//        Persona p = new Persona("Diego","D.","Robles","estoesunarfc","estoesunacrup","minumero",new GregorianCalendar(2003, Calendar.JUNE, 1));
 //        Automovil auto = new Automovil("1111", "Carro de piedra", "Veneno", "gris", "nox",p);
 ////        Automovil auto2 = new Automovil("3333", "carovolador", "Veneno", "gris", "aaa",p);
 //        p.agregarAuto(auto);

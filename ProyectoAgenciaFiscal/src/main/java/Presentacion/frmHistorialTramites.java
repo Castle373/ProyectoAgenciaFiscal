@@ -92,8 +92,8 @@ public class frmHistorialTramites extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel3.setText("Consultas");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
 
         jScrollPane3.setFocusable(false);
 
@@ -180,12 +180,11 @@ public class frmHistorialTramites extends javax.swing.JFrame {
                 ((JButton) objeto).doClick();
                 JButton boton = (JButton) objeto;
                 if (boton.equals(btnHistorial)) {
-                    
-                    
+
                     //AQUI LO QUE HARA EL BOTON
                     //Row es para especificar en que columna se pulso el boton
                     System.out.println(row);
-                    
+
                 }
             }
         }
