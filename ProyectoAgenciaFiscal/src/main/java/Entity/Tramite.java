@@ -35,22 +35,13 @@ public class Tramite implements Serializable {
     public Tramite(){
         
     }
-    public Tramite(Calendar fechaNacimiento) {
-        super();
-        this.fechaNacimiento = fechaNacimiento;
-    }
 
-    public Tramite(Calendar fechaNacimiento, Persona persona) {
-        super();
-        this.fechaNacimiento = fechaNacimiento;
-        this.persona = persona;
-    }
-
-    public Tramite(float Costo, Calendar fechaNacimiento, Persona persona) {
+    public Tramite(float Costo, Persona persona) {
         this.Costo = Costo;
-        this.fechaNacimiento = fechaNacimiento;
         this.persona = persona;
+        this.fechaTramite = Calendar.getInstance();
     }
+    
     
     @Id
     @Column(name = "idTramite")
@@ -60,11 +51,11 @@ public class Tramite implements Serializable {
     @Column(name = "Costo")
     private float Costo;
     
-    @Column(name="Fecha_Tramite",nullable =  false)
+    @Column(name="Fecha_Tramite",nullable = true)
     @Temporal(TemporalType.DATE)
-    private Calendar fechaNacimiento;
+    private Calendar fechaTramite;
     
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne()
     @JoinColumn(name="idPersona", nullable = false)
     private Persona persona;
     
@@ -74,6 +65,30 @@ public class Tramite implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public float getCosto() {
+        return Costo;
+    }
+
+    public void setCosto(float Costo) {
+        this.Costo = Costo;
+    }
+
+    public Calendar getFechaTramite() {
+        return fechaTramite;
+    }
+
+    public void setFechaTramite(Calendar fechaTramite) {
+        this.fechaTramite = fechaTramite;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 
     @Override

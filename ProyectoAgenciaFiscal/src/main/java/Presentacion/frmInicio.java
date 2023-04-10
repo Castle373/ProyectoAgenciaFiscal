@@ -4,6 +4,16 @@
  */
 package Presentacion;
 
+import INegocio.IAutomovilNegocio;
+import INegocio.IPersonaNegocio;
+import IPersistencia.IAutomovilDAO;
+import IPersistencia.IConexionBD;
+import IPersistencia.IPersonaDAO;
+import Negocio.AutomovilNegocio;
+import Negocio.PersonaNegocio;
+import Persistencia.AutomovilDAO;
+import Persistencia.ConexionBD;
+import Persistencia.PersonaDAO;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,6 +47,7 @@ public class frmInicio extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        btnTramites = new javax.swing.JButton();
 
         jButton6.setText("Historial de placas");
 
@@ -89,6 +100,13 @@ public class frmInicio extends javax.swing.JFrame {
             }
         });
 
+        btnTramites.setText("Tramites");
+        btnTramites.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTramitesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,7 +130,8 @@ public class frmInicio extends javax.swing.JFrame {
                                 .addComponent(btnSolicitarPlaca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnTramites, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(132, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -120,7 +139,9 @@ public class frmInicio extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTramites, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnSolicitarPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -128,7 +149,7 @@ public class frmInicio extends javax.swing.JFrame {
                 .addComponent(btnHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -142,9 +163,7 @@ public class frmInicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSolicitarPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarPlacaActionPerformed
-    frmPrePlaca preplaca= new frmPrePlaca();
-    preplaca.setVisible(true);
-    this.dispose();
+
     }//GEN-LAST:event_btnSolicitarPlacaActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -186,6 +205,17 @@ System.exit(0);        // TODO add your handling code here:
       }     
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void btnTramitesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTramitesActionPerformed
+        IConexionBD conexionBD = new ConexionBD();
+        IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
+        IAutomovilDAO automovilDAO = new AutomovilDAO(conexionBD);
+        IPersonaNegocio personaNegocio = new PersonaNegocio(personaDAO);
+        IAutomovilNegocio automovilNegocio = new AutomovilNegocio(automovilDAO);
+    frmTramites frm = new frmTramites(personaNegocio,automovilNegocio);
+    frm.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_btnTramitesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -224,6 +254,7 @@ System.exit(0);        // TODO add your handling code here:
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHistorial;
     private javax.swing.JButton btnSolicitarPlaca;
+    private javax.swing.JButton btnTramites;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

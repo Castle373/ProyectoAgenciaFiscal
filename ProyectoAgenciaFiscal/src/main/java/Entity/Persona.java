@@ -5,6 +5,7 @@
 package Entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -30,12 +31,27 @@ public class Persona implements Serializable {
     public Persona(){
         
     }
-    public Persona(String nombreCompleto, String rfc, String telefono, Calendar fechaNacimiento) {
+
+    public Persona(String nombreCompleto, String rfc, String curp, String telefono, Calendar fechaNacimiento) {
         this.nombreCompleto = nombreCompleto;
         this.rfc = rfc;
+        this.curp = curp;
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
+        tramites = new ArrayList<Tramite>();
+        automoviles = new ArrayList<Automovil>();
     }
+
+    public Persona(String nombreCompleto, String rfc, String curp, String telefono, Calendar fechaNacimiento, List<Tramite> tramite) {
+
+        this.nombreCompleto = nombreCompleto;
+        this.rfc = rfc;
+        this.curp = curp;
+        this.telefono = telefono;
+        this.fechaNacimiento = fechaNacimiento;
+        this.tramites = tramite;
+    }
+    
 
     
     @Id
@@ -46,15 +62,26 @@ public class Persona implements Serializable {
     private String nombreCompleto;
     @Column(name = "RFC")
     private String rfc;
+    @Column(name = "Curp")
+    private String curp;
     @Column(name = "Telefono")
     private String telefono;
     @Column(name="FechaNacimiento",nullable =  false)
     @Temporal(TemporalType.DATE)
     private Calendar fechaNacimiento;
     
-    @OneToMany(mappedBy = "persona", cascade = {CascadeType.ALL})
-    private List<Tramite> tramite;
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.PERSIST)
+    private List<Tramite> tramites;
 
+    @OneToMany(mappedBy = "persona",cascade = CascadeType.PERSIST)
+     private List<Automovil> automoviles;
+    
+    public void agregarAuto(Automovil automovil) {
+        this.automoviles.add(automovil);
+    }
+    public void agregarTramite(Tramite tramite) {
+        this.tramites.add(tramite);
+    }
     public String getNombreCompleto() {
         return nombreCompleto;
     }
@@ -73,6 +100,22 @@ public class Persona implements Serializable {
 
     public String getTelefono() {
         return telefono;
+    }
+
+    public String getCurp() {
+        return curp;
+    }
+
+    public void setCurp(String curp) {
+        this.curp = curp;
+    }
+
+    public List<Tramite> getTramites() {
+        return tramites;
+    }
+
+    public void setTramites(List<Tramite> tramites) {
+        this.tramites = tramites;
     }
 
     public void setTelefono(String telefono) {

@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -30,12 +31,15 @@ public class Automovil implements Serializable {
         
     }
 
-    public Automovil(String modelo, String marca, String linea, String color, String NumeroDeSerie) {
+
+
+    public Automovil(String modelo, String marca, String linea, String color, String NumeroDeSerie, Persona persona) {
         this.modelo = modelo;
         this.marca = marca;
         this.linea = linea;
         this.color = color;
         this.NumeroDeSerie = NumeroDeSerie;
+        this.persona = persona;
         placas = new ArrayList<Placas>();
     }
 
@@ -57,7 +61,10 @@ public class Automovil implements Serializable {
     
      @OneToMany(mappedBy = "automovil")
      private List<Placas> placas;
-    
+     
+    @ManyToOne
+    @JoinColumn(name = "idPersona")
+    private Persona persona;
 
     public List<Placas> getPlacas() {
     return placas;

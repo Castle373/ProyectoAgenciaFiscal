@@ -34,16 +34,8 @@ public class Placas extends Tramite implements Serializable {
         
     }
 
-    public Placas(String numeroPlacas, String estado, Calendar fechaInactividad, Automovil automovil, float Costo, Calendar fechaNacimiento, Persona persona) {
-        super(Costo, fechaNacimiento, persona);
-        this.numeroPlacas = numeroPlacas;
-        this.estado = estado;
-        this.fechaInactividad = fechaInactividad;
-        this.automovil = automovil;
-    }
-
-    public Placas(String numeroPlacas, String estado, Automovil automovil, float Costo, Calendar fechaNacimiento, Persona persona) {
-        super(Costo, fechaNacimiento, persona);
+    public Placas(String numeroPlacas, String estado , Automovil automovil, float Costo , Persona persona) {
+        super(Costo,persona);
         this.numeroPlacas = numeroPlacas;
         this.estado = estado;
         this.automovil = automovil;
@@ -71,15 +63,6 @@ public class Placas extends Tramite implements Serializable {
     public void setNumeroPlacas(String numeroPlacas) {
         this.numeroPlacas = numeroPlacas;
     }
-
-    public Calendar getFechaRecepcion() {
-        return fechaInactividad;
-    }
-
-    public void setFechaRecepcion(Calendar FechaRecepcion) {
-        this.fechaInactividad = FechaRecepcion;
-    }
-
     public Automovil getAutomovil() {
         return automovil;
     }
@@ -88,6 +71,33 @@ public class Placas extends Tramite implements Serializable {
         this.automovil = Automovil;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Calendar getFechaInactividad() {
+        return fechaInactividad;
+    }
+
+    public void setFechaInactividad(Calendar fechaInactividad) {
+        this.fechaInactividad = fechaInactividad;
+    }
+
+    public float getCosto() {
+        return super.getCosto();
+    }
+
+    public Calendar getFechaTramite() {
+        return super.getFechaTramite();
+    }
+
+    public Persona getPersona() {
+        return super.getPersona();
+    }
     
     
     
