@@ -34,51 +34,6 @@ public class TramiteDAO implements ITramiteDAO {
         this.conexionBD = conexionBD;
     }
 
-    
-    public List<Object[]> listaTramite2(boolean tipo1, boolean tipo2, String nombre, LocalDate fechaInicio, LocalDate fechaFin) {
-        EntityManager entityManager = this.conexionBD.crearConexion();
-        entityManager.getTransaction().begin();
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
-        Root<Tramite> tramite = criteriaQuery.from(Tramite.class);
-        Join<Tramite, Persona> persona = tramite.join("persona");
-        criteriaQuery.multiselect(tramite, criteriaBuilder.selectCase().when(criteriaBuilder.equal(criteriaBuilder.literal(Licencia.class), tramite.type()), "Licencia").otherwise("Placas"));
-
-        List<Predicate> predicados = new ArrayList<Predicate>();
-
-        if (tipo1 && !tipo2) {
-            Predicate p1 = criteriaBuilder.equal(criteriaBuilder.literal(Licencia.class), tramite.type());
-            predicados.add(p1);
-        } else if (tipo2 && !tipo1) {
-            Predicate p2 = criteriaBuilder.equal(criteriaBuilder.literal(Placas.class), tramite.type());
-            predicados.add(p2);
-        } else if (tipo1 && tipo2) {
-            Predicate p1 = criteriaBuilder.equal(criteriaBuilder.literal(Licencia.class), tramite.type());
-            Predicate p2 = criteriaBuilder.equal(criteriaBuilder.literal(Placas.class), tramite.type());
-            predicados.add(criteriaBuilder.or(p1, p2));
-        }
-
-        if (nombre != null && !nombre.isEmpty()) {
-            predicados.add(criteriaBuilder.like(criteriaBuilder.lower(persona.get("nombre")), "%" + nombre.toLowerCase() + "%"));
-        }
-
-        if (fechaInicio != null && fechaFin != null) {
-
-            java.sql.Date fechaInicioSQL = java.sql.Date.valueOf(fechaInicio);
-            java.sql.Date fechaFinSQL = java.sql.Date.valueOf(fechaFin);
-            predicados.add(criteriaBuilder.between(tramite.get("fechaTramite"), fechaInicioSQL, fechaFinSQL));
-        }
-
-        if (!predicados.isEmpty()) {
-            criteriaQuery.where(criteriaBuilder.and(predicados.toArray(new Predicate[predicados.size()])));
-        }
-
-        TypedQuery<Object[]> query = entityManager.createQuery(criteriaQuery);
-        List<Object[]> listaTramites = query.getResultList();
-        entityManager.getTransaction().commit();
-
-        return listaTramites;
-    }
     @Override
     public List<Tramite> listaTramite(boolean tipo1, boolean tipo2, String nombre, LocalDate fechaInicio, LocalDate fechaFin) {
         EntityManager entityManager = this.conexionBD.crearConexion();

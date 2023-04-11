@@ -4,9 +4,13 @@
  */
 package Presentacion;
 
+import Entity.Persona;
+import INegocio.IPersonaNegocio;
+import IPersistencia.IPersonaDAO;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -20,18 +24,21 @@ import javax.swing.table.DefaultTableModel;
  * @author DELL User
  */
 public class frmHistorialTramites extends javax.swing.JFrame {
-
+    private List<Persona> listaActual;
+    private IPersonaNegocio personaNegocio;
     private int row, columna;
     private JButton btnHistorial = new JButton("Historial");
 
     /**
      * Creates new form frmHistorialTramites
      */
-    public frmHistorialTramites() {
+    public frmHistorialTramites(IPersonaNegocio personaNegocio) {
 
         initComponents();
+        this.personaNegocio = personaNegocio;
 
         tabla();
+        llenarTabla();
     }
 
     public void tabla() {
@@ -57,6 +64,24 @@ public class frmHistorialTramites extends javax.swing.JFrame {
         }
 
         defa.fireTableDataChanged();
+    }
+
+    public void llenarTabla() {
+        listaActual = personaNegocio.BuscarPersonas(txtBusqueda.getText());
+        DefaultTableModel defa = (DefaultTableModel) tblConsultas.getModel();
+        defa.setRowCount(0);
+        for (int i = 0; i < listaActual.size(); i++) {
+            Object[] datos = new Object[defa.getColumnCount()];
+            datos[0] = listaActual.get(i).getNombre();
+            datos[1] = listaActual.get(i).getCurp();
+            datos[2] = listaActual.get(i).getRfc();
+            datos[3] = listaActual.get(i).getFechaNacimiento();
+            datos[4] = listaActual.get(i).getTelefono();
+            datos[5] = btnHistorial;
+            defa.addRow(datos);
+            
+        }
+        
     }
 
     /**
@@ -183,7 +208,7 @@ public class frmHistorialTramites extends javax.swing.JFrame {
 
                     //AQUI LO QUE HARA EL BOTON
                     //Row es para especificar en que columna se pulso el boton
-                    System.out.println(row);
+                    System.out.println(listaActual.get(row).getId());
 
                 }
             }
@@ -220,7 +245,7 @@ public class frmHistorialTramites extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmHistorialTramites().setVisible(true);
+                //new frmHistorialTramites().setVisible(true);
             }
         });
     }

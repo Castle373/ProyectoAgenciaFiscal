@@ -49,36 +49,36 @@ public class frmReporte extends javax.swing.JFrame {
      */
     public frmReporte() {
         initComponents();
-        fechaInicio.addDateChangeListener(event -> {
-            // Obtener la fecha seleccionada
-            LocalDate dateInicio = event.getNewDate();
-
-            if (fechaFin.getDate() != null && fechaFin.getDate() != null) {
-                LocalDate dateFin = fechaFin.getDate();
-                if (dateInicio.isAfter(dateFin)) {
-                    fechaInicio.setDate(event.getOldDate());
-                    fechaInicio.closePopup();
-                    JOptionPane.showMessageDialog(null, "La fecha de inicio no puede ser posterior a la fecha de fin", "Error en la fecha de inicio", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-            llenarTabla();
-        });
-        fechaFin.addDateChangeListener(event -> {
-            // Obtener la fecha seleccionada
-
-            LocalDate dateFin = event.getNewDate();
-
-            if (fechaFin.getDate() != null && fechaFin.getDate() != null) {
-                LocalDate dateInicio = fechaInicio.getDate();
-                if (dateFin.isBefore(dateInicio)) {
-                    fechaFin.closePopup();
-                    fechaFin.setDate(event.getOldDate());
-                    JOptionPane.showMessageDialog(null, "La fecha de fin no puede ser anterior a la fecha de inicio", "Error en la fecha de fin", JOptionPane.ERROR_MESSAGE);
-
-                }
-            }
-            llenarTabla();
-        });
+//        fechaInicio.addDateChangeListener(event -> {
+//            // Obtener la fecha seleccionada
+//            LocalDate dateInicio = event.getNewDate();
+//
+//            if (fechaFin.getDate() != null && fechaFin.getDate() != null) {
+//                LocalDate dateFin = fechaFin.getDate();
+//                if (dateInicio.isAfter(dateFin)) {
+//                    fechaInicio.setDate(event.getOldDate());
+//                    fechaInicio.closePopup();
+//                    JOptionPane.showMessageDialog(null, "La fecha de inicio no puede ser posterior a la fecha de fin", "Error en la fecha de inicio", JOptionPane.ERROR_MESSAGE);
+//                }
+//            }
+//            llenarTabla();
+//        });
+//        fechaFin.addDateChangeListener(event -> {
+//            // Obtener la fecha seleccionada
+//
+//            LocalDate dateFin = event.getNewDate();
+//
+//            if (fechaFin.getDate() != null && fechaFin.getDate() != null) {
+//                LocalDate dateInicio = fechaInicio.getDate();
+//                if (dateFin.isBefore(dateInicio)) {
+//                    fechaFin.closePopup();
+//                    fechaFin.setDate(event.getOldDate());
+//                    JOptionPane.showMessageDialog(null, "La fecha de fin no puede ser anterior a la fecha de inicio", "Error en la fecha de fin", JOptionPane.ERROR_MESSAGE);
+//
+//                }
+//            }
+//            llenarTabla();
+//        });
         tabla();
         llenarTabla();
     }
@@ -102,7 +102,7 @@ public class frmReporte extends javax.swing.JFrame {
         if (!chkPeriodos.isSelected()) {
             listaActual = tramiteDAO.listaTramite(chkLicencia.isSelected(), chkPlaca.isSelected(), txtBusqueda.getText(), null, null);
         } else {
-            listaActual = tramiteDAO.listaTramite(chkLicencia.isSelected(), chkPlaca.isSelected(), txtBusqueda.getText(), fechaInicio.getDate(), fechaFin.getDate());
+            listaActual = tramiteDAO.listaTramite(chkLicencia.isSelected(), chkPlaca.isSelected(), txtBusqueda.getText(),  null, null);
         }
 
         DefaultTableModel defa = (DefaultTableModel) tblConsultas.getModel();
@@ -115,7 +115,7 @@ public class frmReporte extends javax.swing.JFrame {
                 datos[1] = "Placas";
             }
             if (listaActual.get(i) instanceof Licencia) {
-                datos[1] = "Licenciass";
+                datos[1] = "Licencias";
             }
             datos[2] = listaActual.get(i).getPersona().getNombre();
             datos[3] = listaActual.get(i).getCosto();
@@ -138,8 +138,6 @@ public class frmReporte extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        fechaInicio = new com.github.lgooddatepicker.components.DatePicker();
-        fechaFin = new com.github.lgooddatepicker.components.DatePicker();
         chkPeriodos = new javax.swing.JCheckBox();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblConsultas = new javax.swing.JTable();
@@ -195,14 +193,6 @@ public class frmReporte extends javax.swing.JFrame {
         jLabel6.setText("a");
 
         jButton1.setText("Buscar");
-
-        fechaInicio.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                fechaInicioInputMethodTextChanged(evt);
-            }
-        });
 
         chkPeriodos.setSelected(true);
         chkPeriodos.setText("Por Periodos");
@@ -262,11 +252,8 @@ public class frmReporte extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(43, 43, 43)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(chkPeriodos)))
                 .addGap(112, 112, 112))
@@ -308,8 +295,6 @@ public class frmReporte extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel6)
-                    .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chkPeriodos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -380,31 +365,32 @@ public class frmReporte extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (listaActual.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay Registros");
+            return;
         }
         int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de ejecutar este comando?", "Confirmar", JOptionPane.YES_NO_OPTION);
 
         if (opcion == JOptionPane.YES_OPTION) {
-            List<ReporteTramites> listat = new ArrayList<ReporteTramites>();
+            List<ReporteTramites> listaReporteTramite = new ArrayList<ReporteTramites>();
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
             for (int i = 0; i < listaActual.size(); i++) {
-                Tramite tramite = listaActual.get(i);
-                String costo = String.valueOf(tramite.getCosto());
-                String fecha = formato.format(tramite.getFechaTramite().getTime());
+                
+                String costo = String.valueOf(listaActual.get(i).getCosto());
+                String fecha = formato.format(listaActual.get(i).getFechaTramite().getTime());
                 String tipo="";
                 if (listaActual.get(i) instanceof Placas) {
                     tipo = "Placas";
                 }
                 if (listaActual.get(i) instanceof Licencia) {
-                    tipo = "Licenciass";
+                    tipo = "Licencias";
                 }
-                String nombre = tramite.getPersona().getNombre();
+                String nombre = listaActual.get(i).getPersona().getNombre();
                 ReporteTramites repo = new ReporteTramites(costo, fecha, tipo, nombre);
-                listat.add(repo);
+                listaReporteTramite.add(repo);
             }
 
             try {
                 // Cargar los datos en un JRBeanCollectionDataSource
-                JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(listat);
+                JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(listaReporteTramite);
 
                 // Cargar el archivo JRXML del reporte
                 InputStream reportFile = getClass().getResourceAsStream("/reporteTramite.jrxml");
@@ -444,8 +430,6 @@ public class frmReporte extends javax.swing.JFrame {
     private javax.swing.JCheckBox chkLicencia;
     private javax.swing.JCheckBox chkPeriodos;
     private javax.swing.JCheckBox chkPlaca;
-    private com.github.lgooddatepicker.components.DatePicker fechaFin;
-    private com.github.lgooddatepicker.components.DatePicker fechaInicio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

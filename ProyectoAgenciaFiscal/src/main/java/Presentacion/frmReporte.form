@@ -44,11 +44,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="txtBusqueda" min="-2" pref="273" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="fechaInicio" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       <Component id="jLabel6" min="-2" pref="12" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="fechaFin" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="chkPeriodos" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -103,8 +100,6 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fechaInicio" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fechaFin" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="chkPeriodos" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -151,10 +146,10 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Reporte de tr&#xe1;mites"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="24" style="1"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="Reporte de tr&#xe1;mites"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
@@ -199,13 +194,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Buscar"/>
       </Properties>
-    </Component>
-    <Component class="com.github.lgooddatepicker.components.DatePicker" name="fechaInicio">
-      <Events>
-        <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="fechaInicioInputMethodTextChanged"/>
-      </Events>
-    </Component>
-    <Component class="com.github.lgooddatepicker.components.DatePicker" name="fechaFin">
     </Component>
     <Component class="javax.swing.JCheckBox" name="chkPeriodos">
       <Properties>
