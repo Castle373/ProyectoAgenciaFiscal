@@ -24,8 +24,8 @@ public class TramiteNegocio implements ITramiteNegocio{
     }
     
     @Override
-    public List<Tramite> listaTramite(boolean placas, boolean licencia, String Nombre, LocalDate fechaInicio, LocalDate fechaFin) {
-       return tramiteDAO.listaTramite(placas, licencia, Nombre, fechaInicio, fechaFin);
+    public List<Tramite> listaTramite(boolean placas, boolean licencia, LocalDate fechaInicio, LocalDate fechaFin) {
+       return tramiteDAO.listaTramite(placas, licencia, fechaInicio, fechaFin);
     }
     
 }

@@ -8,6 +8,7 @@ import Entity.Automovil;
 import Entity.Licencia;
 import Entity.Persona;
 import Entity.Placas;
+import Persistencia.Encriptacion;
 import Presentacion.frmInicio;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -64,7 +65,11 @@ public class ProyectoAgenciaFiscal {
 //        
 //        entity.getTransaction().begin();
 //        //Crea persona
-//        Persona p = new Persona("Diego","D.","Robles","estoesunarfc","estoesunacrup","minumero",new GregorianCalendar(2003, Calendar.JUNE, 1));
+//          Encriptacion a = new Encriptacion();
+//          String nombre = a.encriptar("Herman");
+//          String ap1 = a.encriptar("Trista");
+//          String ap2 = a.encriptar("Rosales");
+//        Persona p = new Persona(nombre,ap1,ap2,"estoesunarfc","estoesunacrup","minumero",new GregorianCalendar(2003, Calendar.JUNE, 1));
 //        Automovil auto = new Automovil("1111", "Carro de piedra", "Veneno", "gris", "nox",p);
 ////        Automovil auto2 = new Automovil("3333", "carovolador", "Veneno", "gris", "aaa",p);
 //        p.agregarAuto(auto);

@@ -4,6 +4,8 @@ package Persistencia;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+import Entity.Persona;
+import Entity.Tramite;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -11,10 +13,6 @@ import java.util.List;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-/**
- * Clase Encriptacion
- * @author Alan Rodriguez y Jose Carlos Trista Rosales
- */
 public class Encriptacion {
     /**
      * Metodo Constructor Vacio de la Clase Encriptacion
@@ -66,39 +64,39 @@ public class Encriptacion {
         return null;
     }
     
-//    public List<Persona> desencriptarLista(List<Persona> lista) {
-//        List<Persona> lista_desencriptada = new ArrayList();
-//        
-//        for(Persona persona : lista) {
-//            
-//            persona.setNombre( this.desencriptar( persona.getNombre()) );
-//            persona.setPrimerApellido( this.desencriptar( persona.getPrimerApellido()) );
-//            persona.setSegundoApellido( this.desencriptar( persona.getSegundoApellido() ) );
-//            lista_desencriptada.add(persona);
-//            
-//        }
-//        return lista_desencriptada;
-//    }
+    public List<Persona> desencriptarLista(List<Persona> lista) {
+        List<Persona> lista_desencriptada = new ArrayList();
+        
+        for(Persona persona : lista) {
+            
+            persona.setNombre( this.desencriptar( persona.getNombre()) );
+            persona.setApellidoPaterno(this.desencriptar( persona.getApellidoPaterno()) );
+            persona.setApellidoMaterno(this.desencriptar( persona.getApellidoMaterno()) );
+            lista_desencriptada.add(persona);
+            
+        }
+        return lista;
+    }
 //    
-//    public List<Tramite> desencriptarListaTramite(List<Tramite> lista) {
-//        List<Persona> personasDesencriptadas = new ArrayList<>(); // crea una lista auxiliar de personas
-//        List<Tramite> lista_tramitePersona = new ArrayList<>(); // crea una lista de trámites
-//
-//        for (Tramite tramite : lista) {
-//            Persona persona = tramite.getPersona(); // obtiene la persona del trámite
-//
-//            if (!personasDesencriptadas.contains(persona)) { // si la persona no está en la lista auxiliar
-//                personasDesencriptadas.add(persona); // agrega la persona a la lista auxiliar
-//                persona.setNombre(this.desencriptar(persona.getNombre()));
-//                persona.setPrimerApellido(this.desencriptar(persona.getPrimerApellido()));
-//                persona.setSegundoApellido(this.desencriptar(persona.getSegundoApellido())); 
-//            }
-//            lista_tramitePersona.add(tramite); // agrega el trámite a la lista
-//        }
-//
-//        return lista_tramitePersona;
-//    }
-//
+    public List<Tramite> desencriptarListaTramite(List<Tramite> lista) {
+        List<Persona> personasDesencriptadas = new ArrayList<>(); // crea una lista auxiliar de personas
+        List<Tramite> lista_tramitePersona = new ArrayList<>(); // crea una lista de trámites
+
+        for (Tramite tramite : lista) {
+            Persona persona = tramite.getPersona(); // obtiene la persona del trámite
+
+            if (!personasDesencriptadas.contains(persona)) { // si la persona no está en la lista auxiliar
+                personasDesencriptadas.add(persona); // agrega la persona a la lista auxiliar
+                persona.setNombre(this.desencriptar(persona.getNombre()));
+                persona.setApellidoPaterno(this.desencriptar(persona.getApellidoPaterno()));
+                persona.setApellidoMaterno(this.desencriptar(persona.getApellidoMaterno())); 
+            }
+            lista_tramitePersona.add(tramite); // agrega el trámite a la lista
+        }
+
+        return lista_tramitePersona;
+    }
+
 //    public Persona encriptarNombrePersona(Persona persona) {
 //        persona.setNombre(encriptar(persona.getNombre()));
 //        persona.setPrimerApellido(encriptar(persona.getPrimerApellido()));

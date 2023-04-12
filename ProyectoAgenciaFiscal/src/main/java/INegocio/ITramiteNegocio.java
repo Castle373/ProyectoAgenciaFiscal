@@ -14,6 +14,6 @@ import java.util.List;
  * @author diego
  */
 public interface ITramiteNegocio {
-    public List<Tramite> listaTramite(boolean placas,boolean licencia,String Nombre,LocalDate fechaInicio,LocalDate fechaFin );
+    public List<Tramite> listaTramite(boolean placas,boolean licencia,LocalDate fechaInicio,LocalDate fechaFin );
     
 }
