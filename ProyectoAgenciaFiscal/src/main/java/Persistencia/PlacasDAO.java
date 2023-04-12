@@ -7,6 +7,7 @@ package Persistencia;
 import Entity.Placas;
 import IPersistencia.IConexionBD;
 import IPersistencia.IPlacasDAO;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -51,15 +52,15 @@ public class PlacasDAO implements IPlacasDAO {
             if (!placasActivas.isEmpty()) {
                 Placas placaActiva = placasActivas.get(0);
                 placaActiva.setEstado("INACTIVA");
+                placaActiva.setFechaInactividad(new GregorianCalendar());
                 entityManager.merge(placaActiva);
-                Query query2 = entityManager.createQuery("SELECT p FROM Placas p WHERE p.id = :id");
-                query2.setParameter("id", placaActiva.getId());
-                Placas placasActualizadas = (Placas) query2.getSingleResult();
+
             }
 
             // Agregar la nueva placa
             entityManager.persist(placas);
-
+            entityManager.flush();
+            entityManager.refresh(placas);
             entityManager.getTransaction().commit();
             return placas;
         } catch (Exception e) {

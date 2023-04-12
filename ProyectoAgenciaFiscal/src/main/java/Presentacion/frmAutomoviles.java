@@ -341,7 +341,7 @@ public class frmAutomoviles extends javax.swing.JFrame {
                 ((JButton) objeto).doClick();
                 JButton boton = (JButton) objeto;
                 if (boton.equals(btnHistorial)) {
-                    frmHistorialPlacas frmhisto = new frmHistorialPlacas(automovilNegocio, placasNegocio, listaActual.get(row), persona);
+                    frmHistorialPlacas frmhisto = new frmHistorialPlacas( listaActual.get(row), persona);
                     frmhisto.setVisible(true);
                     this.dispose();
                 }

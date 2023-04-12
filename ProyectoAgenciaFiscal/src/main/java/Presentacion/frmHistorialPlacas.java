@@ -9,6 +9,14 @@ import Entity.Persona;
 import Entity.Placas;
 import INegocio.IAutomovilNegocio;
 import INegocio.IPlacasNegocio;
+import IPersistencia.IAutomovilDAO;
+import IPersistencia.IConexionBD;
+import IPersistencia.IPlacasDAO;
+import Negocio.AutomovilNegocio;
+import Negocio.PlacasNegocio;
+import Persistencia.AutomovilDAO;
+import Persistencia.ConexionBD;
+import Persistencia.PlacasDAO;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.SimpleDateFormat;
@@ -32,9 +40,12 @@ public class frmHistorialPlacas extends javax.swing.JFrame {
     /**
      * Creates new form frmHistorialPlacas
      */
-    public frmHistorialPlacas(IAutomovilNegocio automovilNegocio,IPlacasNegocio placasNegocio, Automovil automovil,Persona persona) {
-        this.automovilNegocio=automovilNegocio;
-        this.placasNegocio = placasNegocio;
+    public frmHistorialPlacas(Automovil automovil,Persona persona) {
+        IConexionBD conexionBD = new ConexionBD();
+        IAutomovilDAO autodao = new AutomovilDAO(conexionBD);
+        IPlacasDAO placasDAO = new PlacasDAO(conexionBD);
+        this.automovilNegocio = new AutomovilNegocio(autodao);
+        this.placasNegocio = new PlacasNegocio(placasDAO);;
         this.automovilActual = automovil;
         this.persona=persona;
         initComponents();
@@ -61,7 +72,7 @@ lblNumeroDeSerie.setText("Numero de Serie:  "+automovilActual.getNumeroDeSerie()
         defa.addColumn("Nombre de solicitante");
         tblConsultas.setRowHeight(40);
 
-    }
+    }   
 
     public void llenarTabla() {
         listaActual = placasNegocio.BuscarPorAuto(automovilActual.getId());

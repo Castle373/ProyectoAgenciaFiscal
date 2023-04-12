@@ -46,7 +46,7 @@ public class frmPlaca extends javax.swing.JFrame {
     }
 
     public void registrarPlaca() {
-        Placas p = new Placas(txtPlaca.getText(), "ACTIVA", automovilActual, costo, persona);
+        Placas p = new Placas(null, "ACTIVA", automovilActual, costo, persona);
         try {
             Placas placa = placasNegocio.registrarPlaca(p);
             JOptionPane.showMessageDialog(null, "La placa fue registrada exitosamente.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
@@ -73,8 +73,6 @@ public class frmPlaca extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        txtPlaca = new javax.swing.JTextField();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         lblDatos = new javax.swing.JLabel();
@@ -112,18 +110,8 @@ public class frmPlaca extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel3.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 14)); // NOI18N
-        jLabel3.setText("Placa:");
-
-        txtPlaca.setText("AAA-111");
-        txtPlaca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPlacaActionPerformed(evt);
-            }
-        });
-
         btnAceptar.setBackground(new java.awt.Color(255, 255, 255));
-        btnAceptar.setText("Aceptar");
+        btnAceptar.setText("Solicitar Placa");
         btnAceptar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,8 +154,8 @@ public class frmPlaca extends javax.swing.JFrame {
                 .addGap(74, 74, 74)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
+                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(100, 158, Short.MAX_VALUE)
@@ -179,11 +167,7 @@ public class frmPlaca extends javax.swing.JFrame {
                         .addComponent(lblNumeroSerie)
                         .addComponent(lblModelo)
                         .addComponent(lblMarca)
-                        .addComponent(lblLinea)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(15, 15, 15)
-                            .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblLinea))
                     .addGap(0, 189, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
@@ -208,11 +192,7 @@ public class frmPlaca extends javax.swing.JFrame {
                     .addComponent(lblMarca)
                     .addGap(10, 10, 10)
                     .addComponent(lblLinea)
-                    .addGap(10, 10, 10)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3)
-                        .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 125, Short.MAX_VALUE)))
+                    .addGap(0, 174, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -243,10 +223,6 @@ public class frmPlaca extends javax.swing.JFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
        registrarPlaca();
     }//GEN-LAST:event_btnAceptarActionPerformed
-
-    private void txtPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlacaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPlacaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,18 +262,8 @@ public class frmPlaca extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnRegresar;
-    private javax.swing.JButton btnRegresar1;
-    private javax.swing.JButton btnRegresar2;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JLabel lblDatos;
     private javax.swing.JLabel lblLinea;
@@ -305,6 +271,5 @@ public class frmPlaca extends javax.swing.JFrame {
     private javax.swing.JLabel lblModelo;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblNumeroSerie;
-    private javax.swing.JTextField txtPlaca;
     // End of variables declaration//GEN-END:variables
 }
