@@ -74,7 +74,7 @@ public class frmInicio extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -83,7 +83,6 @@ public class frmInicio extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Reporte de trámites");
         jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton2.setFocusPainted(false);
@@ -93,7 +92,6 @@ public class frmInicio extends javax.swing.JFrame {
             }
         });
 
-        btnHistorial.setBackground(new java.awt.Color(255, 255, 255));
         btnHistorial.setText("Historial de trámites");
         btnHistorial.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnHistorial.setFocusPainted(false);
@@ -103,12 +101,10 @@ public class frmInicio extends javax.swing.JFrame {
             }
         });
 
-        jButton7.setBackground(new java.awt.Color(255, 255, 255));
         jButton7.setText("Generar registros");
         jButton7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton7.setFocusPainted(false);
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Salir");
         jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton1.setFocusPainted(false);
@@ -118,8 +114,7 @@ public class frmInicio extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Crear/Editar Persona");
+        jButton4.setText("Personas");
         jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton4.setFocusPainted(false);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -128,7 +123,6 @@ public class frmInicio extends javax.swing.JFrame {
             }
         });
 
-        btnTramites.setBackground(new java.awt.Color(255, 255, 255));
         btnTramites.setText("Tramites");
         btnTramites.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnTramites.setFocusPainted(false);
@@ -201,6 +195,9 @@ System.exit(0);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+  frmCrudPersona per = new frmCrudPersona();
+      per.setVisible(true);
+        this.dispose();
 // String opcion=(JOptionPane.showInputDialog(null,"¿Ya esta registrado?","Opciones", JOptionPane.PLAIN_MESSAGE,null,new Object[]{"Si","No"},"Selecciona")).toString();
 //     if(opcion=="Si"){ 
 //     String rfc= JOptionPane.showInputDialog(null, "Ingrese su RFC","RFC");
