@@ -4,8 +4,16 @@
  */
 package Presentacion;
 
+import Entity.Persona;
+import INegocio.IAutomovilNegocio;
+import INegocio.IPersonaNegocio;
+import Persistencia.Encriptacion;
 import java.awt.Color;
 import java.awt.Font;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -15,11 +23,19 @@ import javax.swing.table.TableColumn;
  */
 public class frmCrudPersona extends javax.swing.JFrame {
 
+    private int row, columna;
+    JButton btnEditar = new JButton("Editar");
+    private IPersonaNegocio personaNegocio;
+    private List<Persona> listaActual = new ArrayList<Persona>();
+
     /**
      * Creates new form frmRegistroPersona
      */
-    public frmCrudPersona() {
+    public frmCrudPersona(IPersonaNegocio personaNegocio) {
+        this.personaNegocio = personaNegocio;
         initComponents();
+        tabla();
+        llenarTabla();
     }
 
     /**
@@ -34,6 +50,7 @@ public class frmCrudPersona extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         btnatras = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -59,6 +76,13 @@ public class frmCrudPersona extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText(" Personas");
 
+        jButton1.setText("Registrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -68,7 +92,9 @@ public class frmCrudPersona extends javax.swing.JFrame {
                 .addComponent(btnatras, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(174, 174, 174)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(389, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -80,6 +106,10 @@ public class frmCrudPersona extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -181,7 +211,21 @@ public class frmCrudPersona extends javax.swing.JFrame {
     }//GEN-LAST:event_btnatrasActionPerformed
 
     private void tblRegistrosPersonasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRegistrosPersonasMouseClicked
-   
+        columna = tblRegistrosPersonas.getColumnModel().getColumnIndexAtX(evt.getX());
+        row = evt.getY() / tblRegistrosPersonas.getRowHeight();
+        if (columna <= tblRegistrosPersonas.getColumnCount() && columna >= 0 && row <= tblRegistrosPersonas.getRowCount() && row >= 0) {
+            Object objeto = tblRegistrosPersonas.getValueAt(row, columna);
+            if (objeto instanceof JButton) {
+                ((JButton) objeto).doClick();
+                JButton botones = (JButton) objeto;
+                if (botones.equals(btnEditar)) {
+                    frmRegistroPersona a = new frmRegistroPersona(personaNegocio, listaActual.get(row));
+                    a.setVisible(true);
+                    this.dispose();
+
+                }
+            }
+        }
     }//GEN-LAST:event_tblRegistrosPersonasMouseClicked
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
@@ -189,18 +233,27 @@ public class frmCrudPersona extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        
+
     }//GEN-LAST:event_txtBuscarKeyReleased
- public void  tabla(){
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        frmRegistroPersona a = new frmRegistroPersona(personaNegocio, null);
+        a.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+    public void tabla() {
         tblRegistrosPersonas.setDefaultRenderer(Object.class, new RenderTabla());
         DefaultTableModel defa = new DefaultTableModel();
-                tblRegistrosPersonas.setRowHeight(40);
+        tblRegistrosPersonas.setRowHeight(40);
         tblRegistrosPersonas.setModel(defa);
-        
+
+        defa.addColumn("Nombre");
+        defa.addColumn("Curp");
         defa.addColumn("RFC");
-        defa.addColumn("NOMBRE");
         defa.addColumn("Fecha de nacimiento");
         defa.addColumn("Telefono");
+        defa.addColumn("Discapacitado");
+        defa.addColumn("Editar");
         TableColumn nombreColumna = tblRegistrosPersonas.getColumnModel().getColumn(0);
         TableColumn rfcColumna = tblRegistrosPersonas.getColumnModel().getColumn(2);
         TableColumn fechaColumna = tblRegistrosPersonas.getColumnModel().getColumn(3);
@@ -209,9 +262,39 @@ public class frmCrudPersona extends javax.swing.JFrame {
         rfcColumna.setPreferredWidth(30);
         fechaColumna.setPreferredWidth(50);
         teColumna.setPreferredWidth(25);
-  
 
     }
+
+    public void llenarTabla() {
+        listaActual = personaNegocio.BuscarPersonas();
+        Encriptacion AES = new Encriptacion();
+        listaActual = AES.desencriptarLista(listaActual);
+        List<Persona> listaPorNombre = new ArrayList<Persona>();
+        for (Persona persona : listaActual) {
+            String nombreCompleto = persona.getNombre() + " " + persona.getApellidoPaterno() + " " + persona.getApellidoMaterno();
+            if (nombreCompleto.toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
+                listaPorNombre.add(persona);
+            }
+        }
+        listaActual = listaPorNombre;
+        DefaultTableModel defa = (DefaultTableModel) tblRegistrosPersonas.getModel();
+        defa.setRowCount(0);
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        for (Persona persona : listaActual) {
+            Object[] datos = new Object[defa.getColumnCount()];
+            String nombreCompleto = persona.getNombre() + " " + persona.getApellidoPaterno() + " " + persona.getApellidoMaterno();
+            datos[0] = nombreCompleto;
+            datos[1] = persona.getCurp();
+            datos[2] = persona.getRfc();
+            datos[3] = formato.format(persona.getFechaNacimiento().getTime());
+            datos[4] = persona.getTelefono();
+            datos[5] = persona.getDiscapacidad();
+            datos[6] = btnEditar;
+            defa.addRow(datos);
+        }
+
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -243,13 +326,14 @@ public class frmCrudPersona extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmCrudPersona().setVisible(true);
+                //     new frmCrudPersona().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnatras;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;

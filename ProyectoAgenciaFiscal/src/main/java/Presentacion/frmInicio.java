@@ -205,8 +205,11 @@ System.exit(0);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-  frmCrudPersona per = new frmCrudPersona();
-      per.setVisible(true);
+        IConexionBD conexionBD = new ConexionBD();
+        IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
+        IPersonaNegocio personaNegocio = new PersonaNegocio(personaDAO);
+        frmCrudPersona crudPersona = new frmCrudPersona(personaNegocio);
+        crudPersona.setVisible(true);
         this.dispose();
 // String opcion=(JOptionPane.showInputDialog(null,"¿Ya esta registrado?","Opciones", JOptionPane.PLAIN_MESSAGE,null,new Object[]{"Si","No"},"Selecciona")).toString();
 //     if(opcion=="Si"){ 

@@ -44,6 +44,19 @@ public class Persona implements Serializable {
         automoviles = new ArrayList<Automovil>();
     }
 
+    public Persona(String nombre, String apellidoPaterno, String apellidoMaterno, String rfc, String curp, String telefono, Calendar fechaNacimiento, byte discapacidad) {
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.rfc = rfc;
+        this.curp = curp;
+        this.telefono = telefono;
+        this.fechaNacimiento = fechaNacimiento;
+        this.discapacidad = discapacidad;
+              tramites = new ArrayList<Tramite>();
+        automoviles = new ArrayList<Automovil>();
+    }
+
    
     
 
@@ -67,6 +80,8 @@ public class Persona implements Serializable {
     @Column(name="FechaNacimiento",nullable =  false)
     @Temporal(TemporalType.DATE)
     private Calendar fechaNacimiento;
+        @Column(name = "DISCAPACIDAD")
+    private byte discapacidad;
     
     @OneToMany(mappedBy = "persona", cascade = CascadeType.PERSIST)
     private List<Tramite> tramites;
@@ -152,6 +167,15 @@ public class Persona implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public byte getDiscapacidad() {
+        return discapacidad;
+    }
+
+    public void setDiscapacidad(byte discapacidad) {
+        this.discapacidad = discapacidad;
+    }
+    
 
     @Override
     public int hashCode() {

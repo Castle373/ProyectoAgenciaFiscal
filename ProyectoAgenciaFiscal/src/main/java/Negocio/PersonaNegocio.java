@@ -7,6 +7,7 @@ package Negocio;
 import Entity.Persona;
 import INegocio.IPersonaNegocio;
 import IPersistencia.IPersonaDAO;
+import Persistencia.Encriptacion;
 import java.util.List;
 
 /**
@@ -28,6 +29,17 @@ public class PersonaNegocio implements IPersonaNegocio{
     @Override
     public List<Persona> BuscarPersonas(String Filtro) {
         return personaDAO.listaPersonas(Filtro);
+    }
+
+    @Override
+    public Persona agregarPersona(Persona persona) {
+
+        return personaDAO.agregarPersona(persona);
+    }
+
+    @Override
+    public Persona editarPersona(Persona persona) {
+      return personaDAO.editarPersona(persona);
     }
     
 }

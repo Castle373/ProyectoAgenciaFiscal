@@ -14,4 +14,5 @@ import java.util.List;
 public interface ILicenciaNegocio {
     public List<Licencia> listaLicenciaPersona(int id);
     public List<Licencia> listaLicenciaPersonaVigentes(int id);
+    public Licencia agregaLicencia(Licencia licencia);
 }
