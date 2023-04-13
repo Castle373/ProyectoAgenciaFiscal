@@ -1,6 +1,7 @@
 package Presentacion;
 
 import Entity.Licencia;
+import Entity.Persona;
 import Entity.Placas;
 import Entity.Tramite;
 import INegocio.IPersonaNegocio;
@@ -13,6 +14,7 @@ import Negocio.PersonaNegocio;
 import Negocio.TramiteNegocio;
 import Persistencia.AutomovilDAO;
 import Persistencia.ConexionBD;
+import Persistencia.Encriptacion;
 import Persistencia.PersonaDAO;
 import Persistencia.TramiteDAO;
 import com.github.lgooddatepicker.components.DatePicker;
@@ -44,7 +46,7 @@ public class frmReporte extends javax.swing.JFrame {
 
     private int row, columna;
     private List<Tramite> listaActual = new ArrayList<Tramite>();
-    
+
     /**
      * Creates new form frmReporte
      */
@@ -101,25 +103,40 @@ public class frmReporte extends javax.swing.JFrame {
         ITramiteDAO tramiteDAO = new TramiteDAO(conexionBD);
         ITramiteNegocio tramiteNegocio = new TramiteNegocio(tramiteDAO);
         if (!chkPeriodos.isSelected()) {
-            listaActual = tramiteDAO.listaTramite(chkLicencia.isSelected(), chkPlaca.isSelected(), txtBusqueda.getText(), null, null);
+            listaActual = tramiteDAO.listaTramite(chkLicencia.isSelected(), chkPlaca.isSelected(), null, null);
         } else {
-            listaActual = tramiteDAO.listaTramite(chkLicencia.isSelected(), chkPlaca.isSelected(), txtBusqueda.getText(),  null, null);
+            listaActual = tramiteDAO.listaTramite(chkLicencia.isSelected(), chkPlaca.isSelected(), null, null);
+        }
+
+        Encriptacion AES = new Encriptacion();
+        AES.desencriptarListaTramite(listaActual);
+        if (!txtBusqueda.getText().isEmpty()) {
+            List<Tramite> listaPorNombre = new ArrayList<Tramite>();
+
+            for (Tramite tramite : listaActual) {
+                String NombreCompleto = tramite.getPersona().getNombre() + " " + tramite.getPersona().getApellidoPaterno() + " " + tramite.getPersona().getApellidoMaterno();
+                if (NombreCompleto.toLowerCase().contains(txtBusqueda.getText().toLowerCase())) {
+                    listaPorNombre.add(tramite);
+                }
+            }
+            listaActual=listaPorNombre;
         }
 
         DefaultTableModel defa = (DefaultTableModel) tblConsultas.getModel();
         defa.setRowCount(0);
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        for (int i = 0; i < listaActual.size(); i++) {
+        for (Tramite tramite : listaActual) {
             Object[] datos = new Object[defa.getColumnCount()];
-            datos[0] = formato.format(listaActual.get(i).getFechaTramite().getTime());
-            if (listaActual.get(i) instanceof Placas) {
+            datos[0] = formato.format(tramite.getFechaTramite().getTime());
+            if (tramite instanceof Placas) {
                 datos[1] = "Placas";
             }
-            if (listaActual.get(i) instanceof Licencia) {
+            if (tramite instanceof Licencia) {
                 datos[1] = "Licencias";
             }
-            datos[2] = listaActual.get(i).getPersona().getNombre();
-            datos[3] = listaActual.get(i).getCosto();
+            String NombreCompleto = tramite.getPersona().getNombre() + " " + tramite.getPersona().getApellidoPaterno() + " " + tramite.getPersona().getApellidoMaterno();
+            datos[2] = NombreCompleto;
+            datos[3] = tramite.getCosto();
             defa.addRow(datos);
         }
     }
@@ -418,10 +435,10 @@ public class frmReporte extends javax.swing.JFrame {
             List<ReporteTramites> listaReporteTramite = new ArrayList<ReporteTramites>();
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
             for (int i = 0; i < listaActual.size(); i++) {
-                
+
                 String costo = String.valueOf(listaActual.get(i).getCosto());
                 String fecha = formato.format(listaActual.get(i).getFechaTramite().getTime());
-                String tipo="";
+                String tipo = "";
                 if (listaActual.get(i) instanceof Placas) {
                     tipo = "Placas";
                 }
@@ -458,7 +475,7 @@ public class frmReporte extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaInicioInputMethodTextChanged
 
     private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
-        // TODO add your handling code here:
+    llenarTabla();
     }//GEN-LAST:event_txtBusquedaKeyReleased
 
     public static void main(String args[]) {

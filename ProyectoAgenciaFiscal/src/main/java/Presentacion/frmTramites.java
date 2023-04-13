@@ -8,6 +8,7 @@ package Presentacion;
 import Entity.Persona;
 import INegocio.IAutomovilNegocio;
 import INegocio.IPersonaNegocio;
+import Persistencia.Encriptacion;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -79,17 +80,28 @@ public class frmTramites extends javax.swing.JFrame {
 
     }
     public void llenarTabla(){
-        listaActual= personaNegocio.BuscarPersonas(txtBusqueda.getText());
+        listaActual= personaNegocio.BuscarPersonas();
+        Encriptacion AES = new Encriptacion();
+        listaActual=AES.desencriptarLista(listaActual);
+        List<Persona> listaPorNombre = new ArrayList<Persona>();
+        for (Persona persona :listaActual) {
+            String nombreCompleto=persona.getNombre()+" "+persona.getApellidoPaterno()+" "+persona.getApellidoMaterno();
+            if (nombreCompleto.toLowerCase().contains(txtBusqueda.getText().toLowerCase())) {
+                listaPorNombre.add(persona);
+            }
+        }
+        listaActual=listaPorNombre;
         DefaultTableModel defa = (DefaultTableModel) tblTramites.getModel();
         defa.setRowCount(0);
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); 
-        for (int i = 0; i < listaActual.size(); i++) {
+        for (Persona persona :listaActual) {          
             Object[] datos = new Object[defa.getColumnCount()];
-               datos[0]=listaActual.get(i).getNombre();
-               datos[1]=listaActual.get(i).getCurp();
-               datos[2]=listaActual.get(i).getRfc();
-               datos[3]=formato.format(listaActual.get(i).getFechaNacimiento().getTime());
-               datos[4]=listaActual.get(i).getTelefono();
+            String nombreCompleto=persona.getNombre()+" "+persona.getApellidoPaterno()+" "+persona.getApellidoMaterno();
+               datos[0]=nombreCompleto;
+               datos[1]=persona.getCurp();
+               datos[2]=persona.getRfc();
+               datos[3]=formato.format(persona.getFechaNacimiento().getTime());
+               datos[4]=persona.getTelefono();
                datos[5]=btnLicencia;
                datos[6]=btnAutomoviles;
                defa.addRow(datos);

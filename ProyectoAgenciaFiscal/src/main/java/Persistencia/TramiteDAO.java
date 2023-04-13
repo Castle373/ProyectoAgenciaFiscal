@@ -35,7 +35,7 @@ public class TramiteDAO implements ITramiteDAO {
     }
 
     @Override
-    public List<Tramite> listaTramite(boolean tipo1, boolean tipo2, String nombre, LocalDate fechaInicio, LocalDate fechaFin) {
+    public List<Tramite> listaTramite(boolean tipo1, boolean tipo2, LocalDate fechaInicio, LocalDate fechaFin) {
         EntityManager entityManager = this.conexionBD.crearConexion();
         entityManager.getTransaction().begin();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -58,11 +58,6 @@ public class TramiteDAO implements ITramiteDAO {
             Predicate p2 = criteriaBuilder.equal(criteriaBuilder.literal(Placas.class), tramite.type());
             predicados.add(criteriaBuilder.or(p1, p2));
         }
-
-        if (nombre != null && !nombre.isEmpty()) {
-            predicados.add(criteriaBuilder.like(criteriaBuilder.lower(persona.get("nombre")), "%" + nombre.toLowerCase() + "%"));
-        }
-
         if (fechaInicio != null && fechaFin != null) {
             java.sql.Date fechaInicioSQL = java.sql.Date.valueOf(fechaInicio);
             java.sql.Date fechaFinSQL = java.sql.Date.valueOf(fechaFin);
