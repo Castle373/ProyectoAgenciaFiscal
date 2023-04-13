@@ -29,5 +29,10 @@ public class LicenciaNegocio implements ILicenciaNegocio{
     public List<Licencia> listaLicenciaPersonaVigentes(int id) {
        return licenciaDAO.listaLicenciaPersonaVigentes(id);
     }
+
+    @Override
+    public Licencia agregaLicencia(Licencia licencia) {
+       return licenciaDAO.agregaLicencia(licencia);
+    }
     
 }

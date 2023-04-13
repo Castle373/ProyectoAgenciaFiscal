@@ -17,6 +17,7 @@ public class frmLicencia extends javax.swing.JFrame {
      */
     public frmLicencia() {
         initComponents();
+        precios();
     }
 
     /**
@@ -29,19 +30,24 @@ public class frmLicencia extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel8 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbovigencia = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        txtcosto = new javax.swing.JTextField();
+        cbodiscapacidad = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel8.setText("Vigencia:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 AÑO", "2 AÑOS", "3 AÑOS" }));
+        cbovigencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 AÑO", "2 AÑOS", "3 AÑOS" }));
+        cbovigencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbovigenciaActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Atrás");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -62,10 +68,12 @@ public class frmLicencia extends javax.swing.JFrame {
 
         jLabel10.setText("Costo:");
 
-        jCheckBox1.setText("¿Cuentas con alguna discapacidad?");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        txtcosto.setEditable(false);
+
+        cbodiscapacidad.setText("¿Cuentas con alguna discapacidad?");
+        cbodiscapacidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                cbodiscapacidadActionPerformed(evt);
             }
         });
 
@@ -85,18 +93,18 @@ public class frmLicencia extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addGap(60, 60, 60)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbovigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(149, 149, 149))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox1))
+                    .addComponent(cbodiscapacidad))
                 .addGap(133, 133, 133))
         );
         layout.setVerticalGroup(
@@ -107,13 +115,13 @@ public class frmLicencia extends javax.swing.JFrame {
                 .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbovigencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
-                .addComponent(jCheckBox1)
+                .addComponent(cbodiscapacidad)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -125,13 +133,13 @@ public class frmLicencia extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    private void cbodiscapacidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbodiscapacidadActionPerformed
+precios();        // TODO add your handling code here:
+    }//GEN-LAST:event_cbodiscapacidadActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-   frmPersona per = new frmPersona();
-        per.setVisible(true);
+   //frmRegistroPersona per = new frmRegistroPersona();
+      //  per.setVisible(true);
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -142,6 +150,33 @@ JOptionPane.showMessageDialog(null, "Su tramite fue realizado con exito");
         this.dispose();  
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void cbovigenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbovigenciaActionPerformed
+precios();
+    }//GEN-LAST:event_cbovigenciaActionPerformed
+public void precios(){
+            if (cbovigencia.getSelectedItem()=="1 AÑO") {
+            if (cbodiscapacidad.isSelected()) {
+              txtcosto.setText("200");
+            }else{
+              txtcosto.setText("600");  
+            }
+    
+        }
+         if (cbovigencia.getSelectedItem()=="2 AÑOS") {
+              if (cbodiscapacidad.isSelected()) {
+             txtcosto.setText("500");  
+            }else{
+             txtcosto.setText("900");   
+            } 
+        }
+          if (cbovigencia.getSelectedItem()=="3 AÑOS") {
+               if (cbodiscapacidad.isSelected()) {
+              txtcosto.setText("700");  
+            }else{
+             txtcosto.setText("1100");   
+            }
+        }
+}
     /**
      * @param args the command line arguments
      */
@@ -178,13 +213,13 @@ JOptionPane.showMessageDialog(null, "Su tramite fue realizado con exito");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox cbodiscapacidad;
+    private javax.swing.JComboBox<String> cbovigencia;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtcosto;
     // End of variables declaration//GEN-END:variables
 }

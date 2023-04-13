@@ -14,4 +14,6 @@ import java.util.List;
 public interface IPersonaDAO {
     public List<Persona> listaPersonas();
     public List<Persona> listaPersonas(String filtro);
+    public Persona agregarPersona(Persona persona);
+    public Persona editarPersona(Persona persona);
 }
