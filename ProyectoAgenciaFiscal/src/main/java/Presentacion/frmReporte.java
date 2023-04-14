@@ -22,8 +22,13 @@ import java.io.File;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -119,7 +124,7 @@ public class frmReporte extends javax.swing.JFrame {
                     listaPorNombre.add(tramite);
                 }
             }
-            listaActual=listaPorNombre;
+            listaActual = listaPorNombre;
         }
 
         DefaultTableModel defa = (DefaultTableModel) tblConsultas.getModel();
@@ -451,6 +456,11 @@ public class frmReporte extends javax.swing.JFrame {
             }
 
             try {
+                Map parametro = new HashMap();
+                LocalDateTime fechaHoraActual = LocalDateTime.now();
+                DateTimeFormatter formatEscrito = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy, hh:mm a");
+                String fechaHoraEscrita = fechaHoraActual.format(formatEscrito);
+                parametro.put("fecha",fechaHoraEscrita);
                 // Cargar los datos en un JRBeanCollectionDataSource
                 JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(listaReporteTramite);
 
@@ -459,7 +469,7 @@ public class frmReporte extends javax.swing.JFrame {
                 JasperReport jasperReport = JasperCompileManager.compileReport(reportFile);
 
                 // Llenar el reporte con los datos
-                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, beanColDataSource);
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametro, beanColDataSource);
 
                 // Visualizar el reporte
                 JasperExportManager.exportReportToPdfFile(jasperPrint, "./ReporteTramites.pdf");
@@ -475,7 +485,7 @@ public class frmReporte extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaInicioInputMethodTextChanged
 
     private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
-    llenarTabla();
+        llenarTabla();
     }//GEN-LAST:event_txtBusquedaKeyReleased
 
     public static void main(String args[]) {

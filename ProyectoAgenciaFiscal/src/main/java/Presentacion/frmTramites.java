@@ -46,7 +46,6 @@ public class frmTramites extends javax.swing.JFrame {
            this.LicenciaNegocio=LicenciaNegocio;
   
         botoneDiseño();
-        
         initComponents();
         tabla();
         llenarTabla();
@@ -92,6 +91,12 @@ public class frmTramites extends javax.swing.JFrame {
         for (Persona persona :listaActual) {
             String nombreCompleto=persona.getNombre()+" "+persona.getApellidoPaterno()+" "+persona.getApellidoMaterno();
             if (nombreCompleto.toLowerCase().contains(txtBusqueda.getText().toLowerCase())) {
+                listaPorNombre.add(persona);
+            }
+            else if (persona.getCurp().toLowerCase().contains(txtBusqueda.getText().toLowerCase())) {
+                listaPorNombre.add(persona);
+            }
+            else if (persona.getRfc().toLowerCase().contains(txtBusqueda.getText().toLowerCase())) {
                 listaPorNombre.add(persona);
             }
         }
