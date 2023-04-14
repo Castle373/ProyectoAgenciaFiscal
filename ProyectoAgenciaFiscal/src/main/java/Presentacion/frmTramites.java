@@ -65,7 +65,7 @@ public class frmTramites extends javax.swing.JFrame {
         defa.addColumn("RFC");
         defa.addColumn("Fecha de nacimiento");
         defa.addColumn("Telefono");
-         defa.addColumn("Discapacidad");
+        defa.addColumn("Discapacidad");
         defa.addColumn("Licencia");
         defa.addColumn("Automoviles");
         TableColumn nombreColumna = tblTramites.getColumnModel().getColumn(0);
@@ -108,7 +108,7 @@ public class frmTramites extends javax.swing.JFrame {
                datos[2]=persona.getRfc();
                datos[3]=formato.format(persona.getFechaNacimiento().getTime());
                datos[4]=persona.getTelefono();
-               datos[5] = persona.getDiscapacidad();
+               datos[5]=persona.getDiscapacidad();
                datos[6]=btnLicencia;
                datos[7]=btnAutomoviles;
                defa.addRow(datos);

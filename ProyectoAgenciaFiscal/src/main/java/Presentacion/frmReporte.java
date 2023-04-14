@@ -57,36 +57,36 @@ public class frmReporte extends javax.swing.JFrame {
      */
     public frmReporte() {
         initComponents();
-//        fechaInicio.addDateChangeListener(event -> {
-//            // Obtener la fecha seleccionada
-//            LocalDate dateInicio = event.getNewDate();
-//
-//            if (fechaFin.getDate() != null && fechaFin.getDate() != null) {
-//                LocalDate dateFin = fechaFin.getDate();
-//                if (dateInicio.isAfter(dateFin)) {
-//                    fechaInicio.setDate(event.getOldDate());
-//                    fechaInicio.closePopup();
-//                    JOptionPane.showMessageDialog(null, "La fecha de inicio no puede ser posterior a la fecha de fin", "Error en la fecha de inicio", JOptionPane.ERROR_MESSAGE);
-//                }
-//            }
-//            llenarTabla();
-//        });
-//        fechaFin.addDateChangeListener(event -> {
-//            // Obtener la fecha seleccionada
-//
-//            LocalDate dateFin = event.getNewDate();
-//
-//            if (fechaFin.getDate() != null && fechaFin.getDate() != null) {
-//                LocalDate dateInicio = fechaInicio.getDate();
-//                if (dateFin.isBefore(dateInicio)) {
-//                    fechaFin.closePopup();
-//                    fechaFin.setDate(event.getOldDate());
-//                    JOptionPane.showMessageDialog(null, "La fecha de fin no puede ser anterior a la fecha de inicio", "Error en la fecha de fin", JOptionPane.ERROR_MESSAGE);
-//
-//                }
-//            }
-//            llenarTabla();
-//        });
+        fechaInicio.addDateChangeListener(event -> {
+            // Obtener la fecha seleccionada
+            LocalDate dateInicio = event.getNewDate();
+
+            if (fechaFin.getDate() != null && fechaFin.getDate() != null) {
+                LocalDate dateFin = fechaFin.getDate();
+                if (dateInicio.isAfter(dateFin)) {
+                    fechaInicio.setDate(event.getOldDate());
+                    fechaInicio.closePopup();
+                    JOptionPane.showMessageDialog(null, "La fecha de inicio no puede ser posterior a la fecha de fin", "Error en la fecha de inicio", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            llenarTabla();
+        });
+        fechaFin.addDateChangeListener(event -> {
+            // Obtener la fecha seleccionada
+
+            LocalDate dateFin = event.getNewDate();
+
+            if (fechaFin.getDate() != null && fechaFin.getDate() != null) {
+                LocalDate dateInicio = fechaInicio.getDate();
+                if (dateFin.isBefore(dateInicio)) {
+                    fechaFin.closePopup();
+                    fechaFin.setDate(event.getOldDate());
+                    JOptionPane.showMessageDialog(null, "La fecha de fin no puede ser anterior a la fecha de inicio", "Error en la fecha de fin", JOptionPane.ERROR_MESSAGE);
+
+                }
+            }
+            llenarTabla();
+        });
         tabla();
         llenarTabla();
     }
@@ -110,7 +110,7 @@ public class frmReporte extends javax.swing.JFrame {
         if (!chkPeriodos.isSelected()) {
             listaActual = tramiteDAO.listaTramite(chkLicencia.isSelected(), chkPlaca.isSelected(), null, null);
         } else {
-            listaActual = tramiteDAO.listaTramite(chkLicencia.isSelected(), chkPlaca.isSelected(), null, null);
+            listaActual = tramiteDAO.listaTramite(chkLicencia.isSelected(), chkPlaca.isSelected(), fechaInicio.getDate(), fechaFin.getDate());
         }
 
         Encriptacion AES = new Encriptacion();
@@ -167,15 +167,17 @@ public class frmReporte extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblConsultas = new javax.swing.JTable();
+        fechaInicio = new com.github.lgooddatepicker.components.DatePicker();
+        fechaFin = new com.github.lgooddatepicker.components.DatePicker();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel3.setBackground(new java.awt.Color(102, 89, 222));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel7.setText("Reporte Tramites");
         jLabel7.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 60)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Reporte Tramites");
 
         jButton2.setText("Atrás");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -209,8 +211,8 @@ public class frmReporte extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel1.setFont(new java.awt.Font("Microsoft YaHei Light", 1, 18)); // NOI18N
         jLabel1.setText("Filtros");
+        jLabel1.setFont(new java.awt.Font("Microsoft YaHei Light", 1, 18)); // NOI18N
 
         txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -223,11 +225,11 @@ public class frmReporte extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 12)); // NOI18N
         jLabel3.setText("Periodo:");
+        jLabel3.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 12)); // NOI18N
 
-        jLabel4.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 12)); // NOI18N
         jLabel4.setText("Nombre:");
+        jLabel4.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 12)); // NOI18N
 
         chkLicencia.setSelected(true);
         chkLicencia.setText("Licencia");
@@ -245,14 +247,14 @@ public class frmReporte extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 12)); // NOI18N
         jLabel5.setText("Tipo de trámite:");
+        jLabel5.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 12)); // NOI18N
 
-        jLabel6.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 12)); // NOI18N
         jLabel6.setText("a");
+        jLabel6.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 12)); // NOI18N
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Buscar");
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         chkPeriodos.setSelected(true);
@@ -263,8 +265,8 @@ public class frmReporte extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Generar Reporte");
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -306,13 +308,8 @@ public class frmReporte extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(123, 123, 123)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addGap(21, 21, 21)
@@ -322,44 +319,62 @@ public class frmReporte extends javax.swing.JFrame {
                                         .addGap(1, 1, 1)
                                         .addComponent(chkLicencia)
                                         .addGap(11, 11, 11)
-                                        .addComponent(chkPlaca)))
-                                .addGap(30, 30, 30)
+                                        .addComponent(chkPlaca))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(30, 30, 30)
-                                        .addComponent(chkPeriodos))
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(117, 117, 117)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 147, Short.MAX_VALUE)))
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(chkPeriodos)))
+                                .addGap(15, 15, 15)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 120, Short.MAX_VALUE))
+                            .addComponent(jLabel1))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(4, 4, 4)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel6))
-                        .addGap(14, 14, 14)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(8, 8, 8)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(chkLicencia)
-                            .addComponent(chkPlaca)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(14, 14, 14))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel6)
+                                            .addComponent(fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(chkPeriodos))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(8, 8, 8)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(chkLicencia)
+                                    .addComponent(chkPlaca)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(chkPeriodos)
-                        .addGap(25, 25, 25)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addGap(65, 65, 65)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -502,6 +517,8 @@ public class frmReporte extends javax.swing.JFrame {
     private javax.swing.JCheckBox chkLicencia;
     private javax.swing.JCheckBox chkPeriodos;
     private javax.swing.JCheckBox chkPlaca;
+    private com.github.lgooddatepicker.components.DatePicker fechaFin;
+    private com.github.lgooddatepicker.components.DatePicker fechaInicio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

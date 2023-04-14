@@ -5,6 +5,7 @@
 package Negocio;
 
 import Entity.Automovil;
+import Entity.Persona;
 import Excepciones.AutomovilException;
 import INegocio.IAutomovilNegocio;
 import IPersistencia.IAutomovilDAO;
@@ -49,6 +50,16 @@ public class AutomovilNegocio implements IAutomovilNegocio {
         }
 
         return autoAgregado;
+    }
+
+    @Override
+    public Automovil cambiarDueño(Automovil auto,Persona persona) {
+        return automovilDAO.cambiarDueño(auto, persona);
+    }
+
+    @Override
+    public Automovil bajaDueño(Automovil auto) {
+       return automovilDAO.bajaDueño(auto);
     }
 
 }

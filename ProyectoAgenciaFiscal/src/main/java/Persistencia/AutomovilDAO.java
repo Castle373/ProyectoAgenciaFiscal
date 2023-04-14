@@ -84,4 +84,48 @@ public class AutomovilDAO implements IAutomovilDAO {
         return listaAuto;
     }
 
+    @Override
+    public Automovil cambiarDueño(Automovil auto, Persona persona) {
+EntityManager entityManager = this.conexionBD.crearConexion();
+        entityManager.getTransaction().begin();
+        try {
+            Automovil automovil = entityManager.find(Automovil.class, auto.getId());
+            if (automovil != null) {
+                
+                automovil.setPersona(persona);
+                entityManager.merge(automovil);
+                return automovil;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+        entityManager.getTransaction().commit();
+        return null;
+    }
+
+    @Override
+    public Automovil bajaDueño(Automovil auto) {
+        EntityManager entityManager = this.conexionBD.crearConexion();
+        entityManager.getTransaction().begin();
+        try {
+            Automovil automovil = entityManager.find(Automovil.class, auto.getId());
+            if (automovil != null) {
+                Persona persona = automovil.getPersona();
+                automovil.setPersona(null);
+                entityManager.merge(automovil);
+                return automovil;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+        entityManager.getTransaction().commit();
+        return null;
+    }
+    /*
+    EntityManager entityManager = this.conexionBD.crearConexion();
+        Automovil automovil = entityManager.find(Automovil.class, auto.getId());
+        entityManager.getTransaction().begin();
+        
+        entityManager.getTransaction().commit();
+     */
 }

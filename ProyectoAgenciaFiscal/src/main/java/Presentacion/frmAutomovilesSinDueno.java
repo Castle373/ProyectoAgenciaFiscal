@@ -36,45 +36,45 @@ import javax.swing.table.TableColumn;
  *
  * @author diego
  */
-public class frmAutomoviles extends javax.swing.JFrame {
+public class frmAutomovilesSinDueno extends javax.swing.JFrame {
 
     private int row, columna;
-    private JButton btnSolicitar = new JButton("Solicitar Placas");
+    private JButton btnAdquirir = new JButton("Adquirir Automovil");
     private JButton btnHistorial = new JButton("Historial Placas");
     private List<Automovil> listaActual = new ArrayList<Automovil>();
     private IPlacasNegocio placasNegocio;
     private IAutomovilNegocio automovilNegocio;
     private ILicenciaNegocio licenciaNegocio;
-    private boolean licenciaVigente=false;
     private Persona persona;
 
     /**
      * Creates new form frmAutomoviles
      */
-    public frmAutomoviles(IAutomovilNegocio automovilNegocio, Persona persona) {
+    public frmAutomovilesSinDueno(IAutomovilNegocio automovilNegocio, Persona persona) {
         IConexionBD conexionBD = new ConexionBD();
         IPlacasDAO placasDAO = new PlacasDAO(conexionBD);
         ILicenciaDAO licenciaDAO = new LicenciaDAO(conexionBD);
-        this.licenciaNegocio= new LicenciaNegocio(licenciaDAO);
+        this.licenciaNegocio = new LicenciaNegocio(licenciaDAO);
         this.placasNegocio = new PlacasNegocio(placasDAO);
         this.persona = persona;
         this.automovilNegocio = automovilNegocio;
         initComponents();
         tabla();
         llenarTabla();
-        comprobarLicencia();
         botoneDiseño();
-        String nombreCompleto=persona.getNombre()+" "+persona.getApellidoPaterno()+" "+persona.getApellidoMaterno();
+        String nombreCompleto = persona.getNombre() + " " + persona.getApellidoPaterno() + " " + persona.getApellidoMaterno();
         this.lblCliente.setText(nombreCompleto);
     }
-    public void botoneDiseño(){
-        btnSolicitar.setBackground(new Color(102,89,222));
-        btnHistorial.setBackground(new Color(102,89,222));
-        btnSolicitar.setForeground(Color.BLACK);
+
+    public void botoneDiseño() {
+        btnAdquirir.setBackground(new Color(232, 57, 95));
+        btnHistorial.setBackground(new Color(102, 89, 222));
+        btnAdquirir.setForeground(Color.BLACK);
         btnHistorial.setForeground(Color.BLACK);
-        btnSolicitar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnAdquirir.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         btnHistorial.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
     }
+
     public void tabla() {
         tblAuto.setDefaultRenderer(Object.class, new RenderTabla());
         DefaultTableModel defa = new DefaultTableModel();
@@ -111,26 +111,14 @@ public class frmAutomoviles extends javax.swing.JFrame {
                 datos[4] = "Usado";
             }
 
-            datos[5] = btnSolicitar;
+            datos[5] = btnAdquirir;
             datos[6] = btnHistorial;
             defa.addRow(datos);
-            
+
         }
 
     }
-    public void comprobarLicencia(){
-        List<Licencia> listaLicencia=licenciaNegocio.listaLicenciaPersona(persona.getId());
-        if (listaLicencia.isEmpty()) {
-            lblLicenciaVigente.setText("Sin Licencia Vigente");
-            lblLicenciaVigente.setForeground(Color.red);
-            licenciaVigente=false;
-        }else{
-             lblLicenciaVigente.setText("Con Licencia Vigente");
-             lblLicenciaVigente.setForeground(Color.GREEN);
-             licenciaVigente=true;
-        }
-        
-    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -323,7 +311,7 @@ public class frmAutomoviles extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void tblAutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAutoMouseClicked
-            columna = tblAuto.getColumnModel().getColumnIndexAtX(evt.getX());
+        columna = tblAuto.getColumnModel().getColumnIndexAtX(evt.getX());
         row = evt.getY() / tblAuto.getRowHeight();
         if (columna <= tblAuto.getColumnCount() && columna >= 0 && row <= tblAuto.getRowCount() && row >= 0) {
             Object objeto = tblAuto.getValueAt(row, columna);
@@ -331,36 +319,15 @@ public class frmAutomoviles extends javax.swing.JFrame {
                 ((JButton) objeto).doClick();
                 JButton boton = (JButton) objeto;
                 if (boton.equals(btnHistorial)) {
-                    frmHistorialPlacas frmhisto = new frmHistorialPlacas( listaActual.get(row), persona);
+                    frmHistorialPlacas frmhisto = new frmHistorialPlacas(listaActual.get(row), persona);
                     frmhisto.setVisible(true);
                     this.dispose();
                 }
-                if (boton.equals(btnSolicitar)) {
-                    if (!licenciaVigente) {
-                        JOptionPane.showMessageDialog(rootPane,"No Cuentas con una Licencia Vigente para Realizar esta Operacion","Sin licencia",JOptionPane.WARNING_MESSAGE);
-                        return;
+                if (boton.equals(btnAdquirir)) {
+                    int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de realizar esta operación?");
+                    if (opcion == JOptionPane.YES_OPTION) {
+                       automovilNegocio.cambiarDueño(listaActual.get(row),persona);
                     }
-                    if (tblAuto.getValueAt(row, 4).equals("Nuevo")) {
-                        int respuesta = JOptionPane.showConfirmDialog(rootPane, "Este carro es nuevo, Deseas solicitar una placa?", "Confirmación", JOptionPane.YES_NO_OPTION);
-                        if (respuesta == JOptionPane.YES_OPTION) {
-                            
-                            frmPlaca frmplacas = new frmPlaca(automovilNegocio, placasNegocio, listaActual.get(row), persona,1500);
-                            frmplacas.setVisible(true);
-                            this.dispose();
-                        } else {
-                            return;
-                        }
-                    } else {
-                        int respuesta = JOptionPane.showConfirmDialog(rootPane, "Este carro ya cuenta con placas, Desea cambiar de placas?", "Confirmación", JOptionPane.YES_NO_OPTION);
-                        if (respuesta == JOptionPane.YES_OPTION) {
-                            frmPlaca frmplacas = new frmPlaca(automovilNegocio, placasNegocio, listaActual.get(row), persona,1000);
-                            frmplacas.setVisible(true);
-                            this.dispose();
-                        } else {
-                            return;
-                        }
-                    }
-
                 }
             }
         }
@@ -383,14 +350,15 @@ public class frmAutomoviles extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmAutomoviles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmAutomovilesSinDueno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmAutomoviles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmAutomovilesSinDueno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmAutomoviles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmAutomovilesSinDueno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmAutomoviles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmAutomovilesSinDueno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

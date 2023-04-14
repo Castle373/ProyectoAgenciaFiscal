@@ -17,4 +17,6 @@ public interface IAutomovilNegocio {
     public List<Automovil> BuscarAutomovilesPorPersona(int id);
     public List<Automovil> BuscarAutomovilesPorPersona(int id,String filtro);
     public Automovil registrarAutomovil(Automovil auto)throws AutomovilException;
+    public Automovil cambiarDueño(Automovil auto,Persona persona);
+    public Automovil bajaDueño(Automovil auto);
 }
