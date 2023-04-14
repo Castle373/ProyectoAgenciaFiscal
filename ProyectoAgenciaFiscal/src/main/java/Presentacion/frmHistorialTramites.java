@@ -4,7 +4,9 @@
  */
 package Presentacion;
 
+import Entity.Licencia;
 import Entity.Persona;
+import Entity.Placas;
 import Entity.Tramite;
 import INegocio.IPersonaNegocio;
 import INegocio.ITramiteNegocio;
@@ -18,6 +20,7 @@ import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -41,10 +44,11 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  * @author DELL User
  */
 public class frmHistorialTramites extends javax.swing.JFrame {
+
     private List<Persona> listaActual;
     private IPersonaNegocio personaNegocio;
     private int row, columna;
-    private JButton btnHistorial = new JButton("Historial");
+    private JButton btnHistorial = new JButton("Generar reporte");
 
     /**
      * Creates new form frmHistorialTramites
@@ -243,15 +247,27 @@ public class frmHistorialTramites extends javax.swing.JFrame {
                     List<Tramite> listaTramitePersona = tramitenegocio.listaTramitePersona(listaActual.get(row));
 
                     if (!listaTramitePersona.isEmpty()) {
-                          int respuesta = JOptionPane.showConfirmDialog(rootPane, "Estás seguro de crear un PDF?", "Confirmación", JOptionPane.YES_NO_OPTION);
+                        int respuesta = JOptionPane.showConfirmDialog(rootPane, "Estás seguro de crear un PDF?", "Confirmación", JOptionPane.YES_NO_OPTION);
                         if (respuesta == JOptionPane.YES_OPTION) {
-                            List<ReporteTramites> listaReporteTramite= new ArrayList<ReporteTramites>();
+                            List<ReporteTramites> listaReporteTramite = new ArrayList<ReporteTramites>();
+                            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
                             for (int i = 0; i < listaTramitePersona.size(); i++) {
                                 ReporteTramites reporte = new ReporteTramites();
-                                Persona personaReporte = listaTramitePersona.get(i).getPersona(); 
-//                                String nombre = personaReporte.getNombre()+" "+personaReporte.g;
                                 
-                                
+                                Persona personaReporte = listaTramitePersona.get(i).getPersona();
+                                String nombre = personaReporte.getNombre() + " " + personaReporte.getApellidoPaterno() + " " + personaReporte.getApellidoMaterno();
+                                String costo = String.valueOf(listaTramitePersona.get(i).getCosto());
+                                String fecha = formato.format(listaTramitePersona.get(i).getFechaTramite().getTime());
+                                String tipo = "";
+                                if (listaTramitePersona.get(i) instanceof Placas) {
+                                    tipo = "Placas";
+                                }
+                                if (listaTramitePersona.get(i) instanceof Licencia) {
+                                    tipo = "Licencias";
+                                }
+
+                                ReporteTramites repo = new ReporteTramites(costo, fecha, tipo, nombre);
+                                listaReporteTramite.add(repo);
                             }
                             try {
                                 // Cargar los datos en un JRBeanCollectionDataSource
@@ -282,7 +298,7 @@ public class frmHistorialTramites extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String busqueda = txtBusqueda.getText();
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
