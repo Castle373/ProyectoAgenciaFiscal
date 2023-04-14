@@ -17,7 +17,7 @@ import javax.swing.table.TableColumn;
 
 /**
  *
- * @author diego
+ * @author Gabriel
  */
 public class frmRegistroPersona extends javax.swing.JFrame {
     private IPersonaNegocio personaNegocio;

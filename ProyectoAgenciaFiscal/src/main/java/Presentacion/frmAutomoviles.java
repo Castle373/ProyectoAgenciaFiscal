@@ -315,7 +315,9 @@ public class frmAutomoviles extends javax.swing.JFrame {
         IConexionBD conexionBD = new ConexionBD();
         IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
         IPersonaNegocio personaNegocio = new PersonaNegocio(personaDAO);
-        frmTramites frm = new frmTramites(personaNegocio, automovilNegocio);
+          ILicenciaDAO licenciaDAO=new LicenciaDAO(conexionBD);
+           ILicenciaNegocio licencianegocio=new LicenciaNegocio(licenciaDAO);
+        frmTramites frm = new frmTramites(personaNegocio, automovilNegocio,licencianegocio);
         frm.setVisible(true);
         this.dispose();
 

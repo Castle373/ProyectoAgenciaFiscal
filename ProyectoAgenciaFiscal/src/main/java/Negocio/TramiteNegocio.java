@@ -4,6 +4,7 @@
  */
 package Negocio;
 
+import Entity.Persona;
 import Entity.Tramite;
 import INegocio.ITramiteNegocio;
 import IPersistencia.ITramiteDAO;
@@ -26,6 +27,11 @@ public class TramiteNegocio implements ITramiteNegocio{
     @Override
     public List<Tramite> listaTramite(boolean placas, boolean licencia, LocalDate fechaInicio, LocalDate fechaFin) {
        return tramiteDAO.listaTramite(placas, licencia, fechaInicio, fechaFin);
+    }
+
+    @Override
+    public List<Tramite> listaTramitePersona(Persona persona) {
+        return tramiteDAO.listaTramitePersona(persona);
     }
     
 }

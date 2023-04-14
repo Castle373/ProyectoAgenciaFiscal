@@ -74,4 +74,16 @@ public class TramiteDAO implements ITramiteDAO {
 
         return listaTramites;
     }
+
+    @Override
+    public List<Tramite> listaTramitePersona(Persona persona) {
+        EntityManager entityManager = this.conexionBD.crearConexion();
+        entityManager.getTransaction().begin();
+        TypedQuery<Tramite> query = entityManager.createQuery("SELECT t FROM Tramite t WHERE t.persona.id = :idPersona", Tramite.class);
+        query.setParameter("idPersona", persona.getId());
+        List<Tramite> listaTramite = query.getResultList();
+        entityManager.getTransaction().commit();
+        return listaTramite;
+    }
+
 }

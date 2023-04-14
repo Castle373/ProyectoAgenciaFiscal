@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author diego
+ * @author Gabriel
  */
 public class PersonaNegocio implements IPersonaNegocio{
     

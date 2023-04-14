@@ -15,4 +15,5 @@ public interface ILicenciaDAO {
     public List<Licencia> listaLicenciaPersona(int id);
     public List<Licencia> listaLicenciaPersonaVigentes(int id);
     public Licencia agregaLicencia(Licencia licencia);
+
 }

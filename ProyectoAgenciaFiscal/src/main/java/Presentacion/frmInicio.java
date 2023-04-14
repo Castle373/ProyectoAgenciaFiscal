@@ -5,14 +5,18 @@
 package Presentacion;
 
 import INegocio.IAutomovilNegocio;
+import INegocio.ILicenciaNegocio;
 import INegocio.IPersonaNegocio;
 import IPersistencia.IAutomovilDAO;
 import IPersistencia.IConexionBD;
+import IPersistencia.ILicenciaDAO;
 import IPersistencia.IPersonaDAO;
 import Negocio.AutomovilNegocio;
+import Negocio.LicenciaNegocio;
 import Negocio.PersonaNegocio;
 import Persistencia.AutomovilDAO;
 import Persistencia.ConexionBD;
+import Persistencia.LicenciaDAO;
 import Persistencia.PersonaDAO;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -99,8 +103,19 @@ public class frmInicio extends javax.swing.JFrame {
         });
 
         jButton7.setText("Generar registros");
+<<<<<<< HEAD
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel1.setText("Trámites");
+=======
         jButton7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton7.setFocusPainted(false);
+>>>>>>> 64314f04f534e866ddad5cee836c7b321cb0bfe7
 
         jButton1.setText("Salir");
         jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -229,12 +244,24 @@ System.exit(0);        // TODO add your handling code here:
         IConexionBD conexionBD = new ConexionBD();
         IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
         IAutomovilDAO automovilDAO = new AutomovilDAO(conexionBD);
+        ILicenciaDAO licenciaDAO=new LicenciaDAO(conexionBD);
         IPersonaNegocio personaNegocio = new PersonaNegocio(personaDAO);
         IAutomovilNegocio automovilNegocio = new AutomovilNegocio(automovilDAO);
-    frmTramites frm = new frmTramites(personaNegocio,automovilNegocio);
+<<<<<<< HEAD
+        frmTramites frm = new frmTramites(personaNegocio, automovilNegocio);
+        frm.setVisible(true);
+        this.dispose();
+=======
+        ILicenciaNegocio licencianegocio=new LicenciaNegocio(licenciaDAO);
+    frmTramites frm = new frmTramites(personaNegocio,automovilNegocio,licencianegocio);
     frm.setVisible(true);
     this.dispose();
+>>>>>>> 64314f04f534e866ddad5cee836c7b321cb0bfe7
     }//GEN-LAST:event_btnTramitesActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments

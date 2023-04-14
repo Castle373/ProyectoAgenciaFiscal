@@ -18,7 +18,7 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author diego
+ * @author Gabriel
  */
 public class PersonaDAO implements IPersonaDAO{
     private IConexionBD conexionBD;
