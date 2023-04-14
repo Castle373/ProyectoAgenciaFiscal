@@ -7,6 +7,7 @@ package Presentacion;
 
 import Entity.Persona;
 import INegocio.IAutomovilNegocio;
+import INegocio.ILicenciaNegocio;
 import INegocio.IPersonaNegocio;
 import Persistencia.Encriptacion;
 import java.awt.Color;
@@ -34,13 +35,16 @@ public class frmTramites extends javax.swing.JFrame {
     JButton btnAutomoviles = new JButton("Automoviles");
     private IPersonaNegocio personaNegocio;
     private IAutomovilNegocio automovilNegocio;
+      private ILicenciaNegocio LicenciaNegocio;
     private List<Persona> listaActual = new ArrayList<Persona>();
     /**
      * Creates new form frmTramites
      */
-    public frmTramites(IPersonaNegocio personaNegocio,IAutomovilNegocio automovilNegocio) {
+    public frmTramites(IPersonaNegocio personaNegocio,IAutomovilNegocio automovilNegocio,ILicenciaNegocio LicenciaNegocio) {
         this.automovilNegocio=automovilNegocio;
         this.personaNegocio=personaNegocio;
+           this.LicenciaNegocio=LicenciaNegocio;
+  
         botoneDiseño();
         
         initComponents();
@@ -276,7 +280,9 @@ public class frmTramites extends javax.swing.JFrame {
                 if(botones.equals(btnLicencia)){
                     //AQUI LO QUE HARA EL BOTON
                     //Row es para especificar en que columna se pulso el boton
-
+                    System.out.println(listaActual.get(row));
+frmLicencia ee  = new frmLicencia(listaActual.get(row),LicenciaNegocio);
+                        ee.setVisible(true);
                 }else{
                     if(botones.equals(btnAutomoviles)){
 

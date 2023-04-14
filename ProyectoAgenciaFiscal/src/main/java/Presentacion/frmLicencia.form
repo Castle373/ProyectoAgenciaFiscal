@@ -49,11 +49,8 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel1" min="-2" pref="203" max="-2" attributes="0"/>
-                  <Component id="cbodiscapacidad" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="133" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" pref="203" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -72,9 +69,7 @@
                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                   <Component id="txtcosto" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-              <Component id="cbodiscapacidad" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="80" max="32767" attributes="0"/>
+              <EmptySpace pref="130" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButton2" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                   <Component id="jButton3" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
@@ -140,14 +135,6 @@
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="cbodiscapacidad">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#xbf;Cuentas con alguna discapacidad?"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbodiscapacidadActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

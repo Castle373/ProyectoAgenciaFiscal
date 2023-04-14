@@ -4,20 +4,31 @@
  */
 package Presentacion;
 
+import Entity.Licencia;
+import Entity.Persona;
+import INegocio.ILicenciaNegocio;
+import Negocio.LicenciaNegocio;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author DELL User
+ * @author Gabriel
  */
 public class frmLicencia extends javax.swing.JFrame {
-
+private Persona persona;
+private Licencia licencia;
+private ILicenciaNegocio LicenciaNegocio;
+private int anios=0;
     /**
      * Creates new form frmLicencia
      */
-    public frmLicencia() {
+    public frmLicencia(Persona persona,ILicenciaNegocio LicenciaNegocio) {
         initComponents();
-        precios();
+        this.persona=persona;
+        this.LicenciaNegocio=LicenciaNegocio;
+          precios();
     }
 
     /**
@@ -36,7 +47,6 @@ public class frmLicencia extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txtcosto = new javax.swing.JTextField();
-        cbodiscapacidad = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,13 +80,6 @@ public class frmLicencia extends javax.swing.JFrame {
 
         txtcosto.setEditable(false);
 
-        cbodiscapacidad.setText("¿Cuentas con alguna discapacidad?");
-        cbodiscapacidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbodiscapacidadActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,10 +105,8 @@ public class frmLicencia extends javax.swing.JFrame {
                         .addGap(149, 149, 149))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbodiscapacidad))
-                .addGap(133, 133, 133))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(140, 140, 140))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,9 +121,7 @@ public class frmLicencia extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
                     .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addComponent(cbodiscapacidad)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -133,10 +132,6 @@ public class frmLicencia extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbodiscapacidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbodiscapacidadActionPerformed
-precios();        // TODO add your handling code here:
-    }//GEN-LAST:event_cbodiscapacidadActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
    //frmRegistroPersona per = new frmRegistroPersona();
       //  per.setVisible(true);
@@ -144,9 +139,8 @@ precios();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-JOptionPane.showMessageDialog(null, "Su tramite fue realizado con exito");         
-        frmInicio inicio = new frmInicio();
-        inicio.setVisible(true);
+
+        agregar();
         this.dispose();  
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -155,28 +149,47 @@ precios();
     }//GEN-LAST:event_cbovigenciaActionPerformed
 public void precios(){
             if (cbovigencia.getSelectedItem()=="1 AÑO") {
-            if (cbodiscapacidad.isSelected()) {
+            if (persona.getDiscapacidad()==1) {
               txtcosto.setText("200");
             }else{
               txtcosto.setText("600");  
             }
-    
+    anios=1;
         }
          if (cbovigencia.getSelectedItem()=="2 AÑOS") {
-              if (cbodiscapacidad.isSelected()) {
+              if (persona.getDiscapacidad()==1) {
              txtcosto.setText("500");  
             }else{
              txtcosto.setText("900");   
             } 
+                anios=2;
         }
           if (cbovigencia.getSelectedItem()=="3 AÑOS") {
-               if (cbodiscapacidad.isSelected()) {
+               if (persona.getDiscapacidad()==1) {
               txtcosto.setText("700");  
             }else{
              txtcosto.setText("1100");   
             }
+                 anios=3;
         }
 }
+public void agregar(){
+   float costo=Float.valueOf(txtcosto.getText());
+   Calendar calendario=Calendar.getInstance();
+   int ano=calendario.get(Calendar.YEAR)+anios;
+   Calendar cal= new GregorianCalendar(ano,Calendar.MONTH,Calendar.DAY_OF_YEAR);
+     Licencia licencia1=new Licencia(anios,cal,costo,persona);
+     Licencia guardar=LicenciaNegocio.agregaLicencia(licencia1);
+    if (guardar!=null) {
+        JOptionPane.showMessageDialog(this, "SI SE PUDO");
+      
+     
+        this.dispose();
+    }else{
+      JOptionPane.showMessageDialog(this, "NO SE PUDO");   
+    }
+}
+
     /**
      * @param args the command line arguments
      */
@@ -207,13 +220,12 @@ public void precios(){
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmLicencia().setVisible(true);
+              //   new frmLicencia().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox cbodiscapacidad;
     private javax.swing.JComboBox<String> cbovigencia;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author diego
+ * @author Gabriel
  */
 public interface IPersonaDAO {
     public List<Persona> listaPersonas();

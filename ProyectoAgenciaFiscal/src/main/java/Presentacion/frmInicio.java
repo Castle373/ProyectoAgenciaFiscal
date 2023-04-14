@@ -5,14 +5,18 @@
 package Presentacion;
 
 import INegocio.IAutomovilNegocio;
+import INegocio.ILicenciaNegocio;
 import INegocio.IPersonaNegocio;
 import IPersistencia.IAutomovilDAO;
 import IPersistencia.IConexionBD;
+import IPersistencia.ILicenciaDAO;
 import IPersistencia.IPersonaDAO;
 import Negocio.AutomovilNegocio;
+import Negocio.LicenciaNegocio;
 import Negocio.PersonaNegocio;
 import Persistencia.AutomovilDAO;
 import Persistencia.ConexionBD;
+import Persistencia.LicenciaDAO;
 import Persistencia.PersonaDAO;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -229,9 +233,11 @@ System.exit(0);        // TODO add your handling code here:
         IConexionBD conexionBD = new ConexionBD();
         IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
         IAutomovilDAO automovilDAO = new AutomovilDAO(conexionBD);
+        ILicenciaDAO licenciaDAO=new LicenciaDAO(conexionBD);
         IPersonaNegocio personaNegocio = new PersonaNegocio(personaDAO);
         IAutomovilNegocio automovilNegocio = new AutomovilNegocio(automovilDAO);
-    frmTramites frm = new frmTramites(personaNegocio,automovilNegocio);
+        ILicenciaNegocio licencianegocio=new LicenciaNegocio(licenciaDAO);
+    frmTramites frm = new frmTramites(personaNegocio,automovilNegocio,licencianegocio);
     frm.setVisible(true);
     this.dispose();
     }//GEN-LAST:event_btnTramitesActionPerformed
