@@ -6,7 +6,6 @@ package Presentacion;
 
 import Entity.Persona;
 import Entity.Tramite;
-import static Entity.Tramite_.persona;
 import INegocio.IPersonaNegocio;
 import INegocio.ITramiteNegocio;
 import IPersistencia.IConexionBD;
