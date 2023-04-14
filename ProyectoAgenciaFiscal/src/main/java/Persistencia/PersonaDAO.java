@@ -18,7 +18,7 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author diego
+ * @author Gabriel
  */
 public class PersonaDAO implements IPersonaDAO{
     private IConexionBD conexionBD;
@@ -98,4 +98,30 @@ public List<Persona> listaPersonas(String filtro) {
 
    return listasPersonas;
 }
+
+    @Override
+    public Persona agregarPersona(Persona persona) {
+       EntityManager entityManager = this.conexionBD.crearConexion();
+        entityManager.getTransaction().begin();
+        try {
+            entityManager.persist(persona);
+        } catch (Exception e) {
+            return null;
+        }
+        entityManager.getTransaction().commit();
+        return persona; 
+    }
+
+    @Override
+    public Persona editarPersona(Persona persona) {
+       EntityManager entityManager = this.conexionBD.crearConexion();
+        entityManager.getTransaction().begin();
+        try {
+            entityManager.merge(persona);
+        } catch (Exception e) {
+            return null;
+        }
+        entityManager.getTransaction().commit();
+        return persona;  
+    }
 }

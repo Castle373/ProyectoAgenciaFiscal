@@ -23,6 +23,7 @@ import Persistencia.LicenciaDAO;
 import Persistencia.PersonaDAO;
 import Persistencia.PlacasDAO;
 import java.awt.Color;
+import java.awt.Font;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,8 +63,16 @@ public class frmAutomoviles extends javax.swing.JFrame {
         tabla();
         llenarTabla();
         comprobarLicencia();
+        botoneDiseño();
     }
-
+    public void botoneDiseño(){
+        btnSolicitar.setBackground(new Color(102,89,222));
+        btnHistorial.setBackground(new Color(102,89,222));
+        btnSolicitar.setForeground(Color.BLACK);
+        btnHistorial.setForeground(Color.BLACK);
+        btnSolicitar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnHistorial.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+    }
     public void tabla() {
         tblAuto.setDefaultRenderer(Object.class, new RenderTabla());
         DefaultTableModel defa = new DefaultTableModel();
@@ -109,7 +118,6 @@ public class frmAutomoviles extends javax.swing.JFrame {
     }
     public void comprobarLicencia(){
         List<Licencia> listaLicencia=licenciaNegocio.listaLicenciaPersona(persona.getId());
-        System.out.println(listaLicencia.size());
         if (listaLicencia.isEmpty()) {
             lblLicenciaVigente.setText("Sin Licencia Vigente");
             lblLicenciaVigente.setForeground(Color.red);
@@ -130,43 +138,85 @@ public class frmAutomoviles extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblAuto = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        lblLicenciaVigente = new javax.swing.JLabel();
+        lblLicencia = new javax.swing.JLabel();
+        btnRegresar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        btnAgregaCarro = new javax.swing.JButton();
         txtBusqueda = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        btnRegresar = new javax.swing.JButton();
-        btnAgregaCarro = new javax.swing.JButton();
-        lblLicencia = new javax.swing.JLabel();
-        lblLicenciaVigente = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblAuto = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
 
-        jScrollPane3.setFocusable(false);
+        jPanel3.setBackground(new java.awt.Color(102, 89, 222));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        tblAuto = new javax.swing.JTable(){
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
-        };
-        tblAuto.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 60)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Automoviles");
 
-            },
-            new String [] {
+        lblLicenciaVigente.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 14)); // NOI18N
+        lblLicenciaVigente.setText("Estado Licencia");
 
-            }
-        ));
-        tblAuto.getTableHeader().setReorderingAllowed(false);
-        tblAuto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblAutoMouseClicked(evt);
+        lblLicencia.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 14)); // NOI18N
+        lblLicencia.setForeground(new java.awt.Color(255, 255, 255));
+        lblLicencia.setText("Licencia:");
+
+        btnRegresar.setBackground(new java.awt.Color(255, 255, 255));
+        btnRegresar.setText("Regresar");
+        btnRegresar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnRegresar.setFocusPainted(false);
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
             }
         });
-        jScrollPane3.setViewportView(tblAuto);
 
-        jLabel1.setFont(new java.awt.Font("ROG Fonts", 0, 36)); // NOI18N
-        jLabel1.setText("Automoviles");
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(121, 121, 121)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblLicencia)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblLicenciaVigente)
+                .addGap(155, 155, 155))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblLicenciaVigente))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        btnAgregaCarro.setBackground(new java.awt.Color(255, 255, 255));
+        btnAgregaCarro.setText("Agregar Carro");
+        btnAgregaCarro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnAgregaCarro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregaCarroActionPerformed(evt);
+            }
+        });
 
         txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,88 +231,111 @@ public class frmAutomoviles extends javax.swing.JFrame {
 
         jLabel2.setText("Busqueda:");
 
-        btnRegresar.setText("Regresar");
-        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegresarActionPerformed(evt);
+        tblAuto.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        tblAuto.setFocusable(false);
+        tblAuto.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tblAuto.setRowHeight(25);
+        tblAuto.setSelectionBackground(new java.awt.Color(232, 57, 95));
+        tblAuto.setShowVerticalLines(false);
+        tblAuto.getTableHeader().setReorderingAllowed(false);
+        tblAuto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAutoMouseClicked(evt);
             }
         });
+        jScrollPane1.setViewportView(tblAuto);
+        tblAuto.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
+        tblAuto.getTableHeader().setOpaque(false);
+        tblAuto.getTableHeader().setBackground(new Color(102,89,222));
+        tblAuto.getTableHeader().setForeground(new Color(255,255,255));
 
-        btnAgregaCarro.setText("Agregar Carro");
-        btnAgregaCarro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregaCarroActionPerformed(evt);
-            }
-        });
-
-        lblLicencia.setText("Licencia:");
-
-        lblLicenciaVigente.setText("Estado Licencia");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(169, 169, 169)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(54, 54, 54)
+                        .addComponent(btnAgregaCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 865, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAgregaCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(180, 180, 180)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 865, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(btnRegresar)
-                .addGap(112, 112, 112)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAgregaCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(lblLicencia)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblLicenciaVigente)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(btnRegresar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblLicencia)
-                                    .addComponent(lblLicenciaVigente))
-                                .addGap(34, 34, 34)
-                                .addComponent(btnAgregaCarro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)))
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBusquedaActionPerformed
+
+    private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
+        llenarTabla();
+
+    }//GEN-LAST:event_txtBusquedaKeyReleased
+
+    private void btnAgregaCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregaCarroActionPerformed
+        frmRegistroAutomovil frmRegistro = new frmRegistroAutomovil(automovilNegocio, persona);
+        frmRegistro.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAgregaCarroActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        IConexionBD conexionBD = new ConexionBD();
+        IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
+        IPersonaNegocio personaNegocio = new PersonaNegocio(personaDAO);
+          ILicenciaDAO licenciaDAO=new LicenciaDAO(conexionBD);
+           ILicenciaNegocio licencianegocio=new LicenciaNegocio(licenciaDAO);
+        frmTramites frm = new frmTramites(personaNegocio, automovilNegocio,licencianegocio);
+        frm.setVisible(true);
+        this.dispose();
+
+
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
     private void tblAutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAutoMouseClicked
-        columna = tblAuto.getColumnModel().getColumnIndexAtX(evt.getX());
+            columna = tblAuto.getColumnModel().getColumnIndexAtX(evt.getX());
         row = evt.getY() / tblAuto.getRowHeight();
         if (columna <= tblAuto.getColumnCount() && columna >= 0 && row <= tblAuto.getRowCount() && row >= 0) {
             Object objeto = tblAuto.getValueAt(row, columna);
@@ -270,7 +343,7 @@ public class frmAutomoviles extends javax.swing.JFrame {
                 ((JButton) objeto).doClick();
                 JButton boton = (JButton) objeto;
                 if (boton.equals(btnHistorial)) {
-                    frmHistorialPlacas frmhisto = new frmHistorialPlacas(automovilNegocio, placasNegocio, listaActual.get(row), persona);
+                    frmHistorialPlacas frmhisto = new frmHistorialPlacas( listaActual.get(row), persona);
                     frmhisto.setVisible(true);
                     this.dispose();
                 }
@@ -304,32 +377,6 @@ public class frmAutomoviles extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tblAutoMouseClicked
-
-    private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtBusquedaActionPerformed
-
-    private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
-        llenarTabla();
-
-    }//GEN-LAST:event_txtBusquedaKeyReleased
-
-    private void btnAgregaCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregaCarroActionPerformed
-        frmRegistroAutomovil frmRegistro = new frmRegistroAutomovil(automovilNegocio, persona);
-        frmRegistro.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnAgregaCarroActionPerformed
-
-    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        IConexionBD conexionBD = new ConexionBD();
-        IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
-        IPersonaNegocio personaNegocio = new PersonaNegocio(personaDAO);
-        frmTramites frm = new frmTramites(personaNegocio, automovilNegocio);
-        frm.setVisible(true);
-        this.dispose();
-
-
-    }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -369,9 +416,11 @@ public class frmAutomoviles extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregaCarro;
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblLicencia;
     private javax.swing.JLabel lblLicenciaVigente;
     private javax.swing.JTable tblAuto;

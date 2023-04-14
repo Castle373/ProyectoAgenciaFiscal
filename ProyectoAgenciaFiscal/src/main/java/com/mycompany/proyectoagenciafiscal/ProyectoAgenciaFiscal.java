@@ -8,6 +8,7 @@ import Entity.Automovil;
 import Entity.Licencia;
 import Entity.Persona;
 import Entity.Placas;
+import Persistencia.Encriptacion;
 import Presentacion.frmInicio;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -57,41 +58,45 @@ public class ProyectoAgenciaFiscal {
 //        entity.getTransaction().commit();
 //        entity.close();
 //        enti.close();
-        EntityManagerFactory enti = Persistence.createEntityManagerFactory("ConexionD");
-        //Entimanager
-        EntityManager entity = enti.createEntityManager();
-        //Transacion
-        
-        entity.getTransaction().begin();
-        //Crea persona
-        Persona p = new Persona("Diego","D.","Robles","estoesunarfc","estoesunacrup","minumero",new GregorianCalendar(2003, Calendar.JUNE, 1));
-        Automovil auto = new Automovil("1111", "Carro de piedra", "Veneno", "gris", "nox",p);
-//        Automovil auto2 = new Automovil("3333", "carovolador", "Veneno", "gris", "aaa",p);
-        p.agregarAuto(auto);
-//        p.agregarAuto(auto2);
-        Licencia lice  = new Licencia(0, new GregorianCalendar(2003, Calendar.JUNE, 1),100,p);
-        p.agregarTramite(lice);
-
-        
-      
-        
-        // guarda
-        entity.persist(p);
-        entity.getTransaction().commit();
-        entity.getTransaction().begin();
-        //Crea persona
-//        Persona p2 = entity.find(Persona.class, 1);
-        Placas placa = new Placas("estaessuplaca", "ACTIVA", auto, 100, p);
-//        Automovil autoencontrado=entity.find(Automovil.class,auto);
-//        autoencontrado.agregaPlaca(placa);
-        entity.persist(placa);
-//        entity.merge(autoencontrado);
-        
-        
-        // guarda
-        entity.getTransaction().commit();
-        entity.close();
-        enti.close();
+//        EntityManagerFactory enti = Persistence.createEntityManagerFactory("ConexionD");
+//        //Entimanager
+//        EntityManager entity = enti.createEntityManager();
+//        //Transacion
+//        
+//        entity.getTransaction().begin();
+//        //Crea persona
+//          Encriptacion a = new Encriptacion();
+//          String nombre = a.encriptar("Herman");
+//          String ap1 = a.encriptar("Trista");
+//          String ap2 = a.encriptar("Rosales");
+//        Persona p = new Persona(nombre,ap1,ap2,"estoesunarfc","estoesunacrup","minumero",new GregorianCalendar(2003, Calendar.JUNE, 1));
+//        Automovil auto = new Automovil("1111", "Carro de piedra", "Veneno", "gris", "nox",p);
+////        Automovil auto2 = new Automovil("3333", "carovolador", "Veneno", "gris", "aaa",p);
+//        p.agregarAuto(auto);
+////        p.agregarAuto(auto2);
+//        Licencia lice  = new Licencia(0, new GregorianCalendar(2003, Calendar.JUNE, 1),100,p);
+//        p.agregarTramite(lice);
+//
+//        
+//      
+//        
+//        // guarda
+//        entity.persist(p);
+//        entity.getTransaction().commit();
+//        entity.getTransaction().begin();
+//        //Crea persona
+////        Persona p2 = entity.find(Persona.class, 1);
+//        Placas placa = new Placas("estaessuplaca", "ACTIVA", auto, 100, p);
+////        Automovil autoencontrado=entity.find(Automovil.class,auto);
+////        autoencontrado.agregaPlaca(placa);
+//        entity.persist(placa);
+////        entity.merge(autoencontrado);
+//        
+//        
+//        // guarda
+//        entity.getTransaction().commit();
+//        entity.close();
+//        enti.close();
     
     frmInicio frminicio = new frmInicio();
      frminicio.setVisible(true);

@@ -14,4 +14,6 @@ import java.util.List;
 public interface IPersonaNegocio {
      public List<Persona> BuscarPersonas();
      public List<Persona> BuscarPersonas(String Filtro);
+         public Persona agregarPersona(Persona persona);
+    public Persona editarPersona(Persona persona);
 }

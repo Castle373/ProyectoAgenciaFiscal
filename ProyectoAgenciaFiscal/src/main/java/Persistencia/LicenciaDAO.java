@@ -13,7 +13,7 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author diego
+ * @author Gabriel
  */
 public class LicenciaDAO implements ILicenciaDAO {
 
@@ -23,6 +23,7 @@ public class LicenciaDAO implements ILicenciaDAO {
         this.conexionBD = conexionBD;
     }
 
+    
     @Override
     public List<Licencia> listaLicenciaPersona(int id) {
         EntityManager entityManager = this.conexionBD.crearConexion();
@@ -43,6 +44,19 @@ public class LicenciaDAO implements ILicenciaDAO {
         List<Licencia> listaLicencia = query.getResultList();
         entityManager.getTransaction().commit();
         return listaLicencia;
+    }
+
+    @Override
+    public Licencia agregaLicencia(Licencia licencia) {
+       EntityManager entityManager = this.conexionBD.crearConexion();
+        entityManager.getTransaction().begin();
+        try {
+            entityManager.persist(licencia);
+        } catch (Exception e) {
+            return null;
+        }
+        entityManager.getTransaction().commit();
+        return licencia; 
     }
 
 }

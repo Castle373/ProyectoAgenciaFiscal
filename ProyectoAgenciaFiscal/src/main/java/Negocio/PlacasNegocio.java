@@ -44,7 +44,10 @@ public class PlacasNegocio implements IPlacasNegocio {
     public Placas registrarPlaca(Placas placas)throws PlacaException {
         List<Placas> lista = placasDAO.listaPlacas();
         for (int i = 0; i < lista.size(); i++) {
-            if (placas.getNumeroPlacas().equals(lista.get(i).getNumeroPlacas())) {
+            if (placas.getNumeroPlacas()==null) {
+                i=lista.size();
+            }
+            else if (placas.getNumeroPlacas().equals(lista.get(i).getNumeroPlacas())) {
                 throw new PlacaException("La placa ya existe");
             }
         }

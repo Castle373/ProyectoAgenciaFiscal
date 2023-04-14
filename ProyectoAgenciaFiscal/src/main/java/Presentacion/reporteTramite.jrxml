@@ -3,6 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="fecha" class="java.lang.String"/>
 	<field name="costo" class="java.lang.String"/>
 	<field name="fechaTramite" class="java.lang.String"/>
 	<field name="nombre" class="java.lang.String"/>
@@ -13,12 +14,20 @@
 	<title>
 		<band height="120" splitType="Stretch">
 			<staticText>
-				<reportElement x="103" y="67" width="350" height="53" uuid="62aae6e4-faff-4439-b13a-b28c2ed724ca"/>
+				<reportElement x="97" y="41" width="350" height="53" uuid="62aae6e4-faff-4439-b13a-b28c2ed724ca"/>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="36" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Reporte Tramites]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="0" y="100" width="32" height="20" uuid="a1d80981-9459-4d26-b85b-bb1de514c4ff"/>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="32" y="100" width="181" height="20" uuid="ace05f7c-427d-41b3-98ab-e389d0e77f83"/>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -104,7 +113,12 @@
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="57" splitType="Stretch"/>
+		<band height="57" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="171" height="20" uuid="a54351f0-eea8-44d1-9e5c-89e3a03d26d8"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>
