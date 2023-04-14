@@ -476,6 +476,7 @@ public class frmReporte extends javax.swing.JFrame {
                 DateTimeFormatter formatEscrito = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy, hh:mm a");
                 String fechaHoraEscrita = fechaHoraActual.format(formatEscrito);
                 parametro.put("fecha",fechaHoraEscrita);
+                parametro.put("historial", "Reporte General");
                 // Cargar los datos en un JRBeanCollectionDataSource
                 JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(listaReporteTramite);
 

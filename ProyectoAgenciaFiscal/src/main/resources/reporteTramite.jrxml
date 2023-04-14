@@ -4,6 +4,7 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="fecha" class="java.lang.String"/>
+	<parameter name="historial" class="java.lang.String"/>
 	<field name="costo" class="java.lang.String"/>
 	<field name="fechaTramite" class="java.lang.String"/>
 	<field name="nombre" class="java.lang.String"/>
@@ -12,7 +13,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="120" splitType="Stretch">
+		<band height="140" splitType="Stretch">
 			<staticText>
 				<reportElement x="97" y="41" width="350" height="53" uuid="62aae6e4-faff-4439-b13a-b28c2ed724ca"/>
 				<textElement textAlignment="Center">
@@ -28,10 +29,14 @@
 				<reportElement x="32" y="100" width="181" height="20" uuid="ace05f7c-427d-41b3-98ab-e389d0e77f83"/>
 				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="0" y="120" width="100" height="20" uuid="77ffaa4e-b64f-4de4-8a68-6a6b8eba7732"/>
+				<textFieldExpression><![CDATA[$P{historial}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="31" splitType="Stretch"/>
+		<band height="8" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="45" splitType="Stretch">
