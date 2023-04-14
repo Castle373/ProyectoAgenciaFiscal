@@ -86,6 +86,11 @@ public class frmInicio extends javax.swing.JFrame {
         });
 
         jButton7.setText("Generar registros");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("Trámites");
@@ -219,10 +224,14 @@ System.exit(0);        // TODO add your handling code here:
         IAutomovilDAO automovilDAO = new AutomovilDAO(conexionBD);
         IPersonaNegocio personaNegocio = new PersonaNegocio(personaDAO);
         IAutomovilNegocio automovilNegocio = new AutomovilNegocio(automovilDAO);
-    frmTramites frm = new frmTramites(personaNegocio,automovilNegocio);
-    frm.setVisible(true);
-    this.dispose();
+        frmTramites frm = new frmTramites(personaNegocio, automovilNegocio);
+        frm.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnTramitesActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments

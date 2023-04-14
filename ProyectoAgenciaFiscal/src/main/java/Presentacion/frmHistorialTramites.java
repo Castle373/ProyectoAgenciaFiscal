@@ -5,19 +5,37 @@
 package Presentacion;
 
 import Entity.Persona;
+import Entity.Tramite;
+import static Entity.Tramite_.persona;
 import INegocio.IPersonaNegocio;
+import INegocio.ITramiteNegocio;
+import IPersistencia.IConexionBD;
 import IPersistencia.IPersonaDAO;
+import IPersistencia.ITramiteDAO;
+import Negocio.TramiteNegocio;
+import Persistencia.ConexionBD;
+import Persistencia.TramiteDAO;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  *
@@ -79,9 +97,9 @@ public class frmHistorialTramites extends javax.swing.JFrame {
             datos[4] = listaActual.get(i).getTelefono();
             datos[5] = btnHistorial;
             defa.addRow(datos);
-            
+
         }
-        
+
     }
 
     /**
@@ -99,10 +117,11 @@ public class frmHistorialTramites extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblConsultas = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Busqueda;");
+        jLabel1.setText("Busqueda:");
 
         txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,8 +136,8 @@ public class frmHistorialTramites extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Consultas");
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel3.setText("Consultas");
 
         jScrollPane3.setFocusable(false);
 
@@ -143,6 +162,13 @@ public class frmHistorialTramites extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tblConsultas);
 
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -160,6 +186,8 @@ public class frmHistorialTramites extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63)
+                        .addComponent(jButton1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -176,10 +204,11 @@ public class frmHistorialTramites extends javax.swing.JFrame {
                 .addGap(83, 83, 83)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
@@ -209,11 +238,53 @@ public class frmHistorialTramites extends javax.swing.JFrame {
                     //AQUI LO QUE HARA EL BOTON
                     //Row es para especificar en que columna se pulso el boton
                     System.out.println(listaActual.get(row).getId());
+                    IConexionBD conexion = new ConexionBD();
+                    ITramiteDAO itramitedao = new TramiteDAO(conexion);
+                    ITramiteNegocio tramitenegocio = new TramiteNegocio(itramitedao);
+                    List<Tramite> listaTramitePersona = tramitenegocio.listaTramitePersona(listaActual.get(row));
 
+                    if (!listaTramitePersona.isEmpty()) {
+                          int respuesta = JOptionPane.showConfirmDialog(rootPane, "Estás seguro de crear un PDF?", "Confirmación", JOptionPane.YES_NO_OPTION);
+                        if (respuesta == JOptionPane.YES_OPTION) {
+                            List<ReporteTramites> listaReporteTramite= new ArrayList<ReporteTramites>();
+                            for (int i = 0; i < listaTramitePersona.size(); i++) {
+                                ReporteTramites reporte = new ReporteTramites();
+                                Persona personaReporte = listaTramitePersona.get(i).getPersona(); 
+//                                String nombre = personaReporte.getNombre()+" "+personaReporte.g;
+                                
+                                
+                            }
+                            try {
+                                // Cargar los datos en un JRBeanCollectionDataSource
+                                JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(listaReporteTramite);
+
+                                // Cargar el archivo JRXML del reporte
+                                InputStream reportFile = getClass().getResourceAsStream("/reporteTramite.jrxml");
+                                JasperReport jasperReport = JasperCompileManager.compileReport(reportFile);
+
+                                // Llenar el reporte con los datos
+                                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, beanColDataSource);
+
+                                // Visualizar el reporte
+                                JasperExportManager.exportReportToPdfFile(jasperPrint, "./ReporteTramites.pdf");
+                            } catch (JRException ex) {
+                                Logger.getLogger(frmReporte.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            return;
+                        }
+                    }
+                    // 3. crear clases reportetramites por cada tramite 
+                    // 4. crear pdf con la lista de reportestramite  
                 }
             }
         }
     }//GEN-LAST:event_tblConsultasMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String busqueda = txtBusqueda.getText();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -252,6 +323,7 @@ public class frmHistorialTramites extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane3;
