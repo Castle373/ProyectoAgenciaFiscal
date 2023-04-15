@@ -33,6 +33,7 @@ public class frmCrudPersona extends javax.swing.JFrame {
      */
     public frmCrudPersona(IPersonaNegocio personaNegocio) {
         this.personaNegocio = personaNegocio;
+      
         initComponents();
         tabla();
         llenarTabla();

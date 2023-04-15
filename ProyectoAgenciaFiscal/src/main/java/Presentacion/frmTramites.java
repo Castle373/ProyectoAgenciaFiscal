@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -44,6 +45,7 @@ public class frmTramites extends javax.swing.JFrame {
         this.automovilNegocio=automovilNegocio;
         this.personaNegocio=personaNegocio;
            this.LicenciaNegocio=LicenciaNegocio;
+           
   
         botoneDiseño();
         initComponents();
@@ -283,19 +285,26 @@ public class frmTramites extends javax.swing.JFrame {
                 ((JButton)objeto).doClick();
                 JButton botones=(JButton)objeto;
                 if(botones.equals(btnLicencia)){
-                    //AQUI LO QUE HARA EL BOTON
-                    //Row es para especificar en que columna se pulso el boton
+                    if (personaNegocio.Edad(listaActual.get(row))>=18) {
+                        
+                    
                     System.out.println(listaActual.get(row));
 frmLicencia ee  = new frmLicencia(listaActual.get(row),LicenciaNegocio);
                         ee.setVisible(true);
                 }else{
+                     JOptionPane.showMessageDialog(this, "Esta persona tiene menos de 18 años");       
+                    }  
+                }
                     if(botones.equals(btnAutomoviles)){
 
                         frmAutomoviles frm  = new frmAutomoviles(automovilNegocio, listaActual.get(row));
                         frm.setVisible(true);
                         this.dispose();
                     }
-                }
+                
+                }else{
+                    
+                
             }
         }
     }//GEN-LAST:event_tblTramitesMouseClicked

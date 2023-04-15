@@ -25,29 +25,34 @@ import javax.swing.table.TableColumn;
  * @author Gabriel
  */
 public class frmRegistroPersona extends javax.swing.JFrame {
+
     private IPersonaNegocio personaNegocio;
     private Persona persona;
-    private boolean editar=false;
+    private boolean editar = false;
+
     /**
      * Creates new form frmPersona
      */
-    public frmRegistroPersona(IPersonaNegocio personaNegocio,Persona persona) {
-          this.personaNegocio=personaNegocio;
-          this.persona=persona;
+    public frmRegistroPersona(IPersonaNegocio personaNegocio, Persona persona) {
+        this.personaNegocio = personaNegocio;
+        this.persona = persona;
         initComponents();
-        if (this.persona!=null) {
+
+        if (this.persona != null) {
             lbltitulo.setText("Editar");
-        editar=true;
-        txtNombre.setText(persona.getNombre());
-        txtApellidop.setText(persona.getApellidoPaterno());
-         txtApellidom.setText(persona.getApellidoMaterno());
-         txtRFC.setText(persona.getRfc());
-           txtCurp.setText(persona.getCurp());
-           txtTelefono.setText(persona.getTelefono());
-           
-           LocalDate persona3 = LocalDateTime.ofInstant(persona.getFechaNacimiento().toInstant(), persona.getFechaNacimiento().getTimeZone().toZoneId()).toLocalDate();
- 
-           dpFecha.setDate(persona3);
+
+            editar = true;
+            txtNombre.setText(persona.getNombre());
+            txtApellidop.setText(persona.getApellidoPaterno());
+            txtApellidom.setText(persona.getApellidoMaterno());
+            txtRFC.setText(persona.getRfc());
+            txtCurp.setText(persona.getCurp());
+            txtTelefono.setText(persona.getTelefono());
+            System.out.println(persona.getFechaNacimiento());
+
+            LocalDate persona3 = LocalDateTime.ofInstant(persona.getFechaNacimiento().toInstant(), persona.getFechaNacimiento().getTimeZone().toZoneId()).toLocalDate();
+
+            dpFecha.setDate(persona3);
         }
     }
 
@@ -86,7 +91,19 @@ public class frmRegistroPersona extends javax.swing.JFrame {
 
         jLabel3.setText("Nombre:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, -1, -1));
+
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 178, -1));
+
+        txtRFC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRFCKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 178, -1));
 
         jLabel4.setText("RFC:");
@@ -158,14 +175,32 @@ public class frmRegistroPersona extends javax.swing.JFrame {
 
         jLabel8.setText("Apellido_p");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
+
+        txtApellidop.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidopKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtApellidop, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, 178, -1));
 
         jLabel9.setText("Apellido_m");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
+
+        txtApellidom.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidomKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtApellidom, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 178, -1));
 
         jLabel10.setText("Curp");
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
+
+        txtCurp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCurpKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtCurp, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, 178, -1));
         getContentPane().add(dpFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 330, -1, -1));
 
@@ -182,7 +217,7 @@ public class frmRegistroPersona extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-             IConexionBD conexionBD = new ConexionBD();
+        IConexionBD conexionBD = new ConexionBD();
         IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
         IPersonaNegocio personaNegocio = new PersonaNegocio(personaDAO);
         frmCrudPersona inicio = new frmCrudPersona(personaNegocio);
@@ -191,15 +226,19 @@ public class frmRegistroPersona extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (editar) {
-            editar();
+        if (txtRFC.getText().length()==13 && txtCurp.getText().length()==18 && txtTelefono.getText().length()==10){
+            if (editar) {
+                editar();
+            } else {
+                agregar();
+            }
         }else{
-            agregar();
+             JOptionPane.showMessageDialog(this, "NO SE PUDO COMPLETAR EL TRAMITE, POR FAVOR MODIFIQUE SU INFORMACIÓN");   
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cbodiscapacidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbodiscapacidadActionPerformed
-             // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_cbodiscapacidadActionPerformed
 
     private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
@@ -207,95 +246,175 @@ public class frmRegistroPersona extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTelefonoActionPerformed
 
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
-int key = evt.getKeyChar();
+        int key = evt.getKeyChar();
 
-    boolean numeros = key >= 48 && key <= 57;
-        
-    if (!numeros)
-    {
-        evt.consume();
-    }
+        boolean numeros = key >= 48 && key <= 57;
 
-    if (txtTelefono.getText().trim().length() == 10) {
-        evt.consume();
-    }
+        if (!numeros) {
+            evt.consume();
+        }
+
+        if (txtTelefono.getText().trim().length() == 10) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtTelefonoKeyTyped
-public void agregar(){
-    byte check;
-    if (!validarcampos()) {
-        return;
-    }
-    Calendar calendar = Calendar.getInstance();
-	LocalDate localito = dpFecha.getDate();
-java.sql.Date Fechanac = java.sql.Date.valueOf(localito);
- calendar.setTime(Fechanac);
- 
- if (cbodiscapacidad.isSelected()) {
-     check=1;
- }else{
-     check=0;
- }
-    Persona persona1=new Persona(txtNombre.getText(),txtApellidop.getText(),txtApellidom.getText(),txtRFC.getText(),txtCurp.getText(),txtTelefono.getText(),calendar,check);
-          Encriptacion e=new Encriptacion();
+
+    private void txtCurpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCurpKeyTyped
+
+        int key = evt.getKeyChar();
+
+        boolean mayusculas = key >= 65 && key <= 90;
+        boolean minusculas = key >= 97 && key <= 122;
+        boolean numeros = key >= 48 && key <= 57;
+        boolean espacio = key == 32;
+
+        if (!(minusculas || mayusculas || espacio || numeros)) {
+            evt.consume();
+        }
+        if (txtCurp.getText().trim().length() == 18) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCurpKeyTyped
+
+    private void txtRFCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRFCKeyTyped
+
+        int key = evt.getKeyChar();
+
+        boolean mayusculas = key >= 65 && key <= 90;
+        boolean minusculas = key >= 97 && key <= 122;
+        boolean numeros = key >= 48 && key <= 57;
+        boolean espacio = key == 32;
+
+        if (!(minusculas || mayusculas || espacio || numeros)) {
+            evt.consume();
+        }
+        if (txtRFC.getText().trim().length() == 13) {
+            evt.consume();
+        }   // TODO add your handling code here:
+    }//GEN-LAST:event_txtRFCKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+   
+        int key = evt.getKeyChar();
+
+        boolean mayusculas = key >= 65 && key <= 90;
+        boolean minusculas = key >= 97 && key <= 122;
+        boolean espacio = key == 32;
+
+        if (!(minusculas || mayusculas || espacio)) {
+            evt.consume();
+        }  
+              if (txtNombre.getText().trim().length() == 50) {
+            evt.consume();
+        }// TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtApellidopKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidopKeyTyped
+        int key = evt.getKeyChar();
+
+        boolean mayusculas = key >= 65 && key <= 90;
+        boolean minusculas = key >= 97 && key <= 122;
+        boolean espacio = key == 32;
+
+        if (!(minusculas || mayusculas || espacio)) {
+            evt.consume();
+        }  
+              if (txtApellidom.getText().trim().length() == 50) {
+            evt.consume();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtApellidopKeyTyped
+
+    private void txtApellidomKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidomKeyTyped
+        int key = evt.getKeyChar();
+
+        boolean mayusculas = key >= 65 && key <= 90;
+        boolean minusculas = key >= 97 && key <= 122;
+        boolean espacio = key == 32;
+
+        if (!(minusculas || mayusculas || espacio)) {
+            evt.consume();
+        }  
+              if (txtApellidom.getText().trim().length() == 50) {
+            evt.consume();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtApellidomKeyTyped
+    public void agregar() {
+        byte check;
+        if (!validarcampos()) {
+            return;
+        }
+        Calendar calendar = Calendar.getInstance();
+        LocalDate localito = dpFecha.getDate();
+        java.sql.Date Fechanac = java.sql.Date.valueOf(localito);
+        calendar.setTime(Fechanac);
+
+        if (cbodiscapacidad.isSelected()) {
+            check = 1;
+        } else {
+            check = 0;
+        }
+        Persona persona1 = new Persona(txtNombre.getText(), txtApellidop.getText(), txtApellidom.getText(), txtRFC.getText(), txtCurp.getText(), txtTelefono.getText(), calendar, check);
+        Encriptacion e = new Encriptacion();
         persona1.setNombre(e.encriptar(persona1.getNombre()));
-         persona1.setApellidoPaterno(e.encriptar(persona1.getApellidoPaterno()));
+        persona1.setApellidoPaterno(e.encriptar(persona1.getApellidoPaterno()));
         persona1.setApellidoMaterno(e.encriptar(persona1.getApellidoMaterno()));
-    Persona guardar=personaNegocio.agregarPersona(persona1);
-    if (guardar!=null) {
-        JOptionPane.showMessageDialog(this, "SI SE PUDO");
-        frmCrudPersona per=new frmCrudPersona(personaNegocio);
-        per.setVisible(true);
-        this.dispose();
-    }else{
-      JOptionPane.showMessageDialog(this, "NO SE PUDO");   
+        Persona guardar = personaNegocio.agregarPersona(persona1);
+        if (guardar != null) {
+            JOptionPane.showMessageDialog(this, "SI SE PUDO");
+            frmCrudPersona per = new frmCrudPersona(personaNegocio);
+            per.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "NO SE PUDO");
+        }
+
     }
 
-   
-}   
-public void editar(){
-    byte check;
-    if (!validarcampos()) {
-        return;
-    }
-    persona.setNombre(txtNombre.getText());
-    persona.setApellidoPaterno(txtApellidop.getText());
-     persona.setApellidoMaterno(txtApellidom.getText());
-     persona.setRfc(txtRFC.getText());
-     persona.setTelefono(txtTelefono.getText());
-    persona.setCurp(txtCurp.getText());
-     if (cbodiscapacidad.isSelected()) {
-     check=1;
- }else{
-     check=0;
- }
-    Calendar calendarito = Calendar.getInstance();
-	LocalDate localito1 = dpFecha.getDate();
-java.sql.Date Fechanac = java.sql.Date.valueOf(localito1);
- calendarito.setTime(Fechanac);
-    persona.setFechaNacimiento(calendarito);
-     Encriptacion e=new Encriptacion();
+    public void editar() {
+        byte check;
+        if (!validarcampos()) {
+            return;
+        }
+        persona.setNombre(txtNombre.getText());
+        persona.setApellidoPaterno(txtApellidop.getText());
+        persona.setApellidoMaterno(txtApellidom.getText());
+        persona.setRfc(txtRFC.getText());
+        persona.setTelefono(txtTelefono.getText());
+        persona.setCurp(txtCurp.getText());
+        if (cbodiscapacidad.isSelected()) {
+            check = 1;
+        } else {
+            check = 0;
+        }
+        Calendar calendarito = Calendar.getInstance();
+        LocalDate localito1 = dpFecha.getDate();
+        java.sql.Date Fechanac = java.sql.Date.valueOf(localito1);
+        calendarito.setTime(Fechanac);
+        persona.setFechaNacimiento(calendarito);
+        Encriptacion e = new Encriptacion();
         persona.setNombre(e.encriptar(persona.getNombre()));
-         persona.setApellidoPaterno(e.encriptar(persona.getApellidoPaterno()));
+        persona.setApellidoPaterno(e.encriptar(persona.getApellidoPaterno()));
         persona.setApellidoMaterno(e.encriptar(persona.getApellidoMaterno()));
         persona.setDiscapacidad(check);
-     Persona editarpersona=personaNegocio.editarPersona(persona);
-    if (editarpersona!=null) {
-        JOptionPane.showMessageDialog(this, "SI SE PUDO");
-        frmCrudPersona per=new frmCrudPersona(personaNegocio);
-        per.setVisible(true);
-        this.dispose();
-    }else{
-      JOptionPane.showMessageDialog(this, "NO SE PUDO");   
+        Persona editarpersona = personaNegocio.editarPersona(persona);
+        if (editarpersona != null) {
+            JOptionPane.showMessageDialog(this, "SI SE PUDO");
+            frmCrudPersona per = new frmCrudPersona(personaNegocio);
+            per.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "NO SE PUDO");
+        }
     }
-}
-public boolean validarcampos(){
-    if (txtRFC.getText().equalsIgnoreCase("")|| txtNombre.getText().equalsIgnoreCase("")
-            || txtApellidop.getText().equalsIgnoreCase("")|| txtApellidom.getText().equalsIgnoreCase("") 
-            || txtCurp.getText().equalsIgnoreCase("") ||txtTelefono.getText().equalsIgnoreCase("")||dpFecha.getDate()==null) {
-        return false;
+
+    public boolean validarcampos() {
+        if (txtRFC.getText().equalsIgnoreCase("") || txtNombre.getText().equalsIgnoreCase("")
+                || txtApellidop.getText().equalsIgnoreCase("") || txtApellidom.getText().equalsIgnoreCase("")
+                || txtCurp.getText().equalsIgnoreCase("") || txtTelefono.getText().equalsIgnoreCase("") || dpFecha.getDate() == null) {
+            return false;
+        }
+        return true;
     }
-    return true;
-}
 
     /**
      * @param args the command line arguments
@@ -328,7 +447,7 @@ public boolean validarcampos(){
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            //    new frmRegistroPersona().setVisible(true);
+                //    new frmRegistroPersona().setVisible(true);
             }
         });
     }

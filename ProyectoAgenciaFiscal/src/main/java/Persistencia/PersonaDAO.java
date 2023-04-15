@@ -8,6 +8,8 @@ import Entity.Persona;
 import IPersistencia.IConexionBD;
 import IPersistencia.IPersonaDAO;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -123,5 +125,22 @@ public List<Persona> listaPersonas(String filtro) {
         }
         entityManager.getTransaction().commit();
         return persona;  
+    }
+  
+    @Override
+    public int Edad(Persona persona) {
+     
+   Calendar calendario=persona.getFechaNacimiento();
+   int anio=calendario.get(Calendar.YEAR);
+   int mes=calendario.get(Calendar.MONTH);
+   int dia=calendario.get(Calendar.DAY_OF_MONTH);
+        Calendar fechaNacimiento = new GregorianCalendar(anio, mes, dia);
+Calendar ahora = Calendar.getInstance();
+
+long edadEnDias = (ahora.getTimeInMillis() - fechaNacimiento.getTimeInMillis())
+                        / 1000 / 60 / 60 / 24;
+
+int anos = Double.valueOf(edadEnDias / 365.25d).intValue();
+return anos;
     }
 }

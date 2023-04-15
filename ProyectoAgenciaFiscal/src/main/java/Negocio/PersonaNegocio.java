@@ -41,5 +41,10 @@ public class PersonaNegocio implements IPersonaNegocio{
     public Persona editarPersona(Persona persona) {
       return personaDAO.editarPersona(persona);
     }
+
+    @Override
+    public int Edad(Persona persona) {
+  return personaDAO.Edad(persona);
+    }
     
 }
