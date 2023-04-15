@@ -6,7 +6,12 @@ package Presentacion;
 
 import Entity.Persona;
 import INegocio.IPersonaNegocio;
+import IPersistencia.IConexionBD;
+import IPersistencia.IPersonaDAO;
+import Negocio.PersonaNegocio;
+import Persistencia.ConexionBD;
 import Persistencia.Encriptacion;
+import Persistencia.PersonaDAO;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -89,6 +94,17 @@ public class frmRegistroPersona extends javax.swing.JFrame {
 
         jLabel5.setText("Fecha de nac:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, -1, -1));
+
+        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTelefonoActionPerformed(evt);
+            }
+        });
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 370, 182, -1));
 
         jLabel6.setText("Telefono:");
@@ -166,9 +182,12 @@ public class frmRegistroPersona extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-     //   frmCrudPersona inicio = new frmCrudPersona();
-        //inicio.setVisible(true);
-      //  this.dispose();        // TODO add your handling code here:
+             IConexionBD conexionBD = new ConexionBD();
+        IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
+        IPersonaNegocio personaNegocio = new PersonaNegocio(personaDAO);
+        frmCrudPersona inicio = new frmCrudPersona(personaNegocio);
+        inicio.setVisible(true);
+        this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -182,6 +201,25 @@ public class frmRegistroPersona extends javax.swing.JFrame {
     private void cbodiscapacidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbodiscapacidadActionPerformed
              // TODO add your handling code here:
     }//GEN-LAST:event_cbodiscapacidadActionPerformed
+
+    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefonoActionPerformed
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+int key = evt.getKeyChar();
+
+    boolean numeros = key >= 48 && key <= 57;
+        
+    if (!numeros)
+    {
+        evt.consume();
+    }
+
+    if (txtTelefono.getText().trim().length() == 10) {
+        evt.consume();
+    }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
 public void agregar(){
     byte check;
     if (!validarcampos()) {

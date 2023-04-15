@@ -177,7 +177,7 @@ public void agregar(){
    float costo=Float.valueOf(txtcosto.getText());
    Calendar calendario=Calendar.getInstance();
    int ano=calendario.get(Calendar.YEAR)+anios;
-   Calendar cal= new GregorianCalendar(ano,Calendar.MONTH,Calendar.DAY_OF_YEAR);
+   Calendar cal= new GregorianCalendar(ano,Calendar.MONTH+1,Calendar.DAY_OF_MONTH);
      Licencia licencia1=new Licencia(anios,cal,costo,persona);
      Licencia guardar=LicenciaNegocio.agregaLicencia(licencia1);
     if (guardar!=null) {
