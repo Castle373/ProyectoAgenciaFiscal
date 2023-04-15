@@ -9,6 +9,8 @@ import Entity.Persona;
 import INegocio.IAutomovilNegocio;
 import INegocio.ILicenciaNegocio;
 import INegocio.IPersonaNegocio;
+import IPersistencia.IConexionBD;
+import Persistencia.ConexionBD;
 import Persistencia.Encriptacion;
 import java.awt.Color;
 import java.awt.Font;
@@ -17,6 +19,7 @@ import java.awt.Image;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -285,6 +288,10 @@ public class frmTramites extends javax.swing.JFrame {
                 ((JButton)objeto).doClick();
                 JButton botones=(JButton)objeto;
                 if(botones.equals(btnLicencia)){
+                    if (LicenciaNegocio.listaLicenciaPersonaVigentes(listaActual.get(row).getId()).isEmpty()) {
+                        
+                    
+
                     if (personaNegocio.Edad(listaActual.get(row))>=18) {
                         
                     
@@ -294,6 +301,9 @@ frmLicencia ee  = new frmLicencia(listaActual.get(row),LicenciaNegocio);
                 }else{
                      JOptionPane.showMessageDialog(this, "Esta persona tiene menos de 18 años");       
                     }  
+                    }else{
+                       JOptionPane.showMessageDialog(this, "Esta persona ya cuenta con una licencia vigente");   
+                    }
                 }
                     if(botones.equals(btnAutomoviles)){
 

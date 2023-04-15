@@ -360,12 +360,12 @@ public class frmRegistroPersona extends javax.swing.JFrame {
         persona1.setApellidoMaterno(e.encriptar(persona1.getApellidoMaterno()));
         Persona guardar = personaNegocio.agregarPersona(persona1);
         if (guardar != null) {
-            JOptionPane.showMessageDialog(this, "SI SE PUDO");
+            JOptionPane.showMessageDialog(this, "El registro se efectuo con exito");
             frmCrudPersona per = new frmCrudPersona(personaNegocio);
             per.setVisible(true);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "NO SE PUDO");
+            JOptionPane.showMessageDialog(this, "No se pudo efectuar el registro");
         }
 
     }
@@ -398,12 +398,12 @@ public class frmRegistroPersona extends javax.swing.JFrame {
         persona.setDiscapacidad(check);
         Persona editarpersona = personaNegocio.editarPersona(persona);
         if (editarpersona != null) {
-            JOptionPane.showMessageDialog(this, "SI SE PUDO");
+            JOptionPane.showMessageDialog(this, "El registro se efectuo con exito");
             frmCrudPersona per = new frmCrudPersona(personaNegocio);
             per.setVisible(true);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "NO SE PUDO");
+            JOptionPane.showMessageDialog(this, "No se pudo efectuar el registro");
         }
     }
 

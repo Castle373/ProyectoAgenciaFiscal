@@ -66,7 +66,7 @@ private int anios=0;
             }
         });
 
-        jButton3.setText("Siguiente");
+        jButton3.setText("Aceptar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -181,12 +181,12 @@ public void agregar(){
      Licencia licencia1=new Licencia(anios,cal,costo,persona);
      Licencia guardar=LicenciaNegocio.agregaLicencia(licencia1);
     if (guardar!=null) {
-        JOptionPane.showMessageDialog(this, "SI SE PUDO");
+        JOptionPane.showMessageDialog(this, "Se completo el tramite de licencia a nombre de: "+persona.getNombre());
       
      
         this.dispose();
     }else{
-      JOptionPane.showMessageDialog(this, "NO SE PUDO");   
+      JOptionPane.showMessageDialog(this, "Hubo un error al intentar completar su tramite");   
     }
 }
 
