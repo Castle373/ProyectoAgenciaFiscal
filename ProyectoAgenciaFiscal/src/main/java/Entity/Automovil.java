@@ -69,6 +69,14 @@ public class Automovil implements Serializable {
     public List<Placas> getPlacas() {
     return placas;
     }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
   
   public void setPlacas(List<Placas> placas) {
     this.placas = placas;

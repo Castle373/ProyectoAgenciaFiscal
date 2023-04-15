@@ -54,7 +54,12 @@ public class frmHistorialPlacas extends javax.swing.JFrame {
         llenarTabla();
     }
     public void configuracionFrame(){
-        lblDueno.setText("Dueño Actual:  "+persona.getNombre());
+        if (persona!=null) {
+           lblDueno.setText("Dueño Actual:  "+persona.getNombre()); 
+        }else{
+           lblDueno.setText("Dueño Actual:   Sin Dueño"); 
+        }
+        
         lblLinea.setText("Linea:  "+automovilActual.getLinea());
         lblMarca.setText("Marca:  "+automovilActual.getMarca());
 lblNumeroDeSerie.setText("Numero de Serie:  "+automovilActual.getNumeroDeSerie());

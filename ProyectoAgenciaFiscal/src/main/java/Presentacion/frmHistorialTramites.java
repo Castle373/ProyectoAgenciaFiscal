@@ -5,21 +5,36 @@
 package Presentacion;
 
 import Entity.Persona;
+import Entity.Tramite;
 import INegocio.IPersonaNegocio;
+import INegocio.ITramiteNegocio;
+import IPersistencia.IConexionBD;
 import IPersistencia.IPersonaDAO;
+import IPersistencia.ITramiteDAO;
+import Negocio.TramiteNegocio;
+import Persistencia.ConexionBD;
+import Persistencia.TramiteDAO;
 import java.awt.Button;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  *
@@ -40,12 +55,7 @@ public class frmHistorialTramites extends javax.swing.JFrame {
         this.personaNegocio = personaNegocio;
 
         tabla();
-        llenarTabla();botoneDiseño();
-    }
-    public void botoneDiseño(){
-        btnHistorial.setBackground(new Color(102,89,222));
-        btnHistorial.setForeground(Color.BLACK);
-        btnHistorial.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        llenarTabla();
     }
 
     public void tabla() {
@@ -86,9 +96,9 @@ public class frmHistorialTramites extends javax.swing.JFrame {
             datos[4] = listaActual.get(i).getTelefono();
             datos[5] = btnHistorial;
             defa.addRow(datos);
-            
+
         }
-        
+
     }
 
     /**
@@ -100,23 +110,23 @@ public class frmHistorialTramites extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        btnRegresar = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblConsultas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
+        btnRegresar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblConsultas = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel3.setBackground(new java.awt.Color(102, 89, 222));
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel1.setText("Busqueda:");
 
-        jLabel2.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 60)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Consultas");
+        txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBusquedaActionPerformed(evt);
+            }
+        });
 
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
@@ -125,32 +135,10 @@ public class frmHistorialTramites extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(btnRegresar)
-                .addGap(113, 113, 113)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(255, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(btnRegresar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel3.setText("Consultas");
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        jScrollPane1.setFocusable(false);
+        jScrollPane3.setFocusable(false);
 
         tblConsultas = new javax.swing.JTable(){
             public boolean isCellEditable(int row, int column){
@@ -165,72 +153,61 @@ public class frmHistorialTramites extends javax.swing.JFrame {
 
             }
         ));
-        tblConsultas.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tblConsultas.setRowHeight(25);
-        tblConsultas.setSelectionBackground(new java.awt.Color(232, 57, 95));
-        tblConsultas.setShowVerticalLines(false);
         tblConsultas.getTableHeader().setReorderingAllowed(false);
         tblConsultas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblConsultasMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblConsultas);
-        tblConsultas.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
-        tblConsultas.getTableHeader().setOpaque(false);
-        tblConsultas.getTableHeader().setBackground(new Color(102,89,222));
-        tblConsultas.getTableHeader().setForeground(new Color(255,255,255));
+        jScrollPane3.setViewportView(tblConsultas);
 
-        jLabel1.setText("Busqueda;");
-
-        txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBusquedaActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jScrollPane1)
-                .addGap(22, 22, 22))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(jLabel1)
-                .addGap(12, 12, 12)
-                .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(298, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel1))
-                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
-        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(btnRegresar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63)
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(148, 148, 148))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegresar)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(83, 83, 83)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
@@ -248,7 +225,7 @@ public class frmHistorialTramites extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBusquedaActionPerformed
 
     private void tblConsultasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblConsultasMouseClicked
-         columna = tblConsultas.getColumnModel().getColumnIndexAtX(evt.getX());
+        columna = tblConsultas.getColumnModel().getColumnIndexAtX(evt.getX());
         row = evt.getY() / tblConsultas.getRowHeight();
         if (columna <= tblConsultas.getColumnCount() && columna >= 0 && row <= tblConsultas.getRowCount() && row >= 0) {
             Object objeto = tblConsultas.getValueAt(row, columna);
@@ -260,11 +237,53 @@ public class frmHistorialTramites extends javax.swing.JFrame {
                     //AQUI LO QUE HARA EL BOTON
                     //Row es para especificar en que columna se pulso el boton
                     System.out.println(listaActual.get(row).getId());
+                    IConexionBD conexion = new ConexionBD();
+                    ITramiteDAO itramitedao = new TramiteDAO(conexion);
+                    ITramiteNegocio tramitenegocio = new TramiteNegocio(itramitedao);
+                    List<Tramite> listaTramitePersona = tramitenegocio.listaTramitePersona(listaActual.get(row));
 
+                    if (!listaTramitePersona.isEmpty()) {
+                          int respuesta = JOptionPane.showConfirmDialog(rootPane, "Estás seguro de crear un PDF?", "Confirmación", JOptionPane.YES_NO_OPTION);
+                        if (respuesta == JOptionPane.YES_OPTION) {
+                            List<ReporteTramites> listaReporteTramite= new ArrayList<ReporteTramites>();
+                            for (int i = 0; i < listaTramitePersona.size(); i++) {
+                                ReporteTramites reporte = new ReporteTramites();
+                                Persona personaReporte = listaTramitePersona.get(i).getPersona(); 
+//                                String nombre = personaReporte.getNombre()+" "+personaReporte.g;
+                                
+                                
+                            }
+                            try {
+                                // Cargar los datos en un JRBeanCollectionDataSource
+                                JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(listaReporteTramite);
+
+                                // Cargar el archivo JRXML del reporte
+                                InputStream reportFile = getClass().getResourceAsStream("/reporteTramite.jrxml");
+                                JasperReport jasperReport = JasperCompileManager.compileReport(reportFile);
+
+                                // Llenar el reporte con los datos
+                                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, beanColDataSource);
+
+                                // Visualizar el reporte
+                                JasperExportManager.exportReportToPdfFile(jasperPrint, "./ReporteTramites.pdf");
+                            } catch (JRException ex) {
+                                Logger.getLogger(frmReporte.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            return;
+                        }
+                    }
+                    // 3. crear clases reportetramites por cada tramite 
+                    // 4. crear pdf con la lista de reportestramite  
                 }
             }
         }
     }//GEN-LAST:event_tblConsultasMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String busqueda = txtBusqueda.getText();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -303,11 +322,10 @@ public class frmHistorialTramites extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable tblConsultas;
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables

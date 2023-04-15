@@ -41,7 +41,7 @@ public class Placas extends Tramite implements Serializable {
         this.automovil = automovil;
     }
     
-    @Column(name="Numero_Placas",nullable =  false)
+    @Column(name="Numero_Placas")
     private String numeroPlacas;
     
     @Column(name="Estado",nullable =  false)

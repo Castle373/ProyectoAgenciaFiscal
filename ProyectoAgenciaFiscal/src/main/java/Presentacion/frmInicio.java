@@ -29,12 +29,13 @@ import javax.swing.JPanel;
  * @author DELL User
  */
 public class frmInicio extends javax.swing.JFrame {
+
     /**
      * Creates new form frmInicio
      */
     public frmInicio() {
         initComponents();
-        
+
     }
 
     /**
@@ -205,7 +206,7 @@ public class frmInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHistorialActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-System.exit(0);        // TODO add your handling code here:
+        System.exit(0);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -233,13 +234,14 @@ System.exit(0);        // TODO add your handling code here:
         IConexionBD conexionBD = new ConexionBD();
         IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
         IAutomovilDAO automovilDAO = new AutomovilDAO(conexionBD);
-        ILicenciaDAO licenciaDAO=new LicenciaDAO(conexionBD);
+        ILicenciaDAO licenciaDAO = new LicenciaDAO(conexionBD);
         IPersonaNegocio personaNegocio = new PersonaNegocio(personaDAO);
         IAutomovilNegocio automovilNegocio = new AutomovilNegocio(automovilDAO);
-        ILicenciaNegocio licencianegocio=new LicenciaNegocio(licenciaDAO);
-    frmTramites frm = new frmTramites(personaNegocio,automovilNegocio,licencianegocio);
-    frm.setVisible(true);
-    this.dispose();
+
+        ILicenciaNegocio licencianegocio = new LicenciaNegocio(licenciaDAO);
+        frmTramites frm = new frmTramites(personaNegocio, automovilNegocio, licencianegocio);
+        frm.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnTramitesActionPerformed
 
     /**
@@ -268,6 +270,9 @@ System.exit(0);        // TODO add your handling code here:
             java.util.logging.Logger.getLogger(frmInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -288,5 +293,5 @@ System.exit(0);        // TODO add your handling code here:
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
- 
+
 }

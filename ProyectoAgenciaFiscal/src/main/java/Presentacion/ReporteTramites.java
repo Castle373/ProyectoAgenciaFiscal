@@ -9,11 +9,17 @@ package Presentacion;
  * @author diego
  */
 public class ReporteTramites {
+
     private String costo;
     private String fechaTramite;
     private String tipo;
     private String nombre;
 
+    public ReporteTramites() {
+
+    }
+
+            
     public ReporteTramites(String costo, String fechaTramite, String tipo, String nombre) {
         this.costo = costo;
         this.fechaTramite = fechaTramite;
