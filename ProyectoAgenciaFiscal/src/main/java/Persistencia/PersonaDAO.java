@@ -22,88 +22,90 @@ import javax.persistence.criteria.Root;
  *
  * @author Gabriel
  */
-public class PersonaDAO implements IPersonaDAO{
+public class PersonaDAO implements IPersonaDAO {
+
     private IConexionBD conexionBD;
 
     public PersonaDAO(IConexionBD conexionBD) {
         this.conexionBD = conexionBD;
     }
-    
+
     @Override
     public List<Persona> listaPersonas() {
-       
-       EntityManager entityManager = this.conexionBD.crearConexion();
-       entityManager.getTransaction().begin();
-       CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-       CriteriaQuery<Persona> criteriaQuery = criteriaBuilder.createQuery(Persona.class);
-       
-       TypedQuery<Persona> query = entityManager.createQuery(criteriaQuery);
-       List<Persona> listasPersonas = query.getResultList();
-       entityManager.getTransaction().commit();
-       
-       return listasPersonas;
+
+        EntityManager entityManager = this.conexionBD.crearConexion();
+        entityManager.getTransaction().begin();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Persona> criteriaQuery = criteriaBuilder.createQuery(Persona.class);
+
+        TypedQuery<Persona> query = entityManager.createQuery(criteriaQuery);
+        List<Persona> listasPersonas = query.getResultList();
+        entityManager.getTransaction().commit();
+
+        return listasPersonas;
     }
-    public List<Persona> listaPersonas(String nombre, String rfc, String curp) {
-   EntityManager entityManager = this.conexionBD.crearConexion();
-   entityManager.getTransaction().begin();
-   CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-   CriteriaQuery<Persona> criteriaQuery = criteriaBuilder.createQuery(Persona.class);
-   Root<Persona> persona = criteriaQuery.from(Persona.class);
-   criteriaQuery.select(persona);
 
-   List<Predicate> predicados = new ArrayList<Predicate>();
+    @Override
+    public List<Persona> listaPersonas(String rfc, String curp, Integer nacimientoY) {
+        EntityManager entityManager = this.conexionBD.crearConexion();
+        entityManager.getTransaction().begin();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Persona> criteriaQuery = criteriaBuilder.createQuery(Persona.class);
+        Root<Persona> persona = criteriaQuery.from(Persona.class);
+        criteriaQuery.select(persona);
 
-   if (nombre != null && !nombre.isEmpty()) {
-       predicados.add(criteriaBuilder.like(criteriaBuilder.lower(persona.get("nombre")), "%" + nombre.toLowerCase() + "%"));
-   }
+        List<Predicate> predicados = new ArrayList<Predicate>();
 
-   if (rfc != null && !rfc.isEmpty()) {
-       predicados.add(criteriaBuilder.equal(persona.get("rfc"), rfc));
-   }
+        if (rfc != null && !rfc.isEmpty()) {
+            predicados.add(criteriaBuilder.like(persona.get("rfc"), "%" + rfc + "%"));
+        }
 
-   if (curp != null && !curp.isEmpty()) {
-       predicados.add(criteriaBuilder.equal(persona.get("curp"), curp));
-   }
+        if (curp != null && !curp.isEmpty()) {
+            predicados.add(criteriaBuilder.like(persona.get("curp"), "%" + curp + "%"));
+        }
+        if (nacimientoY != null) {
+            predicados.add(criteriaBuilder.equal(
+                    criteriaBuilder.function("YEAR", Integer.class, persona.get("fechaNacimiento")),
+                    nacimientoY));
+        }
+        if (!predicados.isEmpty()) {
+            criteriaQuery.where(predicados.toArray(new Predicate[predicados.size()]));
+        }
 
-   if (!predicados.isEmpty()) {
-       criteriaQuery.where(predicados.toArray(new Predicate[predicados.size()]));
-   }
+        TypedQuery<Persona> query = entityManager.createQuery(criteriaQuery);
+        List<Persona> listasPersonas = query.getResultList();
+        entityManager.getTransaction().commit();
 
-   TypedQuery<Persona> query = entityManager.createQuery(criteriaQuery);
-   List<Persona> listasPersonas = query.getResultList();
-   entityManager.getTransaction().commit();
+        return listasPersonas;
+    }
 
-   return listasPersonas;
-}
-    
-    
- @Override
-public List<Persona> listaPersonas(String filtro) {
-   EntityManager entityManager = this.conexionBD.crearConexion();
-   entityManager.getTransaction().begin();
-   CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-   CriteriaQuery<Persona> criteriaQuery = criteriaBuilder.createQuery(Persona.class);
-   Root<Persona> persona = criteriaQuery.from(Persona.class);
-   criteriaQuery.select(persona);
+    @Override
+    public List<Persona> listaPersonas(String filtro) {
+        EntityManager entityManager = this.conexionBD.crearConexion();
+        entityManager.getTransaction().begin();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Persona> criteriaQuery = criteriaBuilder.createQuery(Persona.class);
+        Root<Persona> persona = criteriaQuery.from(Persona.class);
+        criteriaQuery.select(persona);
 
-   if (filtro != null && !filtro.isEmpty()) {
-       filtro = "%" + filtro.toLowerCase() + "%";
-       Predicate predicadoNombre = criteriaBuilder.like(criteriaBuilder.lower(persona.get("nombre")), filtro);
-       Predicate predicadoRFC = criteriaBuilder.like(criteriaBuilder.lower(persona.get("rfc")), filtro);
-       Predicate predicadoCURP = criteriaBuilder.like(criteriaBuilder.lower(persona.get("curp")), filtro);
-       criteriaQuery.where(criteriaBuilder.or(predicadoNombre, predicadoRFC, predicadoCURP));
-   }
+        if (filtro != null && !filtro.isEmpty()) {
+            filtro = "%" + filtro.toLowerCase() + "%";
+            Predicate predicadoNombre = criteriaBuilder.like(criteriaBuilder.lower(persona.get("nombre")), filtro);
+            Predicate predicadoRFC = criteriaBuilder.like(criteriaBuilder.lower(persona.get("rfc")), filtro);
+            Predicate predicadoCURP = criteriaBuilder.like(criteriaBuilder.lower(persona.get("curp")), filtro);
+            criteriaQuery.where(criteriaBuilder.or(predicadoNombre, predicadoRFC, predicadoCURP));
+        }
 
-   TypedQuery<Persona> query = entityManager.createQuery(criteriaQuery);
-   List<Persona> listasPersonas = query.getResultList();
-   entityManager.getTransaction().commit();
+        TypedQuery<Persona> query = entityManager.createQuery(criteriaQuery);
+        List<Persona> listasPersonas = query.getResultList();
+        entityManager.getTransaction().commit();
 
-   return listasPersonas;
-}
+        return listasPersonas;
+    }
 
     @Override
     public Persona agregarPersona(Persona persona) {
-       EntityManager entityManager = this.conexionBD.crearConexion();
+        EntityManager entityManager = this.conexionBD.crearConexion();
         entityManager.getTransaction().begin();
         try {
             entityManager.persist(persona);
@@ -111,12 +113,12 @@ public List<Persona> listaPersonas(String filtro) {
             return null;
         }
         entityManager.getTransaction().commit();
-        return persona; 
+        return persona;
     }
 
     @Override
     public Persona editarPersona(Persona persona) {
-       EntityManager entityManager = this.conexionBD.crearConexion();
+        EntityManager entityManager = this.conexionBD.crearConexion();
         entityManager.getTransaction().begin();
         try {
             entityManager.merge(persona);
@@ -124,23 +126,23 @@ public List<Persona> listaPersonas(String filtro) {
             return null;
         }
         entityManager.getTransaction().commit();
-        return persona;  
+        return persona;
     }
-  
+
     @Override
     public int Edad(Persona persona) {
-     
-   Calendar calendario=persona.getFechaNacimiento();
-   int anio=calendario.get(Calendar.YEAR);
-   int mes=calendario.get(Calendar.MONTH);
-   int dia=calendario.get(Calendar.DAY_OF_MONTH);
+
+        Calendar calendario = persona.getFechaNacimiento();
+        int anio = calendario.get(Calendar.YEAR);
+        int mes = calendario.get(Calendar.MONTH);
+        int dia = calendario.get(Calendar.DAY_OF_MONTH);
         Calendar fechaNacimiento = new GregorianCalendar(anio, mes, dia);
-Calendar ahora = Calendar.getInstance();
+        Calendar ahora = Calendar.getInstance();
 
-long edadEnDias = (ahora.getTimeInMillis() - fechaNacimiento.getTimeInMillis())
-                        / 1000 / 60 / 60 / 24;
+        long edadEnDias = (ahora.getTimeInMillis() - fechaNacimiento.getTimeInMillis())
+                / 1000 / 60 / 60 / 24;
 
-int anos = Double.valueOf(edadEnDias / 365.25d).intValue();
-return anos;
+        int anos = Double.valueOf(edadEnDias / 365.25d).intValue();
+        return anos;
     }
 }

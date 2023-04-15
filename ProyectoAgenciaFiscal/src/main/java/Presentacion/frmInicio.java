@@ -62,9 +62,9 @@ public class frmInicio extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(102, 89, 222));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel1.setText("Agencia Fiscal");
         jLabel1.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 60)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Agencia Fiscal");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -86,6 +86,7 @@ public class frmInicio extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jButton2.setText("Reporte de trámites");
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton2.setFocusPainted(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -95,6 +96,7 @@ public class frmInicio extends javax.swing.JFrame {
         });
 
         btnHistorial.setText("Historial de trámites");
+        btnHistorial.setBackground(new java.awt.Color(255, 255, 255));
         btnHistorial.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnHistorial.setFocusPainted(false);
         btnHistorial.addActionListener(new java.awt.event.ActionListener() {
@@ -104,10 +106,12 @@ public class frmInicio extends javax.swing.JFrame {
         });
 
         jButton7.setText("Generar registros");
+        jButton7.setBackground(new java.awt.Color(255, 255, 255));
         jButton7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton7.setFocusPainted(false);
 
         jButton1.setText("Salir");
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton1.setFocusPainted(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -117,6 +121,7 @@ public class frmInicio extends javax.swing.JFrame {
         });
 
         jButton4.setText("Personas");
+        jButton4.setBackground(new java.awt.Color(255, 255, 255));
         jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton4.setFocusPainted(false);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -126,6 +131,7 @@ public class frmInicio extends javax.swing.JFrame {
         });
 
         btnTramites.setText("Tramites");
+        btnTramites.setBackground(new java.awt.Color(255, 255, 255));
         btnTramites.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnTramites.setFocusPainted(false);
         btnTramites.addActionListener(new java.awt.event.ActionListener() {

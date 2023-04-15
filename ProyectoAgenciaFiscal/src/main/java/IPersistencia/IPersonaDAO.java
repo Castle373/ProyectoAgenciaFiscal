@@ -17,5 +17,5 @@ public interface IPersonaDAO {
     public Persona agregarPersona(Persona persona);
     public Persona editarPersona(Persona persona);
     public int Edad(Persona persona);
-    
+    public List<Persona> listaPersonas( String rfc, String curp,Integer nacimientoY);
 }

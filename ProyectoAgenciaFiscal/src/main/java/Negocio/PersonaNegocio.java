@@ -4,6 +4,7 @@
  */
 package Negocio;
 
+import static Entity.Automovil_.persona;
 import Entity.Persona;
 import INegocio.IPersonaNegocio;
 import IPersistencia.IPersonaDAO;
@@ -45,6 +46,11 @@ public class PersonaNegocio implements IPersonaNegocio{
     @Override
     public int Edad(Persona persona) {
   return personaDAO.Edad(persona);
+    }
+
+    @Override
+    public List<Persona> listaPersonas(String rfc, String curp, Integer nacimientoY) {
+        return personaDAO.listaPersonas(rfc, curp, nacimientoY);
     }
     
 }

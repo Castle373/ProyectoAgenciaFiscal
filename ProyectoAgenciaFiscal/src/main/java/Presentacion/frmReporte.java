@@ -475,7 +475,7 @@ public class frmReporte extends javax.swing.JFrame {
                 LocalDateTime fechaHoraActual = LocalDateTime.now();
                 DateTimeFormatter formatEscrito = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy, hh:mm a");
                 String fechaHoraEscrita = fechaHoraActual.format(formatEscrito);
-                parametro.put("fecha",fechaHoraEscrita);
+                parametro.put("fecha", fechaHoraEscrita);
                 parametro.put("historial", "Reporte General");
                 // Cargar los datos en un JRBeanCollectionDataSource
                 JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(listaReporteTramite);
@@ -486,9 +486,11 @@ public class frmReporte extends javax.swing.JFrame {
 
                 // Llenar el reporte con los datos
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametro, beanColDataSource);
+                JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
 
+                jasperViewer.setVisible(true);
                 // Visualizar el reporte
-                JasperExportManager.exportReportToPdfFile(jasperPrint, "./ReporteTramites.pdf");
+                //JasperExportManager.exportReportToPdfFile(jasperPrint, "./ReporteTramites.pdf");
             } catch (JRException ex) {
                 Logger.getLogger(frmReporte.class.getName()).log(Level.SEVERE, null, ex);
             }

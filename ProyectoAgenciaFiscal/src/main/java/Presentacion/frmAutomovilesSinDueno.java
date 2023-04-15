@@ -84,7 +84,7 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
         defa.addColumn("Linea");
         defa.addColumn("Modelo");
         defa.addColumn("Estado");
-        defa.addColumn("Solicitar Placas");
+        defa.addColumn("Adquirir Automovil");
         defa.addColumn("Historial Placas");
         tblAuto.setRowHeight(40);
         TableColumn solicitarColumna = tblAuto.getColumnModel().getColumn(5);
