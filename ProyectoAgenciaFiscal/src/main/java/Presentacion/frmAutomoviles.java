@@ -219,7 +219,7 @@ public class frmAutomoviles extends javax.swing.JFrame {
 
         lblCliente.setFont(new java.awt.Font("Microsoft YaHei Light", 1, 14)); // NOI18N
         lblCliente.setText("Estado Licencia");
-        jPanel3.add(lblCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 50, -1, -1));
+        jPanel3.add(lblCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, 290, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -379,7 +379,7 @@ public class frmAutomoviles extends javax.swing.JFrame {
                     this.dispose();
                 }
                 if (boton.equals(btnHistorial)) {
-                    frmHistorialPlacas frmhisto = new frmHistorialPlacas(listaActual.get(row), persona);
+                    frmHistorialPlacas frmhisto = new frmHistorialPlacas(listaActual.get(row), persona,false);
                     frmhisto.setVisible(true);
                     this.dispose();
                 }

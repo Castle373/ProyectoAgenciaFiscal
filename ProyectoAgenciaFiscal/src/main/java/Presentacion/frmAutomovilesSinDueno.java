@@ -146,10 +146,8 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
 
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        lblLicenciaVigente = new javax.swing.JLabel();
         lblLicencia = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
-        lblLicencia1 = new javax.swing.JLabel();
         lblCliente = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         txtBusqueda = new javax.swing.JTextField();
@@ -169,10 +167,6 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
         jLabel3.setText("Automoviles Sin Dueño");
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 520, 87));
 
-        lblLicenciaVigente.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 14)); // NOI18N
-        lblLicenciaVigente.setText("Cliente actual");
-        jPanel3.add(lblLicenciaVigente, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 10, -1, -1));
-
         lblLicencia.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 14)); // NOI18N
         lblLicencia.setForeground(new java.awt.Color(255, 255, 255));
         lblLicencia.setText("Cliente:");
@@ -189,14 +183,9 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
         });
         jPanel3.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 60, 30));
 
-        lblLicencia1.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 14)); // NOI18N
-        lblLicencia1.setForeground(new java.awt.Color(255, 255, 255));
-        lblLicencia1.setText("Licencia:");
-        jPanel3.add(lblLicencia1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 0, -1, 40));
-
         lblCliente.setFont(new java.awt.Font("Microsoft YaHei Light", 1, 14)); // NOI18N
         lblCliente.setText("Estado Licencia");
-        jPanel3.add(lblCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 50, -1, -1));
+        jPanel3.add(lblCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 50, 240, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -313,7 +302,7 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
                 ((JButton) objeto).doClick();
                 JButton boton = (JButton) objeto;
                 if (boton.equals(btnHistorial)) {
-                    frmHistorialPlacas frmhisto = new frmHistorialPlacas(listaActual.get(row), persona);
+                    frmHistorialPlacas frmhisto = new frmHistorialPlacas(listaActual.get(row), persona,true);
                     frmhisto.setVisible(true);
                     this.dispose();
                 }
@@ -379,8 +368,6 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCliente;
     private javax.swing.JLabel lblLicencia;
-    private javax.swing.JLabel lblLicencia1;
-    private javax.swing.JLabel lblLicenciaVigente;
     private javax.swing.JTable tblAuto;
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables

@@ -36,11 +36,12 @@ public class frmHistorialPlacas extends javax.swing.JFrame {
     private Persona persona;
     private List<Placas> listaActual = new ArrayList<Placas>();
     private IAutomovilNegocio automovilNegocio;
+    boolean regresarSinDueno;
 
     /**
      * Creates new form frmHistorialPlacas
      */
-    public frmHistorialPlacas(Automovil automovil, Persona persona) {
+    public frmHistorialPlacas(Automovil automovil, Persona persona, boolean regresarSinDueno) {
         IConexionBD conexionBD = new ConexionBD();
         IAutomovilDAO autodao = new AutomovilDAO(conexionBD);
         IPlacasDAO placasDAO = new PlacasDAO(conexionBD);
@@ -48,6 +49,7 @@ public class frmHistorialPlacas extends javax.swing.JFrame {
         this.placasNegocio = new PlacasNegocio(placasDAO);;
         this.automovilActual = automovil;
         this.persona = persona;
+        this.regresarSinDueno=regresarSinDueno;
         initComponents();
         configuracionFrame();
         tabla();
@@ -68,7 +70,8 @@ public class frmHistorialPlacas extends javax.swing.JFrame {
      */
     public void configuracionFrame() {
         if (persona != null) {
-            lblDueno.setText("Dueño Actual:  " + persona.getNombre());
+            String nombreCompleto = persona.getNombre() + " " + persona.getApellidoPaterno() + " " + persona.getApellidoMaterno();
+            lblDueno.setText("Dueño Actual:  " + nombreCompleto);
         } else {
             lblDueno.setText("Dueño Actual:   Sin Dueño");
         }
@@ -240,28 +243,25 @@ public class frmHistorialPlacas extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 824, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNumeroDeSerie)
-                    .addComponent(lblModelo, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                    .addComponent(lblMarca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblLinea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(115, 115, 115))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 824, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblDueno)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(41, 41, 41)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNumeroDeSerie)
+                            .addComponent(lblModelo, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(lblMarca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblLinea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDueno, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -299,10 +299,16 @@ public class frmHistorialPlacas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        if (regresarSinDueno) {
+            frmAutomovilesSinDueno frm = new frmAutomovilesSinDueno(automovilNegocio, persona);
+            frm.setVisible(true);
+            this.dispose();
+        } else {
+            frmAutomoviles frm = new frmAutomoviles(automovilNegocio, persona);
+            frm.setVisible(true);
+            this.dispose();
+        }
 
-        frmAutomoviles frm = new frmAutomoviles(automovilNegocio, persona);
-        frm.setVisible(true);
-        this.dispose();
 
     }//GEN-LAST:event_btnRegresarActionPerformed
 
