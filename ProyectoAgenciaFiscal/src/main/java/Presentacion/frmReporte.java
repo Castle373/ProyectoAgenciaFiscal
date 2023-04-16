@@ -91,6 +91,10 @@ public class frmReporte extends javax.swing.JFrame {
         llenarTabla();
     }
 
+    /**
+     *
+     * Configura la tabla de consultas con sus columnas y altura de filas.
+     */
     public void tabla() {
         tblConsultas.setDefaultRenderer(Object.class, new RenderTabla());
         DefaultTableModel defa = new DefaultTableModel();
@@ -103,30 +107,29 @@ public class frmReporte extends javax.swing.JFrame {
         defa.fireTableDataChanged();
     }
 
+    /**
+     *
+     * Llena la tabla de consultas con los datos de los trámites.
+     *
+     * Obtiene los trámites a través del objeto TramiteNegocio y los muestra en
+     * la tabla.
+     *
+     * Si se selecciona el checkbox de Periodos, se obtienen los trámites dentro
+     * del rango de fechas indicado.
+     *
+     * Si se escribe algo en el campo de búsqueda, se obtienen los trámites que
+     * coinciden con la búsqueda.
+     */
     public void llenarTabla() {
         IConexionBD conexionBD = new ConexionBD();
         ITramiteDAO tramiteDAO = new TramiteDAO(conexionBD);
         ITramiteNegocio tramiteNegocio = new TramiteNegocio(tramiteDAO);
+
         if (!chkPeriodos.isSelected()) {
-            listaActual = tramiteDAO.listaTramite(chkLicencia.isSelected(), chkPlaca.isSelected(), null, null);
+            listaActual = tramiteNegocio.listaTramite(chkLicencia.isSelected(), chkPlaca.isSelected(), null, null, txtBusqueda.getText());
         } else {
-            listaActual = tramiteDAO.listaTramite(chkLicencia.isSelected(), chkPlaca.isSelected(), fechaInicio.getDate(), fechaFin.getDate());
+            listaActual = tramiteNegocio.listaTramite(chkLicencia.isSelected(), chkPlaca.isSelected(), fechaInicio.getDate(), fechaFin.getDate(), txtBusqueda.getText());
         }
-
-        Encriptacion AES = new Encriptacion();
-        AES.desencriptarListaTramite(listaActual);
-        if (!txtBusqueda.getText().isEmpty()) {
-            List<Tramite> listaPorNombre = new ArrayList<Tramite>();
-
-            for (Tramite tramite : listaActual) {
-                String NombreCompleto = tramite.getPersona().getNombre() + " " + tramite.getPersona().getApellidoPaterno() + " " + tramite.getPersona().getApellidoMaterno();
-                if (NombreCompleto.toLowerCase().contains(txtBusqueda.getText().toLowerCase())) {
-                    listaPorNombre.add(tramite);
-                }
-            }
-            listaActual = listaPorNombre;
-        }
-
         DefaultTableModel defa = (DefaultTableModel) tblConsultas.getModel();
         defa.setRowCount(0);
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -407,11 +410,11 @@ public class frmReporte extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
-        // TODO add your handling code here:
+        llenarTabla();
     }//GEN-LAST:event_txtBusquedaActionPerformed
 
     private void chkPeriodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkPeriodosActionPerformed
-        // TODO add your handling code here:
+        llenarTabla();
     }//GEN-LAST:event_chkPeriodosActionPerformed
 
     private void chkPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkPlacaActionPerformed

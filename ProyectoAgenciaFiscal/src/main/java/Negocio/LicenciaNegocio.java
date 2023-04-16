@@ -13,26 +13,52 @@ import java.util.List;
  *
  * @author diego
  */
-public class LicenciaNegocio implements ILicenciaNegocio{
+public class LicenciaNegocio implements ILicenciaNegocio {
 
     private ILicenciaDAO licenciaDAO;
 
+    /**
+     *
+     * Constructor de la clase LicenciaNegocio.
+     *
+     * @param licenciaDAO El objeto DAO que se encarga de interactuar con la
+     * capa de persistencia de datos.
+     */
     public LicenciaNegocio(ILicenciaDAO licenciaDAO) {
         this.licenciaDAO = licenciaDAO;
     }
-    @Override
+
+    /**
+     *
+     * Obtiene una lista de las licencias de una persona.
+     *
+     * @param id El identificador de la persona.
+     * @return Una lista de licencias asociadas a la persona.
+     */
     public List<Licencia> listaLicenciaPersona(int id) {
-       return licenciaDAO.listaLicenciaPersona(id);
+        return licenciaDAO.listaLicenciaPersona(id);
     }
 
-    @Override
+    /**
+     *
+     * Obtiene una lista de las licencias vigentes de una persona.
+     *
+     * @param id El identificador de la persona.
+     * @return Una lista de licencias vigentes asociadas a la persona.
+     */
     public List<Licencia> listaLicenciaPersonaVigentes(int id) {
-       return licenciaDAO.listaLicenciaPersonaVigentes(id);
+        return licenciaDAO.listaLicenciaPersonaVigentes(id);
     }
 
-    @Override
+    /**
+     *
+     * Agrega una nueva licencia a la base de datos.
+     *
+     * @param licencia La nueva licencia a agregar.
+     * @return La licencia agregada con su identificador actualizado.
+     */
     public Licencia agregaLicencia(Licencia licencia) {
-       return licenciaDAO.agregaLicencia(licencia);
+        return licenciaDAO.agregaLicencia(licencia);
     }
-    
+
 }

@@ -40,12 +40,13 @@ public class frmAutomoviles extends javax.swing.JFrame {
 
     private int row, columna;
     private JButton btnSolicitar = new JButton("Solicitar Placas");
+    private JButton btnBaja = new JButton("Dar de Baja");
     private JButton btnHistorial = new JButton("Historial Placas");
     private List<Automovil> listaActual = new ArrayList<Automovil>();
     private IPlacasNegocio placasNegocio;
     private IAutomovilNegocio automovilNegocio;
     private ILicenciaNegocio licenciaNegocio;
-    private boolean licenciaVigente=false;
+    private boolean licenciaVigente = false;
     private Persona persona;
 
     /**
@@ -55,7 +56,7 @@ public class frmAutomoviles extends javax.swing.JFrame {
         IConexionBD conexionBD = new ConexionBD();
         IPlacasDAO placasDAO = new PlacasDAO(conexionBD);
         ILicenciaDAO licenciaDAO = new LicenciaDAO(conexionBD);
-        this.licenciaNegocio= new LicenciaNegocio(licenciaDAO);
+        this.licenciaNegocio = new LicenciaNegocio(licenciaDAO);
         this.placasNegocio = new PlacasNegocio(placasDAO);
         this.persona = persona;
         this.automovilNegocio = automovilNegocio;
@@ -64,17 +65,29 @@ public class frmAutomoviles extends javax.swing.JFrame {
         llenarTabla();
         comprobarLicencia();
         botoneDiseño();
-        String nombreCompleto=persona.getNombre()+" "+persona.getApellidoPaterno()+" "+persona.getApellidoMaterno();
+        String nombreCompleto = persona.getNombre() + " " + persona.getApellidoPaterno() + " " + persona.getApellidoMaterno();
         this.lblCliente.setText(nombreCompleto);
     }
-    public void botoneDiseño(){
-        btnSolicitar.setBackground(new Color(102,89,222));
-        btnHistorial.setBackground(new Color(102,89,222));
+
+    /**
+     *
+     * Establece el diseño personalizado de los botones de la interfaz.
+     */
+    public void botoneDiseño() {
+        btnSolicitar.setBackground(new Color(102, 89, 222));
+        btnHistorial.setBackground(new Color(102, 89, 222));
+        btnBaja.setBackground(new Color(204, 0, 0));
         btnSolicitar.setForeground(Color.BLACK);
         btnHistorial.setForeground(Color.BLACK);
+        btnBaja.setForeground(Color.BLACK);
         btnSolicitar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         btnHistorial.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnBaja.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
     }
+
+    /**
+     * Configura la estructura de la tabla en la interfaz gráfica de usuario.
+     */
     public void tabla() {
         tblAuto.setDefaultRenderer(Object.class, new RenderTabla());
         DefaultTableModel defa = new DefaultTableModel();
@@ -86,6 +99,7 @@ public class frmAutomoviles extends javax.swing.JFrame {
         defa.addColumn("Estado");
         defa.addColumn("Solicitar Placas");
         defa.addColumn("Historial Placas");
+        defa.addColumn("Baja");
         tblAuto.setRowHeight(40);
         TableColumn solicitarColumna = tblAuto.getColumnModel().getColumn(5);
         TableColumn historialColumna = tblAuto.getColumnModel().getColumn(6);
@@ -94,6 +108,9 @@ public class frmAutomoviles extends javax.swing.JFrame {
         defa.fireTableDataChanged();
     }
 
+    /**
+     * Llena la tabla con los datos de los automóviles del usuario.
+     */
     public void llenarTabla() {
 
         listaActual = automovilNegocio.BuscarAutomovilesPorPersona(persona.getId(), txtBusqueda.getText());
@@ -113,24 +130,32 @@ public class frmAutomoviles extends javax.swing.JFrame {
 
             datos[5] = btnSolicitar;
             datos[6] = btnHistorial;
+            datos[7] = btnBaja;
             defa.addRow(datos);
-            
+
         }
 
     }
-    public void comprobarLicencia(){
-        List<Licencia> listaLicencia=licenciaNegocio.listaLicenciaPersona(persona.getId());
+
+    /**
+     *
+     * Verifica si la persona tiene una licencia vigente y actualiza la etiqueta
+     * correspondiente en la interfaz gráfica.
+     */
+    public void comprobarLicencia() {
+        List<Licencia> listaLicencia = licenciaNegocio.listaLicenciaPersona(persona.getId());
         if (listaLicencia.isEmpty()) {
             lblLicenciaVigente.setText("Sin Licencia Vigente");
             lblLicenciaVigente.setForeground(Color.red);
-            licenciaVigente=false;
-        }else{
-             lblLicenciaVigente.setText("Con Licencia Vigente");
-             lblLicenciaVigente.setForeground(Color.GREEN);
-             licenciaVigente=true;
+            licenciaVigente = false;
+        } else {
+            lblLicenciaVigente.setText("Con Licencia Vigente");
+            lblLicenciaVigente.setForeground(Color.GREEN);
+            licenciaVigente = true;
         }
-        
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -176,6 +201,7 @@ public class frmAutomoviles extends javax.swing.JFrame {
         lblLicencia.setText("Cliente:");
         jPanel3.add(lblLicencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, -1, 40));
 
+        btnRegresar.setBackground(new java.awt.Color(255, 255, 255));
         btnRegresar.setText("Regresar");
         btnRegresar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnRegresar.setFocusPainted(false);
@@ -198,8 +224,10 @@ public class frmAutomoviles extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        btnAgregaCarro.setBackground(new java.awt.Color(255, 255, 255));
         btnAgregaCarro.setText("Agregar Carro");
         btnAgregaCarro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnAgregaCarro.setFocusPainted(false);
         btnAgregaCarro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregaCarroActionPerformed(evt);
@@ -242,8 +270,10 @@ public class frmAutomoviles extends javax.swing.JFrame {
         tblAuto.getTableHeader().setBackground(new Color(102,89,222));
         tblAuto.getTableHeader().setForeground(new Color(255,255,255));
 
+        btnAgregaCarroUsado.setBackground(new java.awt.Color(255, 255, 255));
         btnAgregaCarroUsado.setText("Agregar Carro Usado");
         btnAgregaCarroUsado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnAgregaCarroUsado.setFocusPainted(false);
         btnAgregaCarroUsado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregaCarroUsadoActionPerformed(evt);
@@ -255,19 +285,19 @@ public class frmAutomoviles extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 865, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(169, 169, 169)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAgregaCarro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregaCarroUsado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,7 +313,7 @@ public class frmAutomoviles extends javax.swing.JFrame {
                         .addComponent(btnAgregaCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAgregaCarroUsado, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -292,7 +322,7 @@ public class frmAutomoviles extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
@@ -317,7 +347,7 @@ public class frmAutomoviles extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBusquedaKeyReleased
 
     private void btnAgregaCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregaCarroActionPerformed
-        frmRegistroAutomovil frmRegistro = new frmRegistroAutomovil(automovilNegocio, persona);
+        frmRegistroAutomovil frmRegistro = new frmRegistroAutomovil(automovilNegocio, persona, null);
         frmRegistro.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAgregaCarroActionPerformed
@@ -326,9 +356,9 @@ public class frmAutomoviles extends javax.swing.JFrame {
         IConexionBD conexionBD = new ConexionBD();
         IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
         IPersonaNegocio personaNegocio = new PersonaNegocio(personaDAO);
-          ILicenciaDAO licenciaDAO=new LicenciaDAO(conexionBD);
-           ILicenciaNegocio licencianegocio=new LicenciaNegocio(licenciaDAO);
-        frmTramites frm = new frmTramites(personaNegocio, automovilNegocio,licencianegocio);
+        ILicenciaDAO licenciaDAO = new LicenciaDAO(conexionBD);
+        ILicenciaNegocio licencianegocio = new LicenciaNegocio(licenciaDAO);
+        frmTramites frm = new frmTramites(personaNegocio, automovilNegocio, licencianegocio);
         frm.setVisible(true);
         this.dispose();
 
@@ -336,28 +366,33 @@ public class frmAutomoviles extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void tblAutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAutoMouseClicked
-            columna = tblAuto.getColumnModel().getColumnIndexAtX(evt.getX());
+        columna = tblAuto.getColumnModel().getColumnIndexAtX(evt.getX());
         row = evt.getY() / tblAuto.getRowHeight();
         if (columna <= tblAuto.getColumnCount() && columna >= 0 && row <= tblAuto.getRowCount() && row >= 0) {
             Object objeto = tblAuto.getValueAt(row, columna);
             if (objeto instanceof JButton) {
                 ((JButton) objeto).doClick();
                 JButton boton = (JButton) objeto;
+                if (boton.equals(btnBaja)) {
+                    frmRegistroAutomovil frmRegistro = new frmRegistroAutomovil(automovilNegocio, persona, listaActual.get(row));
+                    frmRegistro.setVisible(true);
+                    this.dispose();
+                }
                 if (boton.equals(btnHistorial)) {
-                    frmHistorialPlacas frmhisto = new frmHistorialPlacas( listaActual.get(row), persona);
+                    frmHistorialPlacas frmhisto = new frmHistorialPlacas(listaActual.get(row), persona);
                     frmhisto.setVisible(true);
                     this.dispose();
                 }
                 if (boton.equals(btnSolicitar)) {
                     if (!licenciaVigente) {
-                        JOptionPane.showMessageDialog(rootPane,"No Cuentas con una Licencia Vigente para Realizar esta Operacion","Sin licencia",JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(rootPane, "No Cuentas con una Licencia Vigente para Realizar esta Operacion", "Sin licencia", JOptionPane.WARNING_MESSAGE);
                         return;
                     }
                     if (tblAuto.getValueAt(row, 4).equals("Nuevo")) {
                         int respuesta = JOptionPane.showConfirmDialog(rootPane, "Este carro es nuevo, Deseas solicitar una placa?", "Confirmación", JOptionPane.YES_NO_OPTION);
                         if (respuesta == JOptionPane.YES_OPTION) {
-                            
-                            frmPlaca frmplacas = new frmPlaca(automovilNegocio, placasNegocio, listaActual.get(row), persona,1500);
+
+                            frmPlaca frmplacas = new frmPlaca(automovilNegocio, placasNegocio, listaActual.get(row), persona, 1500);
                             frmplacas.setVisible(true);
                             this.dispose();
                         } else {
@@ -366,7 +401,7 @@ public class frmAutomoviles extends javax.swing.JFrame {
                     } else {
                         int respuesta = JOptionPane.showConfirmDialog(rootPane, "Este carro ya cuenta con placas, Desea cambiar de placas?", "Confirmación", JOptionPane.YES_NO_OPTION);
                         if (respuesta == JOptionPane.YES_OPTION) {
-                            frmPlaca frmplacas = new frmPlaca(automovilNegocio, placasNegocio, listaActual.get(row), persona,1000);
+                            frmPlaca frmplacas = new frmPlaca(automovilNegocio, placasNegocio, listaActual.get(row), persona, 1000);
                             frmplacas.setVisible(true);
                             this.dispose();
                         } else {
@@ -380,7 +415,7 @@ public class frmAutomoviles extends javax.swing.JFrame {
     }//GEN-LAST:event_tblAutoMouseClicked
 
     private void btnAgregaCarroUsadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregaCarroUsadoActionPerformed
-        frmAutomovilesSinDueno frm = new frmAutomovilesSinDueno(automovilNegocio,persona);
+        frmAutomovilesSinDueno frm = new frmAutomovilesSinDueno(automovilNegocio, persona);
         frm.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAgregaCarroUsadoActionPerformed

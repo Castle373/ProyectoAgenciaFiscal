@@ -37,6 +37,11 @@ public class frmPlaca extends javax.swing.JFrame {
         configuracionFrame();
     }
 
+    /**
+     *
+     * Configura la información del frame con los datos del dueño actual y el
+     * automóvil actual.
+     */
     public void configuracionFrame() {
         lblNombre.setText("Dueño Actual:  " + persona.getNombre());
         lblLinea.setText("Linea:  " + automovilActual.getLinea());
@@ -45,6 +50,13 @@ public class frmPlaca extends javax.swing.JFrame {
         lblModelo.setText("Modelo:  " + automovilActual.getModelo());
     }
 
+    /**
+     *
+     * Registra la placa en el sistema con la información del automóvil actual y
+     * el dueño actual. Si se registra correctamente, muestra un mensaje de
+     * confirmación y cierra el frame actual. Si ocurre algún error, muestra un
+     * mensaje de error.
+     */
     public void registrarPlaca() {
         Placas p = new Placas(null, "ACTIVA", automovilActual, costo, persona);
         try {
@@ -55,7 +67,13 @@ public class frmPlaca extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error al registrar la placa: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    public void regresar(){
+
+    /**
+     *
+     * Abre la ventana de administración de automóviles y cierra el frame
+     * actual.
+     */
+    public void regresar() {
         frmAutomoviles frmauto = new frmAutomoviles(automovilNegocio, persona);
         frmauto.setVisible(true);
         this.dispose();
@@ -96,9 +114,9 @@ public class frmPlaca extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
+                .addGap(112, 112, 112)
                 .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
-                .addGap(65, 65, 65))
+                .addGap(33, 33, 33))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,7 +161,7 @@ public class frmPlaca extends javax.swing.JFrame {
         lblLinea.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 14)); // NOI18N
         lblLinea.setText("Linea:");
 
-        lblNombre.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 14)); // NOI18N
+        lblNombre.setFont(new java.awt.Font("Microsoft YaHei Light", 1, 14)); // NOI18N
         lblNombre.setText("Nombre de Solicitante");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -156,24 +174,27 @@ public class frmPlaca extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblNombre)
+                .addGap(169, 169, 169))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(100, 158, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(lblDatos)
-                            .addGap(34, 34, 34)
-                            .addComponent(lblNombre))
+                        .addComponent(lblDatos)
                         .addComponent(lblNumeroSerie)
                         .addComponent(lblModelo)
                         .addComponent(lblMarca)
                         .addComponent(lblLinea))
-                    .addGap(0, 189, Short.MAX_VALUE)))
+                    .addGap(0, 364, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(268, Short.MAX_VALUE)
+                .addGap(88, 88, 88)
+                .addComponent(lblNombre)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -181,9 +202,7 @@ public class frmPlaca extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblDatos)
-                        .addComponent(lblNombre))
+                    .addComponent(lblDatos)
                     .addGap(5, 5, 5)
                     .addComponent(lblNumeroSerie)
                     .addGap(10, 10, 10)
@@ -217,11 +236,11 @@ public class frmPlaca extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-       regresar();
+        regresar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-       registrarPlaca();
+        registrarPlaca();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**

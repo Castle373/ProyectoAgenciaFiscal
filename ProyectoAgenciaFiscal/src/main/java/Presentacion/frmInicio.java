@@ -222,18 +222,7 @@ public class frmInicio extends javax.swing.JFrame {
         frmCrudPersona crudPersona = new frmCrudPersona(personaNegocio);
         crudPersona.setVisible(true);
         this.dispose();
-// String opcion=(JOptionPane.showInputDialog(null,"¿Ya esta registrado?","Opciones", JOptionPane.PLAIN_MESSAGE,null,new Object[]{"Si","No"},"Selecciona")).toString();
-//     if(opcion=="Si"){ 
-//     String rfc= JOptionPane.showInputDialog(null, "Ingrese su RFC","RFC");
-//        frmPersona per = new frmPersona();
-//        per.setVisible(true);
-//        this.dispose();
-//      }else{
-//           frmPersona per = new frmPersona();
-//        per.setVisible(true);
-//        this.dispose();  
-//        
-//      }     
+  
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btnTramitesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTramitesActionPerformed

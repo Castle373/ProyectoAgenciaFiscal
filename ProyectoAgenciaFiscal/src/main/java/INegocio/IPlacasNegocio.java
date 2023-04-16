@@ -14,6 +14,24 @@ import java.util.List;
  * @author diego
  */
 public interface IPlacasNegocio {
+
+    /**
+     *
+     * Obtiene la lista de placas asociadas a un automóvil.
+     *
+     * @param id Identificador del automóvil.
+     * @return Lista de objetos Placas.
+     */
     public List<Placas> BuscarPorAuto(int id);
-    public Placas registrarPlaca(Placas plascas) throws PlacaException;
+
+    /**
+     *
+     * Registra una nueva placa en el sistema.
+     *
+     * @param placas Objeto Placas a registrar.
+     * @return Objeto Placas registrado.
+     * @throws PlacaException Si se produce un error durante el registro de la
+     * placa.
+     */
+    public Placas registrarPlaca(Placas placas) throws PlacaException;
 }

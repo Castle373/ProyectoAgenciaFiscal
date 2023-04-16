@@ -40,32 +40,49 @@ public class frmHistorialPlacas extends javax.swing.JFrame {
     /**
      * Creates new form frmHistorialPlacas
      */
-    public frmHistorialPlacas(Automovil automovil,Persona persona) {
+    public frmHistorialPlacas(Automovil automovil, Persona persona) {
         IConexionBD conexionBD = new ConexionBD();
         IAutomovilDAO autodao = new AutomovilDAO(conexionBD);
         IPlacasDAO placasDAO = new PlacasDAO(conexionBD);
         this.automovilNegocio = new AutomovilNegocio(autodao);
         this.placasNegocio = new PlacasNegocio(placasDAO);;
         this.automovilActual = automovil;
-        this.persona=persona;
+        this.persona = persona;
         initComponents();
         configuracionFrame();
         tabla();
         llenarTabla();
     }
-    public void configuracionFrame(){
-        if (persona!=null) {
-           lblDueno.setText("Dueño Actual:  "+persona.getNombre()); 
-        }else{
-           lblDueno.setText("Dueño Actual:   Sin Dueño"); 
+
+    /**
+     *
+     * Actualiza la información mostrada en el frame de configuración del
+     * automóvil.
+     *
+     * Si existe una persona dueña del automóvil, se muestra su nombre.
+     *
+     * De lo contrario, se muestra "Sin Dueño".
+     *
+     * Se actualizan los campos de línea, marca, número de serie y modelo del
+     * automóvil.
+     */
+    public void configuracionFrame() {
+        if (persona != null) {
+            lblDueno.setText("Dueño Actual:  " + persona.getNombre());
+        } else {
+            lblDueno.setText("Dueño Actual:   Sin Dueño");
         }
-        
-        lblLinea.setText("Linea:  "+automovilActual.getLinea());
-        lblMarca.setText("Marca:  "+automovilActual.getMarca());
-lblNumeroDeSerie.setText("Numero de Serie:  "+automovilActual.getNumeroDeSerie());
-       lblModelo.setText("Modelo:  "+automovilActual.getModelo());
+
+        lblLinea.setText("Linea:  " + automovilActual.getLinea());
+        lblMarca.setText("Marca:  " + automovilActual.getMarca());
+        lblNumeroDeSerie.setText("Numero de Serie:  " + automovilActual.getNumeroDeSerie());
+        lblModelo.setText("Modelo:  " + automovilActual.getModelo());
     }
 
+    /**
+     *
+     * Configura la tabla de consultas y sus columnas.
+     */
     public void tabla() {
         tblConsultas.setDefaultRenderer(Object.class, new RenderTabla());
         DefaultTableModel defa = new DefaultTableModel();
@@ -77,10 +94,21 @@ lblNumeroDeSerie.setText("Numero de Serie:  "+automovilActual.getNumeroDeSerie()
         defa.addColumn("Nombre de solicitante");
         tblConsultas.setRowHeight(40);
 
-    }   
+    }
 
+    /**
+     *
+     * Llena la tabla de consultas con la información de las placas asociadas al
+     * automóvil actual.
+     *
+     * La información incluye la fecha de solicitud, número de placa, estado de
+     * la placa, fecha de inactividad (si existe),
+     *
+     * y el nombre del solicitante.
+     */
     public void llenarTabla() {
         listaActual = placasNegocio.BuscarPorAuto(automovilActual.getId());
+
         DefaultTableModel defa = (DefaultTableModel) tblConsultas.getModel();
         defa.setRowCount(0);
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -89,11 +117,11 @@ lblNumeroDeSerie.setText("Numero de Serie:  "+automovilActual.getNumeroDeSerie()
             datos[0] = formato.format(listaActual.get(i).getFechaTramite().getTime());
             datos[1] = listaActual.get(i).getNumeroPlacas();
             datos[2] = listaActual.get(i).getEstado();
-            if (listaActual.get(i).getFechaInactividad()!=null) {
-            datos[3] = formato.format(listaActual.get(i).getFechaInactividad().getTime());
+            if (listaActual.get(i).getFechaInactividad() != null) {
+                datos[3] = formato.format(listaActual.get(i).getFechaInactividad().getTime());
             }
-            
-            datos[4] = listaActual.get(i).getPersona().getNombre();
+            String nombreCompleto = listaActual.get(i).getPersona().getNombre() + " " + listaActual.get(i).getPersona().getApellidoPaterno() + " " + listaActual.get(i).getPersona().getApellidoMaterno();
+            datos[4] = nombreCompleto;
             defa.addRow(datos);
         }
     }
@@ -271,15 +299,15 @@ lblNumeroDeSerie.setText("Numero de Serie:  "+automovilActual.getNumeroDeSerie()
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-    
-    frmAutomoviles frm = new frmAutomoviles(automovilNegocio, persona);
-    frm.setVisible(true);
-    this.dispose();
-    
+
+        frmAutomoviles frm = new frmAutomoviles(automovilNegocio, persona);
+        frm.setVisible(true);
+        this.dispose();
+
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void tblConsultasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblConsultasMouseClicked
-        
+
     }//GEN-LAST:event_tblConsultasMouseClicked
 
     /**

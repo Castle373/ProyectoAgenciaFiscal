@@ -9,6 +9,7 @@ import Excepciones.PlacaException;
 import INegocio.IPlacasNegocio;
 import IPersistencia.IPersonaDAO;
 import IPersistencia.IPlacasDAO;
+import Persistencia.Encriptacion;
 import java.util.List;
 
 /**
@@ -19,35 +20,50 @@ public class PlacasNegocio implements IPlacasNegocio {
 
     private IPlacasDAO placasDAO;
 
+    /**
+     *
+     * Constructor de la clase PlacasNegocio.
+     *
+     * @param placasDAO El objeto DAO que se encarga de interactuar con la capa
+     * de persistencia de datos.
+     */
     public PlacasNegocio(IPlacasDAO placasDAO) {
         this.placasDAO = placasDAO;
     }
 
-    @Override
+    /**
+     *
+     * Obtiene una lista de las placas asociadas a un automóvil.
+     *
+     * @param id El identificador del automóvil.
+     *
+     * @return Una lista de placas asociadas al automóvil.
+     */
     public List<Placas> BuscarPorAuto(int id) {
-        return placasDAO.listaPlacasAuto(id);
+        List<Placas> listaPlacaAuto = placasDAO.listaPlacasAuto(id);
+        Encriptacion aes = new Encriptacion();
+        listaPlacaAuto = aes.desencriptarListaPlacas(listaPlacaAuto);
+
+        return listaPlacaAuto;
     }
 
-//    @Override
-//    public Placas registrarPlaca(Placas placas) {
-//        List<Placas> lista = placasDAO.listaPlacas();
-//        for (int i = 0; i < lista.size(); i++) {
-//            if (placas.getNumeroPlacas().equals(lista.get(i).getNumeroPlacas())) {
-//                return null;
-//            }
-//        }
-//
-//        return placasDAO.agregarPlacas(placas);
-//    }
-
-    @Override
-    public Placas registrarPlaca(Placas placas)throws PlacaException {
+    /**
+     *
+     * Registra una nueva placa en la base de datos.
+     *
+     * @param placas La nueva placa a registrar.
+     *
+     * @return La placa registrada con su identificador actualizado.
+     *
+     * @throws PlacaException Si la placa ya existe o si no se pudo agregar la
+     * placa.
+     */
+    public Placas registrarPlaca(Placas placas) throws PlacaException {
         List<Placas> lista = placasDAO.listaPlacas();
         for (int i = 0; i < lista.size(); i++) {
-            if (placas.getNumeroPlacas()==null) {
-                i=lista.size();
-            }
-            else if (placas.getNumeroPlacas().equals(lista.get(i).getNumeroPlacas())) {
+            if (placas.getNumeroPlacas() == null) {
+                i = lista.size();
+            } else if (placas.getNumeroPlacas().equals(lista.get(i).getNumeroPlacas())) {
                 throw new PlacaException("La placa ya existe");
             }
         }
@@ -57,7 +73,7 @@ public class PlacasNegocio implements IPlacasNegocio {
             throw new PlacaException("No se pudo agregar la placa");
         }
 
-        // Si la placa se agregó correctamente, retornar la placa
+// Si la placa se agregó correctamente, retornar la placa
         return placaAgregada;
     }
 

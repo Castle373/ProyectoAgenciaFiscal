@@ -17,18 +17,20 @@ import javax.swing.JOptionPane;
  * @author Gabriel
  */
 public class frmLicencia extends javax.swing.JFrame {
-private Persona persona;
-private Licencia licencia;
-private ILicenciaNegocio LicenciaNegocio;
-private int anios=0;
+
+    private Persona persona;
+    private Licencia licencia;
+    private ILicenciaNegocio LicenciaNegocio;
+    private int anios = 0;
+
     /**
      * Creates new form frmLicencia
      */
-    public frmLicencia(Persona persona,ILicenciaNegocio LicenciaNegocio) {
+    public frmLicencia(Persona persona, ILicenciaNegocio LicenciaNegocio) {
         initComponents();
-        this.persona=persona;
-        this.LicenciaNegocio=LicenciaNegocio;
-          precios();
+        this.persona = persona;
+        this.LicenciaNegocio = LicenciaNegocio;
+        precios();
     }
 
     /**
@@ -40,17 +42,53 @@ private int anios=0;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel8 = new javax.swing.JLabel();
-        cbovigencia = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        cbovigencia = new javax.swing.JComboBox<>();
         txtcosto = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel8.setText("Vigencia:");
+        jPanel6.setBackground(new java.awt.Color(102, 89, 222));
+        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel6.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 60)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Solicitud de Licencia");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(48, 48, 48))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 11, Short.MAX_VALUE))
+        );
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Aceptar");
+        jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         cbovigencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 AÑO", "2 AÑOS", "3 AÑOS" }));
         cbovigencia.addActionListener(new java.awt.event.ActionListener() {
@@ -59,73 +97,88 @@ private int anios=0;
             }
         });
 
+        txtcosto.setEditable(false);
+        txtcosto.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
+        jLabel10.setText("Costo:");
+
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Atrás");
+        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Aceptar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
+        jLabel8.setText("Vigencia:");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Solicitar licencia");
 
-        jLabel10.setText("Costo:");
-
-        txtcosto.setEditable(false);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(251, 251, 251)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbovigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(346, 346, 346)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(203, 203, 203))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(cbovigencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(152, 152, 152)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(60, 60, 60)
-                        .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                        .addComponent(cbovigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(149, 149, 149))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(140, 140, 140))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(cbovigencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -133,62 +186,73 @@ private int anios=0;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-   //frmRegistroPersona per = new frmRegistroPersona();
-      //  per.setVisible(true);
+        //frmRegistroPersona per = new frmRegistroPersona();
+        //  per.setVisible(true);
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
         agregar();
-        this.dispose();  
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void cbovigenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbovigenciaActionPerformed
-precios();
+        precios();
     }//GEN-LAST:event_cbovigenciaActionPerformed
-public void precios(){
-            if (cbovigencia.getSelectedItem()=="1 AÑO") {
-            if (persona.getDiscapacidad()==1) {
-              txtcosto.setText("200");
-            }else{
-              txtcosto.setText("600");  
+    /**
+     *
+     * Calcula el costo de la renovación de la placa según la vigencia
+     * seleccionada y si la persona tiene discapacidad. Actualiza el campo de
+     * texto "txtcosto" con el costo correspondiente.
+     */
+    public void precios() {
+        if (cbovigencia.getSelectedItem() == "1 AÑO") {
+            if (persona.getDiscapacidad() == 1) {
+                txtcosto.setText("200");
+            } else {
+                txtcosto.setText("600");
             }
-    anios=1;
+            anios = 1;
         }
-         if (cbovigencia.getSelectedItem()=="2 AÑOS") {
-              if (persona.getDiscapacidad()==1) {
-             txtcosto.setText("500");  
-            }else{
-             txtcosto.setText("900");   
-            } 
-                anios=2;
-        }
-          if (cbovigencia.getSelectedItem()=="3 AÑOS") {
-               if (persona.getDiscapacidad()==1) {
-              txtcosto.setText("700");  
-            }else{
-             txtcosto.setText("1100");   
+        if (cbovigencia.getSelectedItem() == "2 AÑOS") {
+            if (persona.getDiscapacidad() == 1) {
+                txtcosto.setText("500");
+            } else {
+                txtcosto.setText("900");
             }
-                 anios=3;
+            anios = 2;
         }
-}
-public void agregar(){
-   float costo=Float.valueOf(txtcosto.getText());
-   Calendar calendario=Calendar.getInstance();
-   int ano=calendario.get(Calendar.YEAR)+anios;
-   Calendar cal= new GregorianCalendar(ano,calendario.get(Calendar.MONTH),calendario.get(Calendar.DAY_OF_MONTH));
-     Licencia licencia1=new Licencia(anios,cal,costo,persona);
-     Licencia guardar=LicenciaNegocio.agregaLicencia(licencia1);
-    if (guardar!=null) {
-        JOptionPane.showMessageDialog(this, "Se completo el tramite de licencia a nombre de: "+persona.getNombre());
-      
-     
-        this.dispose();
-    }else{
-      JOptionPane.showMessageDialog(this, "Hubo un error al intentar completar su tramite");   
+        if (cbovigencia.getSelectedItem() == "3 AÑOS") {
+            if (persona.getDiscapacidad() == 1) {
+                txtcosto.setText("700");
+            } else {
+                txtcosto.setText("1100");
+            }
+            anios = 3;
+        }
     }
-}
+
+    /**
+     *
+     * Agrega una nueva licencia a la base de datos con la información ingresada
+     * por el usuario.
+     */
+    public void agregar() {
+        float costo = Float.valueOf(txtcosto.getText());
+        Calendar calendario = Calendar.getInstance();
+        int ano = calendario.get(Calendar.YEAR) + anios;
+        Calendar cal = new GregorianCalendar(ano, calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH));
+        Licencia licencia1 = new Licencia(anios, cal, costo, persona);
+        Licencia guardar = LicenciaNegocio.agregaLicencia(licencia1);
+        if (guardar != null) {
+            JOptionPane.showMessageDialog(this, "Se completo el tramite de licencia a nombre de: " + persona.getNombre());
+
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Hubo un error al intentar completar su tramite");
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -220,7 +284,7 @@ public void agregar(){
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-              //   new frmLicencia().setVisible(true);
+                //   new frmLicencia().setVisible(true);
             }
         });
     }
@@ -231,7 +295,10 @@ public void agregar(){
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JTextField txtcosto;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,8 +6,10 @@ package Persistencia;
 
 import Entity.Automovil;
 import Entity.Persona;
+import Entity.Placas;
 import IPersistencia.IAutomovilDAO;
 import IPersistencia.IConexionBD;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -85,15 +87,35 @@ public class AutomovilDAO implements IAutomovilDAO {
     }
 
     @Override
+    public List<Automovil> listaAutosSinPersona() {
+        EntityManager entityManager = this.conexionBD.crearConexion();
+        entityManager.getTransaction().begin();
+        TypedQuery<Automovil> query = entityManager.createQuery("SELECT a FROM Automovil a WHERE a.persona IS NULL", Automovil.class);
+        List<Automovil> listaAutoSinPersona = query.getResultList();
+        entityManager.getTransaction().commit();
+        return listaAutoSinPersona;
+    }
+
+    public List<Automovil> listaAutosSinPersona2() {
+        EntityManager entityManager = this.conexionBD.crearConexion();
+        entityManager.getTransaction().begin();
+        TypedQuery<Automovil> query = entityManager.createQuery("SELECT a FROM Automovil a LEFT JOIN a.persona p WHERE a.persona IS NULL", Automovil.class);
+        List<Automovil> listaAutoSinPersona = query.getResultList();
+        entityManager.getTransaction().commit();
+        return listaAutoSinPersona;
+    }
+
+    @Override
     public Automovil cambiarDueño(Automovil auto, Persona persona) {
-EntityManager entityManager = this.conexionBD.crearConexion();
+        EntityManager entityManager = this.conexionBD.crearConexion();
         entityManager.getTransaction().begin();
         try {
             Automovil automovil = entityManager.find(Automovil.class, auto.getId());
             if (automovil != null) {
-                
+
                 automovil.setPersona(persona);
                 entityManager.merge(automovil);
+                entityManager.getTransaction().commit();
                 return automovil;
             }
         } catch (Exception e) {
@@ -110,22 +132,27 @@ EntityManager entityManager = this.conexionBD.crearConexion();
         try {
             Automovil automovil = entityManager.find(Automovil.class, auto.getId());
             if (automovil != null) {
+                List<Placas> placas = automovil.getPlacas();
+                for (Placas placa : placas) {
+                    if (placa.getEstado().equals("ACTIVA")) {
+                        // cambiar el estado a Desactivado y agregar la fecha de inactividad
+                        placa.setEstado("INACTIVA");
+                        placa.setFechaInactividad(new GregorianCalendar());
+                        entityManager.merge(placa);
+                    }
+                }
                 Persona persona = automovil.getPersona();
                 automovil.setPersona(null);
                 entityManager.merge(automovil);
+                entityManager.getTransaction().commit();
                 return automovil;
             }
         } catch (Exception e) {
+            System.out.println(e);
             return null;
         }
-        entityManager.getTransaction().commit();
+
         return null;
     }
-    /*
-    EntityManager entityManager = this.conexionBD.crearConexion();
-        Automovil automovil = entityManager.find(Automovil.class, auto.getId());
-        entityManager.getTransaction().begin();
-        
-        entityManager.getTransaction().commit();
-     */
+    
 }

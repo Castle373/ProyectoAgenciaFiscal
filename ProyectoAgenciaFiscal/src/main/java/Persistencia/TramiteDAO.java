@@ -30,10 +30,30 @@ public class TramiteDAO implements ITramiteDAO {
 
     private IConexionBD conexionBD;
 
+    /**
+     *
+     * Crea un nuevo objeto TramiteDAO con la conexión a la base de datos
+     * especificada.
+     *
+     * @param conexionBD la conexión a la base de datos utilizada por el DAO
+     */
     public TramiteDAO(IConexionBD conexionBD) {
         this.conexionBD = conexionBD;
     }
 
+    /**
+     * Retorna una lista de trámites filtrados por los tipos de trámite, las
+     * fechas de inicio y fin y opcionalmente por el nombre de la persona.
+     *
+     * @param tipo1 indica si se deben incluir los trámites de tipo Licencia
+     * @param tipo2 indica si se deben incluir los trámites de tipo Placas
+     * @param fechaInicio fecha de inicio del rango de fechas de los trámites
+     * @param fechaFin fecha de fin del rango de fechas de los trámites
+     * @param filtroNombre nombre o parte del nombre de la persona para filtrar
+     * los trámites. Puede ser una cadena vacía si no se desea filtrar por
+     * nombre.
+     * @return una lista de trámites que cumplen con los criterios de búsqueda
+     */
     @Override
     public List<Tramite> listaTramite(boolean tipo1, boolean tipo2, LocalDate fechaInicio, LocalDate fechaFin) {
         EntityManager entityManager = this.conexionBD.crearConexion();
@@ -75,6 +95,12 @@ public class TramiteDAO implements ITramiteDAO {
         return listaTramites;
     }
 
+    /**
+     * Retorna una lista de trámites realizados por una persona especificada.
+     *
+     * @param persona la persona cuyos trámites se desean obtener
+     * @return una lista de trámites realizados por la persona especificada
+     */
     @Override
     public List<Tramite> listaTramitePersona(Persona persona) {
         EntityManager entityManager = this.conexionBD.crearConexion();

@@ -5,6 +5,7 @@ package Persistencia;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 import Entity.Persona;
+import Entity.Placas;
 import Entity.Tramite;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -14,11 +15,12 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 public class Encriptacion {
+
     /**
      * Metodo Constructor Vacio de la Clase Encriptacion
      */
-    public Encriptacion(){
-        
+    public Encriptacion() {
+
     }
     /**
      * Declaracion de Variables de la Clase encriptacion
@@ -26,10 +28,11 @@ public class Encriptacion {
     private static final String ALGORITMO = "AES";
     private static final String MODO = "ECB";
     private static final String PADDING = "PKCS5Padding";
-    private static final String CLAVE_SECRETA = "ProyectoFinalU2B";
+    private static final String CLAVE_SECRETA = "AgenciaFiscal123";
 
     /**
      * Metodo que encripta un nombre
+     *
      * @param texto texto
      * @return null o el nombre encriptado dependiendo del caso
      */
@@ -48,6 +51,7 @@ public class Encriptacion {
 
     /**
      * Metodo para desencriptar el nombre
+     *
      * @param textoEncriptado textoEncript
      * @return null o el nombre desencriptada dependiendo del caso
      */
@@ -63,21 +67,22 @@ public class Encriptacion {
         }
         return null;
     }
-    
+
     public List<Persona> desencriptarLista(List<Persona> lista) {
         List<Persona> lista_desencriptada = new ArrayList();
-        
-        for(Persona persona : lista) {
-            
-            persona.setNombre( this.desencriptar( persona.getNombre()) );
-            persona.setApellidoPaterno(this.desencriptar( persona.getApellidoPaterno()) );
-            persona.setApellidoMaterno(this.desencriptar( persona.getApellidoMaterno()) );
+
+        for (Persona persona : lista) {
+
+            persona.setNombre(this.desencriptar(persona.getNombre()));
+            persona.setApellidoPaterno(this.desencriptar(persona.getApellidoPaterno()));
+            persona.setApellidoMaterno(this.desencriptar(persona.getApellidoMaterno()));
             lista_desencriptada.add(persona);
-            
+
         }
         return lista;
     }
 //    
+
     public List<Tramite> desencriptarListaTramite(List<Tramite> lista) {
         List<Persona> personasDesencriptadas = new ArrayList<>(); // crea una lista auxiliar de personas
         List<Tramite> lista_tramitePersona = new ArrayList<>(); // crea una lista de trámites
@@ -89,7 +94,7 @@ public class Encriptacion {
                 personasDesencriptadas.add(persona); // agrega la persona a la lista auxiliar
                 persona.setNombre(this.desencriptar(persona.getNombre()));
                 persona.setApellidoPaterno(this.desencriptar(persona.getApellidoPaterno()));
-                persona.setApellidoMaterno(this.desencriptar(persona.getApellidoMaterno())); 
+                persona.setApellidoMaterno(this.desencriptar(persona.getApellidoMaterno()));
             }
             lista_tramitePersona.add(tramite); // agrega el trámite a la lista
         }
@@ -97,11 +102,23 @@ public class Encriptacion {
         return lista_tramitePersona;
     }
 
-//    public Persona encriptarNombrePersona(Persona persona) {
-//        persona.setNombre(encriptar(persona.getNombre()));
-//        persona.setPrimerApellido(encriptar(persona.getPrimerApellido()));
-//        persona.setSegundoApellido(encriptar(persona.getSegundoApellido()));
-//        return persona;
+    public List<Placas> desencriptarListaPlacas(List<Placas> lista) {
+        List<Persona> personasDesencriptadas = new ArrayList<>(); // crea una lista auxiliar de personas
+        List<Placas> lista_placasPersona = new ArrayList<>(); // crea una lista de placas
+        for (Placas placas : lista) {
+            Persona persona = placas.getPersona(); // obtiene la persona de las placas
+
+            if (!personasDesencriptadas.contains(persona)) { // si la persona no está en la lista auxiliar
+                personasDesencriptadas.add(persona); // agrega la persona a la lista auxiliar
+                persona.setNombre(this.desencriptar(persona.getNombre()));
+                persona.setApellidoPaterno(this.desencriptar(persona.getApellidoPaterno()));
+                persona.setApellidoMaterno(this.desencriptar(persona.getApellidoMaterno()));
+            }
+            lista_placasPersona.add(placas); // agrega las placas a la lista
+        }
+
+        return lista_placasPersona;
+    }
+
 //    }
-    
 }

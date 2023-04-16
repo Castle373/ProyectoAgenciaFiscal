@@ -69,6 +69,11 @@ public class frmHistorialTramites extends javax.swing.JFrame {
         llenarTabla();
     }
 
+    /**
+     *
+     * Configura la tabla de consultas, agregando las columnas correspondientes
+     * y estableciendo la altura de las filas.
+     */
     public void tabla() {
         tblConsultas.setDefaultRenderer(Object.class, new RenderTabla());
         DefaultTableModel defa = new DefaultTableModel();
@@ -87,28 +92,14 @@ public class frmHistorialTramites extends javax.swing.JFrame {
         defa.fireTableDataChanged();
     }
 
+    /**
+     *
+     * Llena la tabla de consultas con la información de las personas
+     * encontradas en la búsqueda.
+     */
     public void llenarTabla() {
-        Integer nacimientoY=null;
-        
-        if (!txtFecha.getText().equals("")) {
-           nacimientoY= Integer.parseInt(txtFecha.getText());
-        }
-        listaActual = personaNegocio.listaPersonas(txtRfc.getText(), txtCurpo.getText(),nacimientoY);
 
-        Encriptacion AES = new Encriptacion();
-        listaActual = AES.desencriptarLista(listaActual);
-        List<Persona> listaPorNombre = new ArrayList<Persona>();
-        if (!txtNombre.getText().equals("")) {
-            for (Persona persona : listaActual) {
-                String nombreCompleto = persona.getNombre() + " " + persona.getApellidoPaterno() + " " + persona.getApellidoMaterno();
-                if (nombreCompleto.toLowerCase().contains(txtNombre.getText().toLowerCase())) {
-                    listaPorNombre.add(persona);
-                }
-            }
-            listaActual = listaPorNombre;
-        }
-
-        
+        listaActual = personaNegocio.listaPersonas(txtRfc.getText(), txtCurpo.getText(), txtFecha.getText(), txtNombre.getText());
         DefaultTableModel defa = (DefaultTableModel) tblConsultas.getModel();
         defa.setRowCount(0);
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -431,11 +422,11 @@ public class frmHistorialTramites extends javax.swing.JFrame {
 
                                 // Llenar el reporte con los datos
                                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametro, beanColDataSource);
-                                JasperViewer jasperViewer = new JasperViewer(jasperPrint,false);
-                                
+                                JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+
                                 jasperViewer.setVisible(true);
                                 // Visualizar el reporte
-                               // JasperExportManager.exportReportToPdfFile(jasperPrint, "./Reporte_" + nombrePersona + ".pdf");
+                                // JasperExportManager.exportReportToPdfFile(jasperPrint, "./Reporte_" + nombrePersona + ".pdf");
                             } catch (JRException ex) {
                                 Logger.getLogger(frmReporte.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -451,7 +442,7 @@ public class frmHistorialTramites extends javax.swing.JFrame {
     }//GEN-LAST:event_tblConsultasMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -480,7 +471,7 @@ public class frmHistorialTramites extends javax.swing.JFrame {
     }//GEN-LAST:event_txtRfcActionPerformed
 
     private void txtRfcKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRfcKeyReleased
-         llenarTabla();
+        llenarTabla();
     }//GEN-LAST:event_txtRfcKeyReleased
 
     private void txtRfcKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRfcKeyTyped

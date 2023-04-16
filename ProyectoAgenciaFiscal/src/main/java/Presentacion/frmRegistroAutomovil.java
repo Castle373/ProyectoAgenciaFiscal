@@ -18,32 +18,102 @@ public class frmRegistroAutomovil extends javax.swing.JFrame {
 
     private IAutomovilNegocio automovilNegocio;
     private Persona persona;
+    private boolean baja;
+    private Automovil autoBaja;
 
     /**
      * Creates new form frmAutomovil
      */
-    public frmRegistroAutomovil(IAutomovilNegocio automovilNegocio, Persona persona) {
+    public frmRegistroAutomovil(IAutomovilNegocio automovilNegocio, Persona persona, Automovil autoBaja) {
         this.persona = persona;
         this.automovilNegocio = automovilNegocio;
         initComponents();
+        if (autoBaja != null) {
+            this.baja = true;
+            this.autoBaja = autoBaja;
+            interfazBaja();
+        }
     }
 
+    /**
+     *
+     * Deshabilita los campos de texto y muestra los datos del automóvil a dar
+     * de baja en la interfaz.
+     */
+    public void interfazBaja() {
+        txtColor.setEnabled(false);
+        txtLinea.setEnabled(false);
+        txtModelo.setEnabled(false);
+        txtNumero.setEnabled(false);
+        txtMarca.setEnabled(false);
+        btnRegistrar.setText("Dar de Baja el Automovil");
+        txtColor.setText(autoBaja.getColor());
+        txtLinea.setText(autoBaja.getLinea());
+        txtModelo.setText(autoBaja.getModelo());
+        txtNumero.setText(autoBaja.getNumeroDeSerie());
+        txtMarca.setText(autoBaja.getMarca());
+
+    }
+
+    /**
+     *
+     * Pide confirmación al usuario para dar de baja el automóvil y realiza la
+     * operación si el usuario lo confirma.
+     *
+     * Muestra mensajes de éxito o error en la interfaz correspondiente.
+     */
+    public void baja() {
+        int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que quieres dar de baja este Automovil?", "Confirmar", JOptionPane.YES_NO_OPTION);
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            if (automovilNegocio.bajaDueño(autoBaja) != null) {
+                JOptionPane.showMessageDialog(null, "El Automovil fue dado de baja, ya no te pertenece", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                regresar();
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al dar de baja el Automovil", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    /**
+     *
+     * Registra un nuevo automóvil en el sistema con los datos ingresados por el
+     * usuario en la interfaz.
+     *
+     * Muestra mensajes de éxito o error en la interfaz correspondiente.
+     */
     public void registrar() {
+        if (txtModelo.getText().equals("")
+                || txtMarca.getText().equals("")
+                || txtLinea.getText().equals("")
+                || txtColor.getText().equals("")
+                || txtNumero.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Tienes Campos que llenar", "Mensaje", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         Automovil auto = new Automovil(txtModelo.getText(), txtMarca.getText(), txtLinea.getText(), txtColor.getText(), txtNumero.getText(), persona);
+
         try {
             Automovil autoRegistrado = automovilNegocio.registrarAutomovil(auto);
-            JOptionPane.showMessageDialog(null, "El auto fue registrado exitosamente.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El Automovil fue registrado exitosamente.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
             regresar();
         } catch (AutomovilException e) {
-            JOptionPane.showMessageDialog(null, "Error al registrar el auto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al registrar el Automovil: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }
-    public void regresar(){
+
+    /**
+     *
+     * Crea una nueva instancia de la interfaz de automóviles y la muestra en la
+     * pantalla, mientras se cierra la instancia actual.
+     */
+    public void regresar() {
         frmAutomoviles frmauto = new frmAutomoviles(automovilNegocio, persona);
         frmauto.setVisible(true);
         this.dispose();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -99,6 +169,7 @@ public class frmRegistroAutomovil extends javax.swing.JFrame {
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 14)); // NOI18N
         jLabel3.setText("Número de serie:");
@@ -227,12 +298,17 @@ public class frmRegistroAutomovil extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-    regresar();
-        
+        regresar();
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        registrar();
+        if (baja) {
+            baja();
+        } else {
+            registrar();
+        }
+
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
 

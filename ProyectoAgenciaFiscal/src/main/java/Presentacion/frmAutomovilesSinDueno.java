@@ -66,6 +66,10 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
         this.lblCliente.setText(nombreCompleto);
     }
 
+    /**
+     *
+     * Establece el diseño de los botones de la interfaz de usuario.
+     */
     public void botoneDiseño() {
         btnAdquirir.setBackground(new Color(232, 57, 95));
         btnHistorial.setBackground(new Color(102, 89, 222));
@@ -75,6 +79,12 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
         btnHistorial.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
     }
 
+    /**
+     *
+     * Configura la tabla de la interfaz de usuario para mostrar la información
+     * de los autos. Establece las columnas, los renderers y los tamaños de las
+     * columnas.
+     */
     public void tabla() {
         tblAuto.setDefaultRenderer(Object.class, new RenderTabla());
         DefaultTableModel defa = new DefaultTableModel();
@@ -94,9 +104,15 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
         defa.fireTableDataChanged();
     }
 
+    /**
+     *
+     * Llena la tabla de la interfaz de usuario con la información de los autos
+     * sin dueño. Obtiene la información de los autos y sus placas y muestra los
+     * datos en la tabla.
+     */
     public void llenarTabla() {
 
-        listaActual = automovilNegocio.BuscarAutomovilesPorPersona(persona.getId(), txtBusqueda.getText());
+        listaActual = automovilNegocio.listaAutosSinDueño();
         DefaultTableModel defa = (DefaultTableModel) tblAuto.getModel();
         defa.setRowCount(0);
         for (int i = 0; i < listaActual.size(); i++) {
@@ -136,7 +152,6 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
         lblLicencia1 = new javax.swing.JLabel();
         lblCliente = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        btnAgregaCarro = new javax.swing.JButton();
         txtBusqueda = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -149,10 +164,10 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 60)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 48)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Automoviles");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 1, 443, 87));
+        jLabel3.setText("Automoviles Sin Dueño");
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 520, 87));
 
         lblLicenciaVigente.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 14)); // NOI18N
         lblLicenciaVigente.setText("Cliente actual");
@@ -172,7 +187,7 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
                 btnRegresarActionPerformed(evt);
             }
         });
-        jPanel3.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 36, 60, 30));
+        jPanel3.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 60, 30));
 
         lblLicencia1.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 14)); // NOI18N
         lblLicencia1.setForeground(new java.awt.Color(255, 255, 255));
@@ -185,15 +200,6 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        btnAgregaCarro.setBackground(new java.awt.Color(255, 255, 255));
-        btnAgregaCarro.setText("Agregar Carro");
-        btnAgregaCarro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        btnAgregaCarro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregaCarroActionPerformed(evt);
-            }
-        });
 
         txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,9 +249,7 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
                         .addGap(169, 169, 169)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54)
-                        .addComponent(btnAgregaCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 865, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -257,9 +261,7 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAgregaCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -293,20 +295,9 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtBusquedaKeyReleased
 
-    private void btnAgregaCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregaCarroActionPerformed
-        frmRegistroAutomovil frmRegistro = new frmRegistroAutomovil(automovilNegocio, persona);
-        frmRegistro.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnAgregaCarroActionPerformed
-
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        IConexionBD conexionBD = new ConexionBD();
-        
-        IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
-        IPersonaNegocio personaNegocio = new PersonaNegocio(personaDAO);
-        ILicenciaDAO licenciaDAO = new LicenciaDAO(conexionBD);
-        ILicenciaNegocio licencianegocio = new LicenciaNegocio(licenciaDAO);
-        frmTramites frm = new frmTramites(personaNegocio, automovilNegocio,licencianegocio);
+
+        frmAutomoviles frm = new frmAutomoviles(automovilNegocio, persona);
         frm.setVisible(true);
         this.dispose();
 
@@ -327,9 +318,16 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
                     this.dispose();
                 }
                 if (boton.equals(btnAdquirir)) {
-                    int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de realizar esta operación?");
+                    int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de quieres adquirir este Automovil?");
                     if (opcion == JOptionPane.YES_OPTION) {
-                       automovilNegocio.cambiarDueño(listaActual.get(row),persona);
+                        if (automovilNegocio.cambiarDueño(listaActual.get(row), persona) != null) {
+                            String nombreCompleto = persona.getNombre() + " " + persona.getApellidoPaterno() + " " + persona.getApellidoMaterno();
+                            JOptionPane.showMessageDialog(null, "El Automovil ahora es de la Persona : " + nombreCompleto, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                            llenarTabla();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No fue posible establecer el auto ala persona", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                        }
+
                     }
                 }
             }
@@ -373,7 +371,6 @@ public class frmAutomovilesSinDueno extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregaCarro;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

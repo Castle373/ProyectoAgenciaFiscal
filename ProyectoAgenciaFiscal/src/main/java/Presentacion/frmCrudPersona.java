@@ -33,7 +33,7 @@ public class frmCrudPersona extends javax.swing.JFrame {
      */
     public frmCrudPersona(IPersonaNegocio personaNegocio) {
         this.personaNegocio = personaNegocio;
-      
+
         initComponents();
         tabla();
         llenarTabla();
@@ -203,6 +203,7 @@ public class frmCrudPersona extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnatrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnatrasActionPerformed
@@ -234,7 +235,7 @@ public class frmCrudPersona extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-
+        llenarTabla();
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -242,6 +243,11 @@ public class frmCrudPersona extends javax.swing.JFrame {
         a.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+    /**
+     *
+     * Método que configura la tabla de registros de personas, estableciendo su
+     * renderizador, modelo y columnas.
+     */
     public void tabla() {
         tblRegistrosPersonas.setDefaultRenderer(Object.class, new RenderTabla());
         DefaultTableModel defa = new DefaultTableModel();
@@ -266,6 +272,13 @@ public class frmCrudPersona extends javax.swing.JFrame {
 
     }
 
+    /**
+     *
+     * Método que llena la tabla de registros de personas con la información de
+     * la lista de personas actual, filtrando según
+     *
+     * el valor del campo de búsqueda.
+     */
     public void llenarTabla() {
         listaActual = personaNegocio.BuscarPersonas();
         Encriptacion AES = new Encriptacion();

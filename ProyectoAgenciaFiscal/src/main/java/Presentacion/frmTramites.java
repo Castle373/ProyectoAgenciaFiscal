@@ -4,7 +4,6 @@
  */
 package Presentacion;
 
-
 import Entity.Persona;
 import INegocio.IAutomovilNegocio;
 import INegocio.ILicenciaNegocio;
@@ -33,42 +32,53 @@ import javax.swing.table.TableColumn;
  * @author diego
  */
 public class frmTramites extends javax.swing.JFrame {
-    FondoPanel fondo = new FondoPanel();
-    private int row,columna;
+
+    private int row, columna;
     JButton btnLicencia = new JButton("Solicitar Licencia");
     JButton btnAutomoviles = new JButton("Automoviles");
     private IPersonaNegocio personaNegocio;
     private IAutomovilNegocio automovilNegocio;
-      private ILicenciaNegocio LicenciaNegocio;
+    private ILicenciaNegocio LicenciaNegocio;
     private List<Persona> listaActual = new ArrayList<Persona>();
+
     /**
      * Creates new form frmTramites
      */
-    public frmTramites(IPersonaNegocio personaNegocio,IAutomovilNegocio automovilNegocio,ILicenciaNegocio LicenciaNegocio) {
-        this.automovilNegocio=automovilNegocio;
-        this.personaNegocio=personaNegocio;
-           this.LicenciaNegocio=LicenciaNegocio;
-           
-  
+    public frmTramites(IPersonaNegocio personaNegocio, IAutomovilNegocio automovilNegocio, ILicenciaNegocio LicenciaNegocio) {
+        this.automovilNegocio = automovilNegocio;
+        this.personaNegocio = personaNegocio;
+        this.LicenciaNegocio = LicenciaNegocio;
+
         botoneDiseño();
         initComponents();
         tabla();
         llenarTabla();
     }
-    public void botoneDiseño(){
-        btnLicencia.setBackground(new Color(102,89,222));
-        btnAutomoviles.setBackground(new Color(102,89,222));
+
+    /**
+     *
+     * Configura el diseño de los botones para el menú de Licencias y
+     * Automóviles.
+     */
+    public void botoneDiseño() {
+        btnLicencia.setBackground(new Color(102, 89, 222));
+        btnAutomoviles.setBackground(new Color(102, 89, 222));
         btnLicencia.setForeground(Color.BLACK);
         btnAutomoviles.setForeground(Color.BLACK);
         btnAutomoviles.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         btnLicencia.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
     }
-    public void  tabla(){
+
+    /**
+     *
+     * Configura la tabla de datos para mostrar información de personas.
+     */
+    public void tabla() {
         tblTramites.setDefaultRenderer(Object.class, new RenderTabla());
         DefaultTableModel defa = new DefaultTableModel();
-                tblTramites.setRowHeight(40);
+        tblTramites.setRowHeight(40);
         tblTramites.setModel(defa);
-        
+
         defa.addColumn("Nombre");
         defa.addColumn("Curp");
         defa.addColumn("RFC");
@@ -78,52 +88,49 @@ public class frmTramites extends javax.swing.JFrame {
         defa.addColumn("Licencia");
         defa.addColumn("Automoviles");
         TableColumn nombreColumna = tblTramites.getColumnModel().getColumn(0);
+        TableColumn curpColumna = tblTramites.getColumnModel().getColumn(1);
         TableColumn rfcColumna = tblTramites.getColumnModel().getColumn(2);
         TableColumn fechaColumna = tblTramites.getColumnModel().getColumn(3);
         TableColumn teColumna = tblTramites.getColumnModel().getColumn(4);
-        nombreColumna.setPreferredWidth(100);
-        rfcColumna.setPreferredWidth(30);
+        TableColumn disColumna = tblTramites.getColumnModel().getColumn(5);
+        nombreColumna.setPreferredWidth(110);
+        rfcColumna.setPreferredWidth(60);
+        curpColumna.setPreferredWidth(100);
         fechaColumna.setPreferredWidth(50);
         teColumna.setPreferredWidth(25);
-  
+        disColumna.setPreferredWidth(45);
 
     }
-    public void llenarTabla(){
-        listaActual= personaNegocio.BuscarPersonas();
-        Encriptacion AES = new Encriptacion();
-        listaActual=AES.desencriptarLista(listaActual);
-        List<Persona> listaPorNombre = new ArrayList<Persona>();
-        for (Persona persona :listaActual) {
-            String nombreCompleto=persona.getNombre()+" "+persona.getApellidoPaterno()+" "+persona.getApellidoMaterno();
-            if (nombreCompleto.toLowerCase().contains(txtBusqueda.getText().toLowerCase())) {
-                listaPorNombre.add(persona);
-            }
-            else if (persona.getCurp().toLowerCase().contains(txtBusqueda.getText().toLowerCase())) {
-                listaPorNombre.add(persona);
-            }
-            else if (persona.getRfc().toLowerCase().contains(txtBusqueda.getText().toLowerCase())) {
-                listaPorNombre.add(persona);
-            }
-        }
-        listaActual=listaPorNombre;
+
+    /**
+     *
+     * Llena la tabla de datos con información de personas.
+     */
+    public void llenarTabla() {
+        listaActual = personaNegocio.BuscarPersonas(txtBusqueda.getText());
         DefaultTableModel defa = (DefaultTableModel) tblTramites.getModel();
         defa.setRowCount(0);
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); 
-        for (Persona persona :listaActual) {          
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        for (Persona persona : listaActual) {
             Object[] datos = new Object[defa.getColumnCount()];
-            String nombreCompleto=persona.getNombre()+" "+persona.getApellidoPaterno()+" "+persona.getApellidoMaterno();
-               datos[0]=nombreCompleto;
-               datos[1]=persona.getCurp();
-               datos[2]=persona.getRfc();
-               datos[3]=formato.format(persona.getFechaNacimiento().getTime());
-               datos[4]=persona.getTelefono();
-               datos[5]=persona.getDiscapacidad();
-               datos[6]=btnLicencia;
-               datos[7]=btnAutomoviles;
-               defa.addRow(datos);
+            String nombreCompleto = persona.getNombre() + " " + persona.getApellidoPaterno() + " " + persona.getApellidoMaterno();
+            datos[0] = nombreCompleto;
+            datos[1] = persona.getCurp();
+            datos[2] = persona.getRfc();
+            datos[3] = formato.format(persona.getFechaNacimiento().getTime());
+            datos[4] = persona.getTelefono();
+            if (persona.getDiscapacidad() == 0) {
+                datos[5] = "";
+            } else {
+                datos[5] = "Discapacitado";
+            }
+
+            datos[6] = btnLicencia;
+            datos[7] = btnAutomoviles;
+            defa.addRow(datos);
         }
-        
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -147,7 +154,6 @@ public class frmTramites extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(102, 89, 222));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        btnRegresar.setBackground(new java.awt.Color(255, 255, 255));
         btnRegresar.setForeground(new java.awt.Color(2, 2, 2));
         btnRegresar.setText("Regresar");
         btnRegresar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -171,7 +177,7 @@ public class frmTramites extends javax.swing.JFrame {
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(233, 233, 233)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(317, Short.MAX_VALUE))
+                .addContainerGap(347, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,10 +212,8 @@ public class frmTramites extends javax.swing.JFrame {
 
             }
         ));
-        tblTramites.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tblTramites.setRowHeight(25);
         tblTramites.setSelectionBackground(new java.awt.Color(232, 57, 95));
-        tblTramites.setShowVerticalLines(false);
         tblTramites.getTableHeader().setReorderingAllowed(false);
         tblTramites.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -242,7 +246,7 @@ public class frmTramites extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(88, 88, 88)
                 .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(382, Short.MAX_VALUE))
+                .addContainerGap(412, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -280,41 +284,36 @@ public class frmTramites extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblTramitesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTramitesMouseClicked
-        columna=tblTramites.getColumnModel().getColumnIndexAtX(evt.getX());
-        row=evt.getY()/tblTramites.getRowHeight();
-        if(columna<=tblTramites.getColumnCount() && columna>=0 && row<=tblTramites.getRowCount()&& row>=0){
-            Object objeto=tblTramites.getValueAt(row, columna);
-            if(objeto instanceof JButton){
-                ((JButton)objeto).doClick();
-                JButton botones=(JButton)objeto;
-                if(botones.equals(btnLicencia)){
+        columna = tblTramites.getColumnModel().getColumnIndexAtX(evt.getX());
+        row = evt.getY() / tblTramites.getRowHeight();
+        if (columna <= tblTramites.getColumnCount() && columna >= 0 && row <= tblTramites.getRowCount() && row >= 0) {
+            Object objeto = tblTramites.getValueAt(row, columna);
+            if (objeto instanceof JButton) {
+                ((JButton) objeto).doClick();
+                JButton botones = (JButton) objeto;
+                if (botones.equals(btnLicencia)) {
                     if (LicenciaNegocio.listaLicenciaPersonaVigentes(listaActual.get(row).getId()).isEmpty()) {
-                        
-                    
 
-                    if (personaNegocio.Edad(listaActual.get(row))>=18) {
-                        
-                    
-                    System.out.println(listaActual.get(row));
-frmLicencia ee  = new frmLicencia(listaActual.get(row),LicenciaNegocio);
-                        ee.setVisible(true);
-                }else{
-                     JOptionPane.showMessageDialog(this, "Esta persona tiene menos de 18 años");       
-                    }  
-                    }else{
-                       JOptionPane.showMessageDialog(this, "Esta persona ya cuenta con una licencia vigente");   
+                        if (personaNegocio.Edad(listaActual.get(row)) >= 18) {
+
+                            frmLicencia ee = new frmLicencia(listaActual.get(row), LicenciaNegocio);
+                            ee.setVisible(true);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Esta persona tiene menos de 18 años");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Esta persona ya cuenta con una licencia vigente");
                     }
                 }
-                    if(botones.equals(btnAutomoviles)){
+                if (botones.equals(btnAutomoviles)) {
 
-                        frmAutomoviles frm  = new frmAutomoviles(automovilNegocio, listaActual.get(row));
-                        frm.setVisible(true);
-                        this.dispose();
-                    }
-                
-                }else{
-                    
-                
+                    frmAutomoviles frm = new frmAutomoviles(automovilNegocio, listaActual.get(row));
+                    frm.setVisible(true);
+                    this.dispose();
+                }
+
+            } else {
+
             }
         }
     }//GEN-LAST:event_tblTramitesMouseClicked
@@ -378,24 +377,5 @@ frmLicencia ee  = new frmLicencia(listaActual.get(row),LicenciaNegocio);
     private javax.swing.JTable tblTramites;
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
-class FondoPanel extends JPanel {
 
-        private Image imagen;
-
-        @Override
-        public void paint(Graphics g) {
-            ImageIcon imageIcon = new javax.swing.ImageIcon(getClass().getResource("/Fondo.gif"));
-            imagen = imageIcon.getImage();
-            
-            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
-
-            setOpaque(false);
-            try{
-                super.paint(g); 
-            }catch(Exception e){
-                
-            }
-           
-        }
-    }
 }

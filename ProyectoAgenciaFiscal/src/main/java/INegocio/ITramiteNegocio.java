@@ -18,6 +18,6 @@ public interface ITramiteNegocio {
 
     public List<Tramite> listaTramitePersona(Persona persona);
 
-    public List<Tramite> listaTramite(boolean placas, boolean licencia, LocalDate fechaInicio, LocalDate fechaFin);
+    public List<Tramite> listaTramite(boolean placas, boolean licencia, LocalDate fechaInicio, LocalDate fechaFin,String filtro);
 
 }
