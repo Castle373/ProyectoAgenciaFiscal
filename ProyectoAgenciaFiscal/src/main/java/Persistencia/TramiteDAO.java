@@ -49,9 +49,6 @@ public class TramiteDAO implements ITramiteDAO {
      * @param tipo2 indica si se deben incluir los trámites de tipo Placas
      * @param fechaInicio fecha de inicio del rango de fechas de los trámites
      * @param fechaFin fecha de fin del rango de fechas de los trámites
-     * @param filtroNombre nombre o parte del nombre de la persona para filtrar
-     * los trámites. Puede ser una cadena vacía si no se desea filtrar por
-     * nombre.
      * @return una lista de trámites que cumplen con los criterios de búsqueda
      */
     @Override

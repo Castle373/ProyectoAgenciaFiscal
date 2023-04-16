@@ -17,13 +17,26 @@ import javax.persistence.TypedQuery;
  */
 public class LicenciaDAO implements ILicenciaDAO {
 
+    /**
+     * Atributos de la clase.
+     */
     private IConexionBD conexionBD;
 
+    /**
+     * Crea un nuevo objeto LicenciaDAO con la conexión a la base de datos.
+     *
+     * @param conexionBD Conexión a la base de datos.
+     */
     public LicenciaDAO(IConexionBD conexionBD) {
         this.conexionBD = conexionBD;
     }
 
-    
+    /**
+     * Obtiene una lista de todas las licencias de una persona específica.
+     *
+     * @param id el ID de la persona.
+     * @return una lista de Licencias.
+     */
     @Override
     public List<Licencia> listaLicenciaPersona(int id) {
         EntityManager entityManager = this.conexionBD.crearConexion();
@@ -35,21 +48,36 @@ public class LicenciaDAO implements ILicenciaDAO {
         return listaLicencia;
     }
 
+    /**
+     *
+     * Obtiene una lista de todas las licencias vigentes de una persona
+     * específica.
+     *
+     * @param id el ID de la persona.
+     * @return una lista de Licencias.
+     */
     @Override
     public List<Licencia> listaLicenciaPersonaVigentes(int id) {
         EntityManager entityManager = this.conexionBD.crearConexion();
         entityManager.getTransaction().begin();
         TypedQuery<Licencia> query = entityManager.createQuery("SELECT l FROM Licencia l "
-             + "WHERE l.persona.id = :idPersona AND l.FechaVigencia > CURRENT_DATE",Licencia.class);
+                + "WHERE l.persona.id = :idPersona AND l.FechaVigencia > CURRENT_DATE", Licencia.class);
         query.setParameter("idPersona", id);
         List<Licencia> listaLicencia = query.getResultList();
         entityManager.getTransaction().commit();
         return listaLicencia;
     }
 
+    /**
+     *
+     * Agrega una nueva licencia a la base de datos.
+     *
+     * @param licencia la Licencia a agregar.
+     * @return la Licencia agregada.
+     */
     @Override
     public Licencia agregaLicencia(Licencia licencia) {
-       EntityManager entityManager = this.conexionBD.crearConexion();
+        EntityManager entityManager = this.conexionBD.crearConexion();
         entityManager.getTransaction().begin();
         try {
             entityManager.persist(licencia);
@@ -57,7 +85,7 @@ public class LicenciaDAO implements ILicenciaDAO {
             return null;
         }
         entityManager.getTransaction().commit();
-        return licencia; 
+        return licencia;
     }
 
 }

@@ -67,7 +67,11 @@ public class Encriptacion {
         }
         return null;
     }
-
+    /**
+     * Método para desencriptar una lista de persona, desencripta el nombre completo. 
+     * @param lista lista de persona.
+     * @return la lista desencriptada.
+     */
     public List<Persona> desencriptarLista(List<Persona> lista) {
         List<Persona> lista_desencriptada = new ArrayList();
 
@@ -81,8 +85,13 @@ public class Encriptacion {
         }
         return lista;
     }
-//    
 
+    /**
+     * Método para desencriptar una lista de tramite, desencripta el nombre completo
+     * de la persona en cuestión del tramite.. 
+     * @param lista lista de tramite.
+     * @return la lista desencriptada.
+     */
     public List<Tramite> desencriptarListaTramite(List<Tramite> lista) {
         List<Persona> personasDesencriptadas = new ArrayList<>(); // crea una lista auxiliar de personas
         List<Tramite> lista_tramitePersona = new ArrayList<>(); // crea una lista de trámites
@@ -102,6 +111,12 @@ public class Encriptacion {
         return lista_tramitePersona;
     }
 
+    /**
+     * Método para desencriptar una lista de placas, desencripta el nombre completo
+     * de la persona en cuestión de la placa.. 
+     * @param lista lista de placa.
+     * @return la lista desencriptada.
+     */
     public List<Placas> desencriptarListaPlacas(List<Placas> lista) {
         List<Persona> personasDesencriptadas = new ArrayList<>(); // crea una lista auxiliar de personas
         List<Placas> lista_placasPersona = new ArrayList<>(); // crea una lista de placas

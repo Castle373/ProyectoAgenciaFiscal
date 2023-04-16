@@ -7,7 +7,12 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 
 public class ConexionBD implements IConexionBD {
-
+ 
+    /**
+     * Método para crear la conexión con la base de datos.
+     * @return
+     * @throws PersistenceException 
+     */
     @Override
     public EntityManager crearConexion() throws PersistenceException {
         // CREAMOS UNA FACTORY DE ENTITY MANAGERS
@@ -17,6 +22,5 @@ public class ConexionBD implements IConexionBD {
         EntityManager entityManager = managerFactory.createEntityManager();
 
         return entityManager;
-        
     }
 }

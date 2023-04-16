@@ -24,12 +24,26 @@ import javax.persistence.criteria.Root;
  */
 public class PersonaDAO implements IPersonaDAO {
 
+    /**
+     * Atributos de la clase.
+     */
     private IConexionBD conexionBD;
 
+    /**
+     * Crea un nuevo objeto PersonaDAO con la conexión a la base de datos.
+     *
+     * @param conexionBD Conexión a la base de datos.
+     */
     public PersonaDAO(IConexionBD conexionBD) {
         this.conexionBD = conexionBD;
     }
 
+    /**
+     *
+     * Obtiene una lista de todas las personas en la base de datos.
+     *
+     * @return una lista de objetos Persona
+     */
     @Override
     public List<Persona> listaPersonas() {
 
@@ -45,6 +59,17 @@ public class PersonaDAO implements IPersonaDAO {
         return listasPersonas;
     }
 
+    /**
+     *
+     * Obtiene una lista de personas en la base de datos que coinciden con
+     * ciertos parámetros de búsqueda.
+     *
+     * @param rfc el RFC de la persona a buscar
+     * @param curp el CURP de la persona a buscar
+     * @param nacimientoY el año de nacimiento de la persona a buscar (opcional)
+     * @return una lista de objetos Persona que coinciden con los parámetros de
+     * búsqueda
+     */
     @Override
     public List<Persona> listaPersonas(String rfc, String curp, Integer nacimientoY) {
         EntityManager entityManager = this.conexionBD.crearConexion();
@@ -79,6 +104,14 @@ public class PersonaDAO implements IPersonaDAO {
         return listasPersonas;
     }
 
+    /**
+     *
+     * Obtiene una lista de personas en la base de datos que coinciden con un
+     * filtro de búsqueda.
+     *
+     * @param filtro el filtro de búsqueda a aplicar
+     * @return una lista de objetos Persona que coinciden con el filtro
+     */
     @Override
     public List<Persona> listaPersonas(String filtro) {
         EntityManager entityManager = this.conexionBD.crearConexion();
@@ -103,6 +136,13 @@ public class PersonaDAO implements IPersonaDAO {
         return listasPersonas;
     }
 
+    /**
+     *
+     * Agrega una nueva persona a la base de datos.
+     *
+     * @param persona la persona a agregar
+     * @return la persona recién agregada
+     */
     @Override
     public Persona agregarPersona(Persona persona) {
         EntityManager entityManager = this.conexionBD.crearConexion();
@@ -116,6 +156,13 @@ public class PersonaDAO implements IPersonaDAO {
         return persona;
     }
 
+    /**
+     *
+     * Actualiza la información de una persona en la base de datos.
+     *
+     * @param persona la persona con la información actualizada
+     * @return la persona con la información actualizada
+     */
     @Override
     public Persona editarPersona(Persona persona) {
         EntityManager entityManager = this.conexionBD.crearConexion();
@@ -129,6 +176,13 @@ public class PersonaDAO implements IPersonaDAO {
         return persona;
     }
 
+    /**
+     *
+     * Calcula la edad de una persona a partir de su fecha de nacimiento.
+     *
+     * @param persona la persona de la cual se quiere calcular la edad
+     * @return la edad de la persona en años
+     */
     @Override
     public int Edad(Persona persona) {
 

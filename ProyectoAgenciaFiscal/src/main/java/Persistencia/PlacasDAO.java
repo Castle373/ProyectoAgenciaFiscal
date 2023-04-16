@@ -19,12 +19,27 @@ import javax.persistence.TypedQuery;
  */
 public class PlacasDAO implements IPlacasDAO {
 
+    /**
+     * Atributos de la clase.
+     */
     private IConexionBD conexionBD;
 
+    /**
+     * Crea un nuevo objeto PlacasDAO con la conexión a la base de datos.
+     *
+     * @param conexionBD Conexión a la base de datos.
+     */
     public PlacasDAO(IConexionBD conexionBD) {
         this.conexionBD = conexionBD;
     }
 
+    /**
+     *
+     * Devuelve una lista de placas de un automóvil específico.
+     *
+     * @param idAutomovil ID del automóvil.
+     * @return Lista de placas del automóvil.
+     */
     @Override
     public List<Placas> listaPlacasAuto(int idAutomovil) {
         EntityManager entityManager = this.conexionBD.crearConexion();
@@ -36,6 +51,13 @@ public class PlacasDAO implements IPlacasDAO {
         return listaAutos;
     }
 
+    /**
+     *
+     * Agrega las placas de un automóvil al sistema.
+     *
+     * @param placas Placas del automóvil.
+     * @return Objeto Placas agregado.
+     */
     @Override
     public Placas agregarPlacas(Placas placas) {
         EntityManager entityManager = this.conexionBD.crearConexion();
@@ -71,6 +93,13 @@ public class PlacasDAO implements IPlacasDAO {
         }
     }
 
+    /**
+     *
+     * Devuelve una lista de todas las placas de automóviles registrados en el
+     * sistema.
+     *
+     * @return Lista de placas de automóviles.
+     */
     @Override
     public List<Placas> listaPlacas() {
         EntityManager entityManager = this.conexionBD.crearConexion();
