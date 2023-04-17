@@ -267,7 +267,7 @@ public class frmCrudPersona extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-<<<<<<< HEAD
+
     private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
      int key = evt.getKeyChar();
 
@@ -280,7 +280,7 @@ public class frmCrudPersona extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtBuscarKeyTyped
-=======
+
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         byte si = 1, no = 0;
         Persona persona1 = new Persona("Gabriel", "Cervantes", "Trujillo", "1234365790123", "3434gf5442ertfdht54", "4536678453", new GregorianCalendar(2002, Calendar.MARCH, 15), si);
@@ -423,15 +423,11 @@ public class frmCrudPersona extends javax.swing.JFrame {
             Persona guardar17 = personaNegocio.agregarPersona(persona18);
             Persona guardar18 = personaNegocio.agregarPersona(persona19);
             Persona guardar19 = personaNegocio.agregarPersona(persona0);
-            
-           
-
-
         }
 
 
     }//GEN-LAST:event_jToggleButton1ActionPerformed
->>>>>>> 9a6417fd640deb6ce0b8349f7f2b4fc579c7fec5
+
     /**
      *
      * Método que configura la tabla de registros de personas, estableciendo su
