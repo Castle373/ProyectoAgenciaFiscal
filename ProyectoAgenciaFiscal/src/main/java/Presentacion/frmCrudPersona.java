@@ -12,8 +12,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -52,6 +55,7 @@ public class frmCrudPersona extends javax.swing.JFrame {
         btnatras = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -84,33 +88,47 @@ public class frmCrudPersona extends javax.swing.JFrame {
             }
         });
 
+        jToggleButton1.setText("Agregar 20");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
+                .addGap(22, 22, 22)
                 .addComponent(btnatras, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(174, 174, 174)
+                .addGap(200, 200, 200)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
+                .addGap(48, 48, 48)
+                .addComponent(jToggleButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60))
+                .addGap(42, 42, 42))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(btnatras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jToggleButton1)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(btnatras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -194,8 +212,10 @@ public class frmCrudPersona extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,6 +267,7 @@ public class frmCrudPersona extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+<<<<<<< HEAD
     private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
      int key = evt.getKeyChar();
 
@@ -259,6 +280,158 @@ public class frmCrudPersona extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtBuscarKeyTyped
+=======
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        byte si = 1, no = 0;
+        Persona persona1 = new Persona("Gabriel", "Cervantes", "Trujillo", "1234365790123", "3434gf5442ertfdht54", "4536678453", new GregorianCalendar(2002, Calendar.MARCH, 15), si);
+        Encriptacion e = new Encriptacion();
+        persona1.setNombre(e.encriptar("Gabriel"));
+        persona1.setApellidoPaterno(e.encriptar("Cervantes"));
+        persona1.setApellidoMaterno(e.encriptar("Trujillo"));
+
+
+        Persona persona2 = new Persona("Diego", "Cervantes", "Robles", "3234875676123", "3324gfghgfertfdht54", "4534576664", new GregorianCalendar(2003, Calendar.MAY, 14), no);
+
+        persona2.setNombre(e.encriptar("Diego"));
+        persona2.setApellidoPaterno(e.encriptar("Cervantes"));
+        persona2.setApellidoMaterno(e.encriptar("Robles"));
+
+        Persona persona3 = new Persona("Edgar", "JImenez", "Robles", "229875676123", "3134gfghgfertfdht54", "4537665564", new GregorianCalendar(2001, Calendar.MARCH, 13), no);
+
+        persona3.setNombre(e.encriptar("Edgar"));
+        persona3.setApellidoPaterno(e.encriptar("JImenez"));
+        persona3.setApellidoMaterno(e.encriptar("Robles"));
+
+        Persona persona4 = new Persona("Diego", "JImenez", "Cervantes", "4234453856123", "4234gfgh6fertfdht54", "4537666324", new GregorianCalendar(2003, Calendar.MAY, 12), si);
+
+        persona4.setNombre(e.encriptar("(\""));
+        persona4.setApellidoPaterno(e.encriptar("JImenez"));
+        persona4.setApellidoMaterno(e.encriptar("Cervantes"));
+
+        Persona persona5 = new Persona("Edwin", "Hernandez", "Paredes", "526409789856123", "4334gsjgffert764t54", "4537645664", new GregorianCalendar(1992, Calendar.JUNE, 11), no);
+
+        persona5.setNombre(e.encriptar("Edwin"));
+        persona5.setApellidoPaterno(e.encriptar("Hernandez"));
+        persona5.setApellidoMaterno(e.encriptar("Paredes"));
+
+        Persona persona6 = new Persona("Carlos", "Paredes", "Trujillo", "7734569876123", "3334gfghgfertfdht54", "4537116664", new GregorianCalendar(1993, Calendar.MAY, 10), si);
+
+        persona3.setNombre(e.encriptar("Carlos"));
+        persona3.setApellidoPaterno(e.encriptar("Paredes"));
+        persona3.setApellidoMaterno(e.encriptar("Trujillo"));
+
+        Persona persona7 = new Persona("Spencer", "bebe", "Robles", "12756786123", "333746457fertfdht54", "4537566664", new GregorianCalendar(1996, Calendar.MARCH, 4), si);
+
+        persona7.setNombre(e.encriptar("Spencer"));
+        persona7.setApellidoPaterno(e.encriptar("bebe"));
+        persona7.setApellidoMaterno(e.encriptar("Robles"));
+
+        Persona persona8 = new Persona("Miguel", "Barra", "Osuna", "129768756123", "3334gf324fertfdht54", "45376664", new GregorianCalendar(1999, Calendar.JUNE, 7), no);
+
+        persona8.setNombre(e.encriptar("Miguel"));
+        persona8.setApellidoPaterno(e.encriptar("Barra"));
+        persona8.setApellidoMaterno(e.encriptar("Osuna"));
+
+        Persona persona9 = new Persona("Oscar", "Soto", "Barra", "123498676123", "3334gfg87567rtfdht54", "45376664", new GregorianCalendar(1989, Calendar.NOVEMBER, 4), si);
+
+        persona9.setNombre(e.encriptar("Oscar"));
+        persona9.setApellidoPaterno(e.encriptar("Soto"));
+        persona9.setApellidoMaterno(e.encriptar("Barra"));
+
+        Persona persona10 = new Persona("Hector", "Icedo", "Morales", "1230879956123", "6334gfhdffertfdht54", "45376664", new GregorianCalendar(1999, Calendar.NOVEMBER, 12), no);
+
+        persona10.setNombre(e.encriptar("Hector"));
+        persona10.setApellidoPaterno(e.encriptar("Icedo"));
+        persona10.setApellidoMaterno(e.encriptar("Morales"));
+
+        Persona persona11 = new Persona("Flor", "Paredes", "Arellano", "1234078956123", "9334ghfgsfertfdht54", "45376664", new GregorianCalendar(1993, Calendar.JUNE, 13), si);
+
+        persona11.setNombre(e.encriptar("Flor"));
+        persona11.setApellidoPaterno(e.encriptar("Paredes"));
+        persona11.setApellidoMaterno(e.encriptar("Arellano"));
+
+        Persona persona12 = new Persona("Osmara", "JImenez", "Felix", "1287978856123", "38dsfghhhgfertfdht54", "45376664", new GregorianCalendar(2003, Calendar.JUNE, 21), si);
+
+        persona12.setNombre(e.encriptar("Osmara"));
+        persona12.setApellidoPaterno(e.encriptar("JImenez"));
+        persona12.setApellidoMaterno(e.encriptar("Felix"));
+
+        Persona persona13 = new Persona("Miranda", "Reyes", "Sans", "1256367856123", "33yyyyghgfertfdht54", "45376664", new GregorianCalendar(2001, Calendar.MARCH, 22), no);
+
+        persona13.setNombre(e.encriptar("Miranda"));
+        persona13.setApellidoPaterno(e.encriptar("Reyes"));
+        persona13.setApellidoMaterno(e.encriptar("Sans"));
+
+        Persona persona14 = new Persona("Mirinda", "Enmiado", "Morales", "1gdsg7856123", "3234gfggggertfdht54", "45376664", new GregorianCalendar(1998, Calendar.FEBRUARY, 24), no);
+
+        persona14.setNombre(e.encriptar("Mirinda"));
+        persona14.setApellidoPaterno(e.encriptar("Enmiado"));
+        persona14.setApellidoMaterno(e.encriptar("Morales"));
+
+        Persona persona15 = new Persona("Ezequiel", "Cervantes", "Robles", "14345856123", "3ddddddhgfertfdht54", "45376664", new GregorianCalendar(2003, Calendar.JULY, 12), si);
+
+        persona15.setNombre(e.encriptar("Ezequiel"));
+        persona15.setApellidoPaterno(e.encriptar("Cervantes"));
+        persona15.setApellidoMaterno(e.encriptar("Robles"));
+
+        Persona persona16 = new Persona("Pedro", "JImenez", "Huerta", "1234543556123", "333gggghgfertfdht54", "45376664", new GregorianCalendar(1999, Calendar.FEBRUARY, 21), no);
+
+        persona16.setNombre(e.encriptar("Pedro"));
+        persona16.setApellidoPaterno(e.encriptar("JImenez"));
+        persona16.setApellidoMaterno(e.encriptar("Huerta"));
+
+        Persona persona17 = new Persona("Jazmin", "HUrtado", "Morales", "123323456123", "3334gddddsertfdht54", "45376664", new GregorianCalendar(2003, Calendar.JULY, 15), no);
+
+        persona17.setNombre(e.encriptar("Jazmin"));
+        persona17.setApellidoPaterno(e.encriptar("HUrtado"));
+        persona17.setApellidoMaterno(e.encriptar("Morales"));
+
+        Persona persona18 = new Persona("Perla", "Chavez", "Robles", "12344236123", "33fffffgfertfdht54", "45376664", new GregorianCalendar(2002, Calendar.FEBRUARY, 14), no);
+
+        persona18.setNombre(e.encriptar("Perla"));
+        persona18.setApellidoPaterno(e.encriptar("Chavez"));
+        persona18.setApellidoMaterno(e.encriptar("Robles"));
+
+        Persona persona19 = new Persona("Gerardo", "JImenez", "Morales", "123456652323123", "333jjjjgfertfdht54", "45376664", new GregorianCalendar(2001, Calendar.NOVEMBER, 13), si);
+
+        persona19.setNombre(e.encriptar("Gerardo"));
+        persona19.setApellidoPaterno(e.encriptar("JImenez"));
+        persona19.setApellidoMaterno(e.encriptar("Morales"));
+
+        Persona persona0 = new Persona("Veigar", "Chad", "Cervantes", "12764656123", "3334gfgh666jht54", "45376664", new GregorianCalendar(2007, Calendar.FEBRUARY, 10), no);
+
+        persona0.setNombre(e.encriptar("Veigar"));
+        persona0.setApellidoPaterno(e.encriptar("Chad"));
+        persona0.setApellidoMaterno(e.encriptar("Cervantes"));
+        for (int i = 0; i < 20; i++) {
+            Persona guardar = personaNegocio.agregarPersona(persona1);
+            Persona guardar2 = personaNegocio.agregarPersona(persona3);
+            Persona guardar3 = personaNegocio.agregarPersona(persona4);
+            Persona guardar4 = personaNegocio.agregarPersona(persona5);
+            Persona guardar5 = personaNegocio.agregarPersona(persona6);
+            Persona guardar6 = personaNegocio.agregarPersona(persona7);
+            Persona guardar7 = personaNegocio.agregarPersona(persona8);
+            Persona guardar8 = personaNegocio.agregarPersona(persona9);
+            Persona guardar9 = personaNegocio.agregarPersona(persona10);
+            Persona guardar10 = personaNegocio.agregarPersona(persona11);
+            Persona guardar11 = personaNegocio.agregarPersona(persona12);
+            Persona guardar12 = personaNegocio.agregarPersona(persona13);
+            Persona guardar13 = personaNegocio.agregarPersona(persona14);
+            Persona guardar14 = personaNegocio.agregarPersona(persona15);
+            Persona guardar15 = personaNegocio.agregarPersona(persona16);
+            Persona guardar16 = personaNegocio.agregarPersona(persona17);
+            Persona guardar17 = personaNegocio.agregarPersona(persona18);
+            Persona guardar18 = personaNegocio.agregarPersona(persona19);
+            Persona guardar19 = personaNegocio.agregarPersona(persona0);
+            
+           
+
+
+        }
+
+
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+>>>>>>> 9a6417fd640deb6ce0b8349f7f2b4fc579c7fec5
     /**
      *
      * Método que configura la tabla de registros de personas, estableciendo su
@@ -318,7 +491,10 @@ public class frmCrudPersona extends javax.swing.JFrame {
             datos[2] = persona.getRfc();
             datos[3] = formato.format(persona.getFechaNacimiento().getTime());
             datos[4] = persona.getTelefono();
-            datos[5] = persona.getDiscapacidad();
+            if (persona.getDiscapacidad() == 1) {
+                datos[5] = "Discapacitado";
+            } 
+
             datos[6] = btnEditar;
             defa.addRow(datos);
         }
@@ -369,6 +545,7 @@ public class frmCrudPersona extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTable tblRegistrosPersonas;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
