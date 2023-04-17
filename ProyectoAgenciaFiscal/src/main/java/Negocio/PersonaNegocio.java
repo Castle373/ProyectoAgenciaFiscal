@@ -128,10 +128,17 @@ public class PersonaNegocio implements IPersonaNegocio {
         Integer nacimiento = null;
         if (!nacimientoY.equals("")) {
             nacimiento = Integer.parseInt(nacimientoY);
+            System.out.println(nacimiento);
         }
         List<Persona> listaFiltrada = personaDAO.listaPersonas(rfc, curp, nacimiento);
         Encriptacion AES = new Encriptacion();
-        listaFiltrada = AES.desencriptarLista(listaFiltrada);
+        try {
+            listaFiltrada = AES.desencriptarLista(listaFiltrada);
+            
+        } catch (Exception e) {
+            listaFiltrada = AES.desencriptarLista(listaFiltrada);
+        }
+        
         List<Persona> listaPorNombre = new ArrayList<Persona>();
         if (!filtroNombre.equals("")) {
             for (Persona persona : listaFiltrada) {
