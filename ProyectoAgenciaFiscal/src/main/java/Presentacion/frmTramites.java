@@ -292,6 +292,7 @@ public class frmTramites extends javax.swing.JFrame {
                 ((JButton) objeto).doClick();
                 JButton botones = (JButton) objeto;
                 if (botones.equals(btnLicencia)) {
+                    
                     if (LicenciaNegocio.listaLicenciaPersonaVigentes(listaActual.get(row).getId()).isEmpty()) {
 
                         if (personaNegocio.Edad(listaActual.get(row)) >= 18) {

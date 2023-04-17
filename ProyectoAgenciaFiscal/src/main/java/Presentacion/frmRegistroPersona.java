@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -321,14 +322,43 @@ public class frmRegistroPersona extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (txtRFC.getText().length() == 13 && txtCurp.getText().length() == 18 && txtTelefono.getText().length() == 10) {
+  Calendar calendar1 = Calendar.getInstance();
+                
+        LocalDate localito = dpFecha.getDate();
+        java.sql.Date Fechanac = java.sql.Date.valueOf(localito);
+        calendar1.setTime(Fechanac);
+        Calendar calendar = calendar1;
+        int anio = calendar.get(Calendar.YEAR);
+        int mes = calendar.get(Calendar.MONTH);
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        Calendar fechaNacimiento = new GregorianCalendar(anio, mes, dia);
+        Calendar ahora = Calendar.getInstance();
+
+        long edadEnDias = (ahora.getTimeInMillis() - fechaNacimiento.getTimeInMillis())
+                / 1000 / 60 / 60 / 24;
+
+        int anos = Double.valueOf(edadEnDias / 365.25d).intValue();
+
+        if (anos >= 18) {
+        if (txtCurp.getText().length() == 18) {
+        if ( txtTelefono.getText().length() == 10 ) {
+        if (txtRFC.getText().length() == 13 ) {
             if (editar) {
                 editar();
             } else {
                 agregar();
             }
         } else {
-            JOptionPane.showMessageDialog(this, "NO SE PUDO COMPLETAR EL TRAMITE, POR FAVOR MODIFIQUE SU INFORMACIÓN");
+            JOptionPane.showMessageDialog(this, "El RFC no tiene el numero de caracteres correctos, por favor modifique su información");
+        }
+        }else{
+          JOptionPane.showMessageDialog(this, "El Telefono no tiene el numero de caracteres correctos, por favor modifique su información");   
+        }
+         }else{
+            JOptionPane.showMessageDialog(this, "La curp no tiene el numero de caracteres correctos, por favor modifique su información");  
+         }
+        }else{
+           JOptionPane.showMessageDialog(this, "Error, este registro no se pudo completar puesto que el solicitante es menor de edad");     
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
